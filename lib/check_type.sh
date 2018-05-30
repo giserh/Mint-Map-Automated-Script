@@ -5,10 +5,12 @@ set -e
 #max values and convert data to Byte.  
 #(Note: Script assumes single band raster and TIFF file type)
 #Inputs: Data file to check
-#Outputs: TRUE if file is projected, FALSE if it is not projected
+#Outputs: Data file with _byte.tif tag (converted if necessary)
 #Procedure:
 #-Creates a temporary text file of the data file's gdalinfo
-#-Uses grep on text file to see if file is projected
+#-Uses grep on text file to see if file is Byte type
+#-If the file is not Byte, extract min and max values from gdalinfo,
+#rescale values and convert to Byte using gdal_translate.
 #-Clean up temporary file
 
 
