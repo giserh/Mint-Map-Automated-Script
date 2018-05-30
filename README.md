@@ -2,8 +2,8 @@
 
 ## MySQL
 
-```
-# mysql -umint -pyOuaReAgeNius -h 13.57.22.75 mintmap
+```sh
+mysql -umint -pyOuaReAgeNius -h 13.57.22.75 mintmap
 ```
 
 ## Shell
@@ -287,7 +287,7 @@
 
 - Generate metadata.json (will update the website)
 
-- Generate *.json for each dataset 
+- Generate \*.json for each dataset 
 
 	- Legend
 
