@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
+set -e
 
-#Checks to see if a data file is projected into WGS 84 / Pseudo-Mercator (EPSG: 3857)
+#Checks to see if a data file is projected into WGS 84 / Pseudo-Mercator 
+#(EPSG: 3857)
 #Inputs: Data file to check
 #Outputs: TRUE if file is projected, FALSE if it is not projected
 #Procedure:

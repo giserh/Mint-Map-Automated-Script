@@ -1,6 +1,8 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -e
 
-#Checks to see if a directory of tiled TIFF files is zipped and needs to be unzipped.
+#Checks to see if a directory of tiled  files is zipped and needs to be 
+#unzipped.  Unzips the files if necessary.
 #Inputs: Directory of TIFF tile files
 #Outputs: Unzips files into directory (if necessary)
 #Procedure:
