@@ -1,5 +1,10 @@
 # Automated Script
 
+## MySQL
+
+```
+# mysql -umint -pyOuaReAgeNius -h 13.57.22.75 mintmap
+```
 
 ## Shell
 
@@ -30,7 +35,7 @@
 
 	- Use for tiled
 
-		- -dir aaa/*.zip
+		- -dir aaa/\*.zip
 
 - -start-time
 
