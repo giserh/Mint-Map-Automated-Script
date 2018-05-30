@@ -1,33 +1,41 @@
 #!/usr/bin/env bash
 set -e
 
-#Checks to see if a data file is projected into WGS 84 / Pseudo-Mercator 
-#(EPSG: 3857)
-#Inputs: Data file to check
-#Outputs: TRUE if file is projected, FALSE if it is not projected
-#Procedure:
-#-Creates a temporary text file of the data file's gdalinfo
-#-Uses grep on text file to see if file is projected
-#-Clean up temporary file
+### check_projection.sh
+# Checks to see if a data file is projected into WGS 84 / Pseudo-Mercator
+# (EPSG: 3857) and projects it using gdalwarp if necessary.
+### Inputs: 
+# Data file to check
+### Outputs:
+# File in EPSG: 3857 PCS with _proj.tif suffix
+### Procedure:
+# -Creates a temporary text file of the data file's gdalinfo
+# -Uses grep on text file to see if file is projected
+# -Projects file into EPSG: 3857 if necessary
+# -Clean up temporary file
 
-
-#Input file to be checked
+# Parse arguments:
 export INPUT=$1
+export OUTPUT=$2
 
-#Get gdalinfo of input
+# Get gdalinfo of input:
 export GDALINFO="$(gdalinfo $INPUT)"
 
-#Make temporary text file
+# Make temporary text file:
 export TEMP=${INPUT%.*}_temp.txt
 touch $TEMP
 echo $GDALINFO >> $TEMP
 
-#Check to see if data is projected
+# Check to see if data is projected:
 if ! grep -q 'PROJCS\["WGS 84 / Pseudo-Mercator"' $TEMP; then
-	echo "FALSE"
+	gdalwarp \
+	-t_srs EPSG:3857 \
+	-r near \
+	$INPUT $OUTPUT
+
 else
-	echo "TRUE"
+	cp $INPUT $OUTPUT
 fi
 
-#Remove temporary file
+# Remove temporary file:
 rm $TEMP
