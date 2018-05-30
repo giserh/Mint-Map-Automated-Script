@@ -28,6 +28,7 @@ echo $GDALINFO >> $TEMP
 
 #Check to see if data is byte format
 if grep -q 'Type=Byte' $TEMP; then
+	cp $INPUT $OUTPUT
 	echo "Data is already Byte type"
 else
 
