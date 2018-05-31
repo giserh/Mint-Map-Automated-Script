@@ -1,1 +1,0 @@
-{"crs": {"type": "name", "properties": {"name": "urn:ogc:def:crs:EPSG::3857"}}, "type": "FeatureCollection", "features": [{"geometry": {"type": "Polygon", "coordinates": [[[4.5, 31.0], [4.6, 31.0], [4.6, 31.1], [4.5, 31.1], [4.5, 31.0]]]}, "type": "Feature", "properties": {"value": 0}}], "bbox": [4.5, 31.0, 4.6, 31.1]}
