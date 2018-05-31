@@ -2,6 +2,8 @@
 
 set -e
 
+# check prerequisite
+
 # copy to /usr/local/share/mintcast
 sudo mkdir -p /usr/local/share/mintcast
 sudo cp -r ./bin /usr/local/share/mintcast/
@@ -14,6 +16,8 @@ sudo ln -fs /usr/local/share/mintcast/bin/mintcast.sh /usr/local/bin/mintcast
 sudo chmod +x /usr/local/bin/mintcast
 
 # create man page for mintcast
+install -g 0 -o 0 -m 0644 ./man/man1/mintcast.1 /usr/local/man/man1/
+gzip /usr/local/man/man1/mintcast.1
 
 CHECK_PATH="$(echo $PATH | grep -E ':*/usr/local/bin:*' | wc -l | tr  -d ' ')"
 if [[ $CHECK_PATH = "0" ]]; then
