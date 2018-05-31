@@ -9,10 +9,10 @@ set -e
 ### Outputs:
 # File in EPSG: 3857 PCS with _proj.tif suffix
 ### Procedure:
-# -Creates a temporary text file of the data file's gdalinfo
-# -Uses grep on text file to see if file is projected
-# -Projects file into EPSG: 3857 if necessary
-# -Clean up temporary file
+# - Creates a temporary text file of the data file's gdalinfo
+# - Uses grep on text file to see if file is projected
+# - Projects file into EPSG: 3857 if necessary
+# - Clean up temporary file
 
 # Parse arguments:
 export INPUT=$1

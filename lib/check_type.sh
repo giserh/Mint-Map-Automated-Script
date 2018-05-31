@@ -10,11 +10,11 @@ set -e
 ### Outputs: 
 # Data file with _byte.tif tag (converted if necessary)
 ### Procedure:
-# -Creates a temporary text file of the data file's gdalinfo
-# -Uses grep on text file to see if file is Byte type
-# -If the file is not Byte, extract min and max values from gdalinfo,
+# - Creates a temporary text file of the data file's gdalinfo
+# - Uses grep on text file to see if file is Byte type
+# - If the file is not Byte, extract min and max values from gdalinfo,
 # rescale values and convert to Byte using gdal_translate.
-# -Clean up temporary file
+# - Clean up temporary file
 
 # Parse arguments:
 export INPUT=$1
