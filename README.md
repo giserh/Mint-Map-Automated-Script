@@ -1,5 +1,28 @@
 # Automated Script
 
+## Conventions
+
+- The project name `mintcast`
+- All lib scripts should be `function`, will be included using `source lib/xxx.sh`, and call the function `xxx(x1, x2)`
+- All names should be in lowercase
+- All file should have `shebang line`, like `#!/usr/bin/env bash`  or `#!/usr/bin/env python3`
+	- All python scripts will be added executable mod when user run `./install.sh`
+	- Thus, there is no difference between python3 or python2.7 scripts when run it.
+
+- Names of `lib` scripts should start with `check_`, `proc_` and `handle_`
+	- `check_` like `lib/check_type.sh`, the function inside this file should be `check_type()`
+	- `proc_` like `lib/proc_polygonize.sh`, the function should be `proc_polygonize()`
+	- `handle_` like `lib/handle_netcdf.sh`, the function should be `handle_netcdf.sh`, the return value should be `YES\NO` to indicate whether the process is a success. Other return data should be transfered by referenced parameters
+	- All functions will be called in `bin/mintcast.sh`
+	- Important info should show in different color https://misc.flogisoft.com/bash/tip_colors_and_formatting
+
+- Names of `python` scripts should be `macro_` or `handle_` like `python/handle_grid_csv/main.py` or `python/macro_extract_lnglat/main.py`
+	- Python script should get paramter from `promot`
+	- Python script should output every thing in `stdout`
+	- Python script should show process message in `stderr` in a different colors as bash
+
+
+
 ## MySQL
 
 ```sh

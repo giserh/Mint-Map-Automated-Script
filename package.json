@@ -1,0 +1,30 @@
+{
+  "@name": "mintcast",
+  "@version": "0.0.1",
+  "@description": "generate vector, raster mbtiles and configure json files for GeoTiff, NetCDF and already-tiled map resources",
+  "scripts": {
+    "bin/install.sh": "install mintcast to /usr/local/bin",
+    "bin/mintcast.sh": "the main script"
+  },
+  "dependencies": {
+    "gdal": {"same": true, "version": ""},
+    "tippecanoe": {
+        "same": false, 
+        "git": "https://github.com/mapbox/tippecanoe.git", 
+        "osx":{
+          "install": "brew install tippecanoe"
+        },
+        "other": {
+          "dependencies":"yum install -y make sqlite-devel zlib-devel bash git gcc-c++",
+          "install": "make -j && make install"
+        },
+    },
+    "mysql":{"same":true}
+  },
+  "keywords": [
+    "mintmap"
+  ],
+  "repository": "git@github.com:limbov8/Mint-Map-Automated-Script.git",
+  "author": "limbov8 <liboliu@usc.edu>",
+  "devDependencies": {}
+}
