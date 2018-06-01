@@ -16,40 +16,38 @@ set -e
 # rescale values and convert to Byte using gdal_translate.
 # - Clean up temporary file
 
-# Parse arguments:
-export INPUT=$1
-export OUTPUT=$2
+check_type () {
+	# Get gdalinfo of input:
+	GDALINFO="$(gdalinfo $1)"
 
-# Get gdalinfo of input:
-export GDALINFO="$(gdalinfo $INPUT)"
+	# Make temporary text file:
+	TEMP=${INPUT%.*}_temp.txt
+	touch $TEMP
+	echo $GDALINFO >> $TEMP
 
-# Make temporary text file:
-export TEMP=${INPUT%.*}_temp.txt
-touch $TEMP
-echo $GDALINFO >> $TEMP
+	# Check to see if data is byte format:
+	if grep -q 'Type=Byte' $TEMP; then
+		cp $1 $2
+		echo "Data is already Byte type"
+	else
 
-# Check to see if data is byte format:
-if grep -q 'Type=Byte' $TEMP; then
-	cp $INPUT $OUTPUT
-	echo "Data is already Byte type"
-else
+		# Extract min and max values from GDAL info:
+		tmp_min=${GDALINFO#*Minimum=}
+		MIN_VAL=${tmp_min%", Max"*}
+		echo "Minimum value: $MIN_VAL"
+		tmp_max=${GDALINFO#*Maximum=}
+		MAX_VAL=${tmp_max%", M"*}
+		echo "Maximum value: $MAX_VAL"
 
-	# Extract min and max values from GDAL info:
-	tmp_min=${GDALINFO#*Minimum=}
-	export MIN_VAL=${tmp_min%", Max"*}
-	echo "Minimum value: $MIN_VAL"
-	tmp_max=${GDALINFO#*Maximum=}
-	export MAX_VAL=${tmp_max%", M"*}
-	echo "Maximum value: $MAX_VAL"
+		# Rescale values and convert data to Byte:
+		gdal_translate \
+		-ot Byte \
+		-scale $MIN_VAL $MAX_VAL 0 254 \
+		-a_nodata 255 \
+		$1 \
+		$2
+	fi
 
-	# Rescale values and convert data to Byte:
-	gdal_translate \
-	-ot Byte \
-	-scale $MIN_VAL $MAX_VAL 0 254 \
-	-a_nodata 255 \
-	$INPUT \
-	$OUTPUT
-fi
-
-# Remove temporary file:
-rm $TEMP
+	# Remove temporary file:
+	rm $TEMP
+}

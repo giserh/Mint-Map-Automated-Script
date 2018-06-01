@@ -5,7 +5,7 @@ set -e
 # Checks to see if a data file is projected into WGS 84 / Pseudo-Mercator
 # (EPSG: 3857) and projects it using gdalwarp if necessary.
 ### Inputs: 
-# Data file to check
+# 1) Data file to check, 2) Name of output file
 ### Outputs:
 # File in EPSG: 3857 PCS with _proj.tif suffix
 ### Procedure:
@@ -14,28 +14,26 @@ set -e
 # - Projects file into EPSG: 3857 if necessary
 # - Clean up temporary file
 
-# Parse arguments:
-export INPUT=$1
-export OUTPUT=$2
+check_projection() {
+	# Get gdalinfo of input:
+	GDALINFO="$(gdalinfo $INPUT)"
 
-# Get gdalinfo of input:
-export GDALINFO="$(gdalinfo $INPUT)"
+	# Make temporary text file:
+	TEMP=${1%.*}_temp.txt
+	touch $TEMP
+	echo $GDALINFO >> $TEMP
 
-# Make temporary text file:
-export TEMP=${INPUT%.*}_temp.txt
-touch $TEMP
-echo $GDALINFO >> $TEMP
+	# Check to see if data is projected:
+	if ! grep -q 'PROJCS\["WGS 84 / Pseudo-Mercator"' $TEMP; then
+		gdalwarp \
+		-t_srs EPSG:3857 \
+		-r near \
+		$1 $2
 
-# Check to see if data is projected:
-if ! grep -q 'PROJCS\["WGS 84 / Pseudo-Mercator"' $TEMP; then
-	gdalwarp \
-	-t_srs EPSG:3857 \
-	-r near \
-	$INPUT $OUTPUT
+	else
+		cp $1 $2
+	fi
 
-else
-	cp $INPUT $OUTPUT
-fi
-
-# Remove temporary file:
-rm $TEMP
+	# Remove temporary file:
+	rm $TEMP
+}
