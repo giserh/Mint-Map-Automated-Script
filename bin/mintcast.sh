@@ -12,7 +12,6 @@ if [[ $# -lt 1 ]]; then
     exit 0
 fi
 
-
 DATASET_TYPE="tiff"         # DATASET_TYPE, tiff, nc or tiled
 QML_FILE=""                 # QML file path
 DATASET_DIR=""              # If dataset has timeseries or tiled
@@ -27,6 +26,8 @@ TILESEVER_PORT="8082"       # Used by tileserver
 TILESEVER_BIND="0.0.0.0"    # Used by tileserver
 DEV_MODE=YES                # Default is dev mode. Generate all files (mbtiles or json) in dist/.
 NO_WEBSITE_UPDATE=NO        # Only generate tiles in dist/, no json, no restart tileserver
+
+DATAFILE_PATH=""            # Single file path like tiff
 
 helper_parameter $@
 
