@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-set -e
 
 ### clip2ss.sh
 # Clips data layer to South Sudan boundary as defined by input shapefile.

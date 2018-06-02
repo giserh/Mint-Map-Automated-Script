@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-set -e
 
 ### polygonize.sh
 # Polygonize TIF and add layer and value names using gdal_polygonize.py

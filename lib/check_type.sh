@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-set -e
 
 ### check_type.sh
 # Checks to see if a data file is encoded as Byte data.  If not, extract min
