@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-### geojson2mbtiles.sh
+### proc_geojson2mbtiles.sh
 # Generate zoom levels while converting GeoJSON file to MBTiles.
 ### Inputs:
 # 1) Input file, 2) Name of output file, 3) Layer name
@@ -10,7 +10,7 @@
 # - Convert to MBTiles and generate zoom levels with tippecanoe
 
 # Convert GeoJSON to MBTiles:
-convert_geojson() {
+proc_geojson2mbtiles() {
 	tippecanoe \
 	-f \
 	-o $2`#Output filename` \
