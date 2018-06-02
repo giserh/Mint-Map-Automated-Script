@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
-source lib/helper_usage.sh
-source lib/helper_parameter.sh
+
+# export MINTCAST_PATH='/usr/local/bin/mintcast'
+export MINTCAST_PATH='.'
+
+source $MINTCAST_PATH/lib/helper_usage.sh
+source $MINTCAST_PATH/lib/helper_parameter.sh
 
 VERSION="$(cat package.json | sed -nE 's/.+@ver.*:.*\"(.*)\".*/\1/p' | tr -d '\r')"
 

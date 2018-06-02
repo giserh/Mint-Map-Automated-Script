@@ -10,6 +10,7 @@ sudo mkdir -p /usr/local/share/mintcast
 sudo cp -r ./bin /usr/local/share/mintcast/
 sudo cp -r ./lib /usr/local/share/mintcast/
 sudo cp -r ./python /usr/local/share/mintcast/
+sudo cp -r ./shp /usr/local/share/mintcast/
 sudo cp ./package.json /usr/local/share/mintcast/
 
 # link mintcast
