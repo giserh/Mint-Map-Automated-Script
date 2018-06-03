@@ -9,24 +9,21 @@
 ### Outputs: 
 # Data file with _byte.tif tag (converted if necessary)
 ### Procedure:
-# - Creates a temporary text file of the data file's gdalinfo
-# - Uses grep on text file to see if file is Byte type
+# - Uses grep on gdalinfo to see if file is Byte type
 # - If the file is not Byte, extract min and max values from gdalinfo,
 # rescale values and convert to Byte using gdal_translate.
-# - Clean up temporary file
 
 check_type () {
-	# Get gdalinfo of input:
-	GDALINFO="$(gdalinfo $1)"
+	# Make temporary stats file:
+	STATS=${1%.*}_stats.tif
+	gdal_translate -stats $1 $STATS
 
-	# Make temporary text file:
-	TEMP=${INPUT%.*}_temp.txt
-	touch $TEMP
-	echo $GDALINFO >> $TEMP
+	# Get gdalinfo of stats:
+	GDALINFO="$(gdalinfo $STATS)"
 
 	# Check to see if data is byte format:
-	if grep -q 'Type=Byte' $TEMP; then
-		cp $1 $2
+	if echo $GDALINFO | grep -q 'Type=Byte'; then
+		mv $STATS $2 # Set temporary stats file as output
 		echo "Data is already Byte type"
 	else
 
@@ -45,8 +42,8 @@ check_type () {
 		-a_nodata 255 \
 		$1 \
 		$2
-	fi
 
-	# Remove temporary file:
-	rm $TEMP
+		# Remove temporary stats file:
+		rm $STATS
+	fi
 }
