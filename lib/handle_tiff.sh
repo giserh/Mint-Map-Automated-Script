@@ -41,8 +41,8 @@ handle_tiff(){
 	PROJ_OUT=${CLIP_OUT%.*}_proj.tif
 	RES_OUT=${PROJ_OUT%.*}_newres.tif
 	POLY_OUT=${PROJ_OUT%.*}_poly.geojson
-	RASTER_MBTILES=$OUT_DIR/${INPUT%.*}_raster_tiles.mbtiles
-	VECTOR_MBTILES=$OUT_DIR/${INPUT%.*}_vector_tiles.mbtiles
+	RASTER_MBTILES=$OUT_DIR/${FILENAME%.*}_raster_tiles.mbtiles
+	VECTOR_MBTILES=$OUT_DIR/${FIlENAME%.*}_vector_tiles.mbtiles
 
 	# Pre-processing:
 	check_type $INPUT $BYTE_OUT #Check data type/convert to byte
