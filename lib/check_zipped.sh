@@ -13,7 +13,11 @@
 
 check_zipped() {
 	# Clean input directory name:
-	CLEANED_DIR=${1%/*}
+	if [ "${1: -1}" == "/" ]; then
+		CLEANED_DIR=${1%/*1}
+	else
+		CLEANED_DIR=$1
+	fi
 
 	# Check if there are unzipped files in the directory, unzip them if not:
 	if [ -n "$(ls -A $CLEANED_DIR/*$2 2>/dev/null)" ]; then
