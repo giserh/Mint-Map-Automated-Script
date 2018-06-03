@@ -56,6 +56,7 @@ handle_tiled_tiff(){
 		handle_tiff $MERGE_OUT $LAYER_NAME $VALUE_NAME
 	else
 		#handle_tiff_qml $MERGE_OUT $LAYER_NAME $VALUE $QML_FILE
+		echo $QML_FILE #placeholder
 	fi
 
 	# Delete intermediate files:
