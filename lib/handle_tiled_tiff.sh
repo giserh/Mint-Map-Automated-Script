@@ -17,7 +17,7 @@ source check_zipped.sh
 source handle_tiff.sh
 #source handle_tiff_qml.sh
 
-handle_tiled_tif(){
+handle_tiled_tiff(){
 	# Parse arguments:
 	TILE_DIR=$1 #Directory containing tiles
 	FILE_EXT=$2 #File extension (and suffix) to check before unzipping
