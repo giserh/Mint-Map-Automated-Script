@@ -34,4 +34,3 @@ NO_WEBSITE_UPDATE=NO        # Only generate tiles in dist/, no json, no restart 
 DATAFILE_PATH=""            # Single file path like tiff
 
 helper_parameter $@
-
