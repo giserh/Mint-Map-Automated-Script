@@ -31,6 +31,8 @@ TILESEVER_BIND="0.0.0.0"    # Used by tileserver
 DEV_MODE=YES                # Default is dev mode. Generate all files (mbtiles or json) in dist/.
 NO_WEBSITE_UPDATE=NO        # Only generate tiles in dist/, no json, no restart tileserver
 
+WITH_QUALITIY_ASSESSMENT=NO # for tiled dataset, if with --with-quality-assessment, then generate like elevation.num.raster.mbtiles
+DATASET_NAME="output" 		# output mbtiles name like -o elevation, output will be elevation.raster.mbtiles and elevation.vector.mbtiles
 DATAFILE_PATH=""            # Single file path like tiff
 
 helper_parameter $@

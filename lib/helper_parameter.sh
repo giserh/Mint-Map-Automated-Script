@@ -40,6 +40,11 @@ helper_parameter(){
         shift
         shift
         ;;
+        -o|--output)
+        DATASET_NAME="$2"
+        shift
+        shift
+        ;;
         --target-mbtiles-path)
         TARGET_MBTILES_PATH="$2"
         shift
@@ -72,6 +77,10 @@ helper_parameter(){
         --without-website)
         NO_WEBSITE_UPDATE=YES
         shift 
+        ;;
+        --with-quality-assessment)
+        WITH_QUALITIY_ASSESSMENT=YES
+        shift
         ;;
         -v|--version)
         echo "$VERSION"

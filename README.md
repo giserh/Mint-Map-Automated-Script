@@ -1,5 +1,11 @@
 # Automated Script
 
+
+## GDAL Version conflict
+
+```shell
+brew reinstall gdal --with-armadillo --with-complete --with-libkml --with-unsupported
+```
 ## Conventions
 
 - The project name `mintcast`
