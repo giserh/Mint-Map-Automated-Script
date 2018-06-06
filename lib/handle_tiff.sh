@@ -27,13 +27,19 @@ handle_tiff(){
 	LAYER_NAME=$LAYER_NAME
 
 	# Hard-coded paths (passed from mintcast.sh?):
-	OUT_DIR='/Volumes/BigMemory/mint-webmap/data'
+	OUT_DIR="$MINTCAST_PATH/dist"
+	if [[ ! -d "$OUT_DIR" ]]; then
+		mkdir -p "$OUT_DIR"
+	fi
+	if [[ $DEV_MODE != 'NO' ]]; then
+		OUT_DIR=$TARGET_MBTILES_PATH
+	fi
 	#OUT_DIR=$MINTCAST_PATH/dist
 	TEMP_DIR=$OUT_DIR
 	#TEMP_DIR=$MINTCAST_PATH/tmp
-	SS_BOUNDARY='../shp/ss.shp'
+	SS_BOUNDARY="$MINTCAST_PATH/shp/ss.shp"
 	#SS_BOUNDARY=$MINTCAST_PATH/shp/ss.shp
-	COLOR_TABLE='../shp/colortable.txt'
+	COLOR_TABLE="$MINTCAST_PATH/shp/colortable.txt"
 	#COLOR_TABLE=$MINTCAST_PATH/shp/colortable.txt
 
 	# Remove path from input:

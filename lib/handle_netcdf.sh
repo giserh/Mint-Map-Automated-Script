@@ -9,9 +9,17 @@ handle_netcdf(){
 	IFS=$'\n'
 	NETCDF_FILES=($NETCDF_FILES_STRING)
 	SUBDATASETS_ARRAY=()
+	SUBDATASET_LAYAERS_ARRAY=()
 	for netcdf_file in "${NETCDF_FILES[@]}"; do
 		proc_getnetcdf_subdataset "$netcdf_file"
 		echo "${SUBDATASETS_ARRAY[@]}"
+		index=0
+		for subset_tiff in SUBDATASETS_ARRAY; do
+			DATAFILE_PATH="$subset_tiff"
+			LAYER_NAME="${SUBDATASET_LAYAERS_ARRAY[$index]}"
+			handle_tiff
+			index=$((index+1))
+		done
 	done
 	# xargs -I % proc_getnetcdf_subdataset %
 
