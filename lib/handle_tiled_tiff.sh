@@ -4,7 +4,7 @@
 # Complete workflow for generating raster and vector tiles from tiled TIFFs.
 ### Inputs: 
 # 1) Tile directory, 2) File extension (and suffix) to check before unzipping
-# 3) Desired filename (w/o extension), 4) Layer name, 5) Value name
+# 3) Desired filename (w/o extension), 4) Layer name
 ### Outputs: 
 # MBTiles ready to be displayed on website.  Creates intermediate files at
 # each step of the process.
@@ -18,13 +18,12 @@ source handle_tiff.sh
 #source handle_tiff_qml.sh
 
 handle_tiled_tiff(){
-	# Parse arguments:
-	TILE_DIR=$1 #Directory containing tiles
+	# Parse arguments from mintcast.sh:
+	TILE_DIR=$DATASET_DIR #Directory containing tiles
 	FILE_EXT=$2 #File extension (and suffix) to check before unzipping
-	FILENAME=$3 #Desired filename (without extension) for output
-	LAYER_NAME=$4 #Layer name (displayed on map)
-	VALUE_NAME=$5 #Value name (displayed on map)
-	QML_FILE="" #Will be passed from mintcast.sh (remove this later)
+	FILENAME=$DATASET_NAME #Desired filename (without extension) for output
+	LAYER_NAME=$LAYER_NAME #Layer name (displayed on map)
+	QML_FILE=$QML_FILE #Will be passed from mintcast.sh (remove this later)
 
 	# Hard-coded paths (passed from mintcast.sh?):
 	OUT_DIR='/Volumes/BigMemory/mint-webmap/data'
@@ -53,9 +52,9 @@ handle_tiled_tiff(){
 
 	# Choose and execute routine (TIFF or TIFF w/ QML):
 	if [ "$QML_FILE" == "" ]; then
-		handle_tiff $MERGE_OUT $LAYER_NAME $VALUE_NAME
+		handle_tiff $MERGE_OUT $LAYER_NAME
 	else
-		#handle_tiff_qml $MERGE_OUT $LAYER_NAME $VALUE $QML_FILE
+		#handle_tiff_qml $MERGE_OUT $LAYER_NAME $QML_FILE
 		echo $QML_FILE #placeholder
 	fi
 
