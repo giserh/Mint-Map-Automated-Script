@@ -13,13 +13,13 @@
 
 # Source functions:
 #source check_type.sh
-source check_projection.sh
-source proc_clip.sh
-source proc_newres.sh
-source proc_tif2mbtiles.sh
-source proc_gdaladdo.sh
-source proc_polygonize.sh
-source proc_geojson2mbtiles.sh
+source $MINTCAST_PATH/lib/check_projection.sh
+source $MINTCAST_PATH/lib/proc_clip.sh
+source $MINTCAST_PATH/lib/proc_newres.sh
+source $MINTCAST_PATH/lib/proc_tif2mbtiles.sh
+source $MINTCAST_PATH/lib/proc_gdaladdo.sh
+source $MINTCAST_PATH/lib/proc_polygonize.sh
+source $MINTCAST_PATH/lib/proc_geojson2mbtiles.sh
 
 handle_tiff(){
 	# Parse arguments from mintcast.sh:
