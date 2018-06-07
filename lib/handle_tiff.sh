@@ -5,6 +5,8 @@
 ### Inputs:
 # 1) Input filepath, 2) Layer name
 
+### TO DO: figure out what to use for no data value depending on data type
+
 ### TO DO: return YES or NO at EOF (can just use #?)
 ### TO DO: exit on non-zero status (using #?)
 ### TO DO: add mintcast path
@@ -12,12 +14,12 @@
 ### TO DO: change inputs to names from positional to names from mintcast.sh
 
 # Source functions:
-#source check_type.sh
 source $MINTCAST_PATH/lib/check_projection.sh
 source $MINTCAST_PATH/lib/proc_clip.sh
 source $MINTCAST_PATH/lib/proc_newres.sh
 source $MINTCAST_PATH/lib/proc_tif2mbtiles.sh
 source $MINTCAST_PATH/lib/proc_gdaladdo.sh
+source $MINTCAST_PATH/lib/proc_gdaldem.sh
 source $MINTCAST_PATH/lib/proc_polygonize.sh
 source $MINTCAST_PATH/lib/proc_geojson2mbtiles.sh
 
@@ -38,16 +40,13 @@ handle_tiff(){
 	TEMP_DIR=$OUT_DIR
 	#TEMP_DIR=$MINTCAST_PATH/tmp
 	SS_BOUNDARY="$MINTCAST_PATH/shp/ss.shp"
-	#SS_BOUNDARY=$MINTCAST_PATH/shp/ss.shp
 	COLOR_TABLE="$MINTCAST_PATH/shp/colortable.txt"
-	#COLOR_TABLE=$MINTCAST_PATH/shp/colortable.txt
 
-	# Remove path from input:
+	# Remove path from inpust:
 	FILENAME=$(basename $INPUT)
 
 	# Set names for intermediary and output files:
-	#BYTE_OUT=$TEMP_DIR/${FILENAME%.*}_byte.tif
-	CLIP_OUT=${BYTE_OUT%.*}_clip.tif
+	CLIP_OUT=$TEMP_DIR/${FILENAME%.*}_clip.tif
 	PROJ_OUT=${CLIP_OUT%.*}_proj.tif
 	RES_OUT=${PROJ_OUT%.*}_newres.tif
 	COLOR_OUT=${RES_OUT%.*}_color.tif
