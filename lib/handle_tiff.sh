@@ -6,7 +6,7 @@
 # 1) Input filepath, 2) Layer name
 
 ### TO DO: figure out what to use for no data value depending on data type
-
+### TO DO: figure out new resolution for each file
 ### TO DO: return YES or NO at EOF (can just use #?)
 ### TO DO: exit on non-zero status (using #?)
 ### TO DO: add mintcast path
