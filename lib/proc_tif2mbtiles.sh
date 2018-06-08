@@ -13,8 +13,13 @@
 proc_tif2mbtiles() {
 	gdal_translate \
 	-co QUALITY=100 \
-	-co ZOOM_LEVEL_STRATEGEY=UPPER \
+	-co ZOOM_LEVEL_STRATEGY=UPPER \
 	-of mbtiles \
 	$1`#Input TIFF` \
 	$2 `#Output MBTiles`
+
+	if [[ $? -ne 0 ]]; then
+		echo "proc_tif2mbtiles.sh has failed.  Exiting aborting script."
+		exit 1
+	fi
 }
