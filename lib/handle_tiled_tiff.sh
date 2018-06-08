@@ -37,7 +37,7 @@ handle_tiled_tiff(){
 	if [[ $WITH_QUALITY_ASSESSMENT != 'NO' ]]; then
 		FILE_EXT='num.tif'
 	else
-		FILE_EXT='dem.tif' #This might need to be made into a var from mintcast
+		FILE_EXT=$TILED_FILE_EXT
 	fi
 
 

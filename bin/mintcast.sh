@@ -5,6 +5,10 @@ export MINTCAST_PATH='.'
 
 source $MINTCAST_PATH/lib/helper_usage.sh
 source $MINTCAST_PATH/lib/helper_parameter.sh
+source $MINTCAST_PATH/lib/handle_tiff.sh
+source $MINTCAST_PATH/lib/handle_tiled_tiff.sh
+source $MINTCAST_PATH/lib/handle_tiff_qml.sh
+source $MINTCAST_PATH/lib/handle_netcdf.sh
 
 VERSION="$(cat package.json | sed -nE 's/.+@ver.*:.*\"(.*)\".*/\1/p' | tr -d '\r')"
 
@@ -30,9 +34,22 @@ TILESEVER_PORT="8082"       # Used by tileserver
 TILESEVER_BIND="0.0.0.0"    # Used by tileserver
 DEV_MODE=YES                # Default is dev mode. Generate all files (mbtiles or json) in dist/.
 NO_WEBSITE_UPDATE=NO        # Only generate tiles in dist/, no json, no restart tileserver
-
+TILED_FILE_EXT="dem.tif"	# for tiled dataset, the suffix and extension of the files to be merged
 WITH_QUALITIY_ASSESSMENT=NO # for tiled dataset, if with --with-quality-assessment, then generate like elevation.num.raster.mbtiles
 DATASET_NAME="output" 		# output mbtiles name like -o elevation, output will be elevation.raster.mbtiles and elevation.vector.mbtiles
 DATAFILE_PATH=""            # Single file path like tiff
 
 helper_parameter $@
+
+if [[ $DATASET_TYPE == "tiff" ]]; then
+	handle_tiff
+elif [[ $DATASET_TYPE == "tiled-tiff" ]]; then
+	handle_tiled_tiff
+elif [[ $DATASET_TYPE == "tiff-qml" ]]; then
+	handle_tiff_qml
+elif [[ $DATASET_TYPE == "netcdf" ]]; then
+	handle_netcdf
+else
+	echo "$DATASET_TYPE is an invalid dataset type." 
+	echo "Valid choices include: tiff, tiled-tiff, tiff-qml, netcdf"
+fi
