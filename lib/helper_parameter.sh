@@ -78,6 +78,11 @@ helper_parameter(){
         NO_WEBSITE_UPDATE=YES
         shift 
         ;;
+        --tiled-ext)
+        TILED_FILE_EXT="$2"
+        shift
+        shift
+        ;;
         --with-quality-assessment)
         WITH_QUALITIY_ASSESSMENT=YES
         shift
