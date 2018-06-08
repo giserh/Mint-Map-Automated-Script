@@ -4,7 +4,7 @@
 # Complete workflow for generating raster and vector tiles from tiled TIFFs.
 ### Inputs: 
 # 1) Tile directory, 2) File extension (and suffix) to check before unzipping
-# 3) Desired filename (w/o extension), 4) Layer name, 5) Value name
+# 3) Desired filename (w/o extension), 4) Layer name
 ### Outputs: 
 # MBTiles ready to be displayed on website.  Creates intermediate files at
 # each step of the process.
@@ -13,24 +13,33 @@
 ### TO DO: exit on non-zero status
 
 # Source functions:
-source check_zipped.sh
-source handle_tiff.sh
+source $MINTCAST_PATH/lib/check_zipped.sh
+source $MINTCAST_PATH/lib/handle_tiff.sh
 #source handle_tiff_qml.sh
 
 handle_tiled_tiff(){
-	# Parse arguments:
-	TILE_DIR=$1 #Directory containing tiles
-	FILE_EXT=$2 #File extension (and suffix) to check before unzipping
-	FILENAME=$3 #Desired filename (without extension) for output
-	LAYER_NAME=$4 #Layer name (displayed on map)
-	VALUE_NAME=$5 #Value name (displayed on map)
-	QML_FILE="" #Will be passed from mintcast.sh (remove this later)
+	# Parse arguments from mintcast.sh:
+	TILE_DIR=$DATASET_DIR #Directory containing tiles
+	FILENAME=$DATASET_NAME #Desired filename (without extension) for output
+	LAYER_NAME=$LAYER_NAME #Layer name (displayed on map)
+	QML_FILE=$QML_FILE #Will be passed from mintcast.sh (remove this later)
 
 	# Hard-coded paths (passed from mintcast.sh?):
-	OUT_DIR='/Volumes/BigMemory/mint-webmap/data'
-	#OUT_DIR=$MINTCAST_PATH/dist
+	OUT_DIR="$MINTCAST_PATH/dist"
+	if [[ ! -d "$OUT_DIR" ]]; then
+		mkdir -p "$OUT_DIR"
+	fi
+	if [[ $DEV_MODE != 'NO' ]]; then
+		OUT_DIR=$TARGET_MBTILES_PATH
+	fi	#OUT_DIR=$MINTCAST_PATH/dist
 	TEMP_DIR=$OUT_DIR
-	#TEMP_DIR=$MINTCAST_PATH/tmp
+
+	if [[ $WITH_QUALITY_ASSESSMENT != 'NO' ]]; then
+		FILE_EXT='num.tif'
+	else
+		FILE_EXT=$TILED_FILE_EXT
+	fi
+
 
 	# Clean directory and filenames:
 	if [ "${TILE_DIR: -1}" == "/" ]; then
@@ -53,9 +62,9 @@ handle_tiled_tiff(){
 
 	# Choose and execute routine (TIFF or TIFF w/ QML):
 	if [ "$QML_FILE" == "" ]; then
-		handle_tiff $MERGE_OUT $LAYER_NAME $VALUE_NAME
+		handle_tiff $MERGE_OUT $LAYER_NAME
 	else
-		#handle_tiff_qml $MERGE_OUT $LAYER_NAME $VALUE $QML_FILE
+		#handle_tiff_qml $MERGE_OUT $LAYER_NAME $QML_FILE
 		echo $QML_FILE #placeholder
 	fi
 

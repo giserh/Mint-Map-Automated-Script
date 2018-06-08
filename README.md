@@ -1,5 +1,15 @@
 # Automated Script
 
+
+## GDAL Version conflict
+
+When install Gdal, flags have to be added to `./configure --with-armadillo --with-complete --with-libkml --with-unsupported`
+
+```shell
+brew install jasper netcdf
+brew reinstall gdal --with-armadillo --with-complete --with-libkml --with-unsupported
+```
+
 ## Conventions
 
 - The project name `mintcast`
@@ -12,7 +22,8 @@
 - Names of `lib` scripts should start with `check_`, `proc_` and `handle_`
 	- `check_` like `lib/check_type.sh`, the function inside this file should be `check_type()`
 	- `proc_` like `lib/proc_polygonize.sh`, the function should be `proc_polygonize()`
-	- `handle_` like `lib/handle_netcdf.sh`, the function should be `handle_netcdf.sh`, the return value should be `YES\NO` to indicate whether the process is a success. Other return data should be transfered by referenced parameters
+	- `handle_` like `lib/handle_netcdf.sh`, the function should be `handle_netcdf.sh`, 
+	- !!!(deperacted) the return value should be `YES\NO` to indicate whether the process is a success. Other return data should be transfered by referenced parameters
 	- All functions will be called in `bin/mintcast.sh`
 	- Important info should show in different color https://misc.flogisoft.com/bash/tip_colors_and_formatting
 

@@ -1,12 +1,10 @@
 #!/usr/bin/env bash
 
-### handle_tiff.sh
-# Complete workflow for generating raster and vector tiles from TIFFs.
+### handle_tiff_qml.sh
+# Complete workflow for generating raster and vector tiles from TIFFs with QML.
 ### Inputs:
 # 1) Input filepath, 2) Layer name
 
-### TO DO: figure out what to use for no data value depending on data type
-### TO DO: figure out new resolution for each file
 ### TO DO: return YES or NO at EOF (can just use #?)
 ### TO DO: exit on non-zero status (using #?)
 ### TO DO: add mintcast path
@@ -19,7 +17,6 @@ source $MINTCAST_PATH/lib/proc_clip.sh
 source $MINTCAST_PATH/lib/proc_newres.sh
 source $MINTCAST_PATH/lib/proc_tif2mbtiles.sh
 source $MINTCAST_PATH/lib/proc_gdaladdo.sh
-source $MINTCAST_PATH/lib/proc_gdaldem.sh
 source $MINTCAST_PATH/lib/proc_polygonize.sh
 source $MINTCAST_PATH/lib/proc_geojson2mbtiles.sh
 
@@ -27,6 +24,7 @@ handle_tiff(){
 	# Parse arguments from mintcast.sh:
 	INPUT=$DATAFILE_PATH
 	LAYER_NAME=$LAYER_NAME
+	QML_FILE=$QML_FILE
 
 	# Hard-coded paths (passed from mintcast.sh?):
 	OUT_DIR="$MINTCAST_PATH/dist"
@@ -36,17 +34,16 @@ handle_tiff(){
 	if [[ $DEV_MODE != 'NO' ]]; then
 		OUT_DIR=$TARGET_MBTILES_PATH
 	fi
-	#OUT_DIR=$MINTCAST_PATH/dist
 	TEMP_DIR=$OUT_DIR
-	#TEMP_DIR=$MINTCAST_PATH/tmp
 	SS_BOUNDARY="$MINTCAST_PATH/shp/ss.shp"
-	COLOR_TABLE="$MINTCAST_PATH/shp/colortable.txt"
+	QML_EXTRACT_PATH="$MINTCAST_PATH/python/macro_extract_colors/main.py"
 
 	# Remove path from inpust:
 	FILENAME=$(basename $INPUT)
 
 	# Set names for intermediary and output files:
 	CLIP_OUT=$TEMP_DIR/${FILENAME%.*}_clip.tif
+	COLOR_TABLE=$TEMP_DIR/${FILENAME%.*}_color.txt
 	PROJ_OUT=${CLIP_OUT%.*}_proj.tif
 	RES_OUT=${PROJ_OUT%.*}_newres.tif
 	COLOR_OUT=${RES_OUT%.*}_color.tif
@@ -61,7 +58,8 @@ handle_tiff(){
 
 	# Generate raster tiles:
 	proc_newres $PROJ_OUT $RES_OUT #Set resolution for raster tiles
-	proc_gdaldem $RES_OUT $COLOR_TABLE $COLOR_OUT
+	python $QML_EXTRACT_PATH $QML_FILE $COLOR_TABLE #Make colortable
+	proc_gdaldem $RES_OUT $COLOR_TABLE $COLOR_OUT #Add colors
 	proc_tif2mbtiles $COLOR_OUT $RASTER_MBTILES #Make .mbtiles
 	proc_gdaladdo $RASTER_MBTILES #Generate zoom levels
 	### TO DO: read MBTiles metadata table/store to database
