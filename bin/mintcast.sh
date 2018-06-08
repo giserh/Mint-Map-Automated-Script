@@ -41,7 +41,6 @@ DATAFILE_PATH=""            # Single file path like tiff
 
 helper_parameter $@
 
-<<<<<<< HEAD
 if [[ $DATASET_TYPE == "tiff" ]]; then
 	handle_tiff
 elif [[ $DATASET_TYPE == "tiled-tiff" ]]; then
@@ -54,5 +53,3 @@ else
 	echo "$DATASET_TYPE is an invalid dataset type." 
 	echo "Valid choices include: tiff, tiled-tiff, tiff-qml, netcdf"
 fi
-=======
->>>>>>> 6f3de4f... sqlite curd
