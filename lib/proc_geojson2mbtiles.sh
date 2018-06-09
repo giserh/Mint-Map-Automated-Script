@@ -22,8 +22,6 @@ proc_geojson2mbtiles() {
 	-D13 \
 	-pf \
 	-s EPSG:3857 \
-	--coalesce-smallest-as-needed \
-	--extend-zooms-if-still-dropping \
 	--layer=$3 `#Layer name`\
 	$1 `#Input filename`
 }
