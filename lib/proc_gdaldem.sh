@@ -17,4 +17,9 @@ proc_gdaldem () {
 	$2 `#Colormap filename`\
 	$3 `#Output filename`\
 	-alpha
+
+	if [[ $? != 0 ]]; then
+		echo "gdaldem failed in proc_gdaldem.sh  Exiting script."
+		exit 1
+	fi
 }
