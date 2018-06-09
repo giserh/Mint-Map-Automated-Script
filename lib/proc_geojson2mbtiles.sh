@@ -24,4 +24,9 @@ proc_geojson2mbtiles() {
 	-s EPSG:3857 \
 	--layer=$3 `#Layer name`\
 	$1 `#Input filename`
+
+	if [[ $? != 0 ]]; then
+		echo "tippecanoe failed in proc_geojson2mbtiles.sh  Exiting script."
+		exit 1
+	fi
 }

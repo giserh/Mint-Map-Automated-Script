@@ -19,4 +19,9 @@ proc_clip () {
 	-cutline $3 `#South Sudan boundary shapefile` \
 	$1 `#Input filename`\
 	$2 `#Output filename`
+	
+	if [[ $? != 0 ]]; then
+		echo "gdalwarp failed in proc_clip.sh Exiting script."
+		exit 1
+	fi
 }

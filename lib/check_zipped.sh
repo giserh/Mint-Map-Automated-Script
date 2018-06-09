@@ -14,7 +14,7 @@
 check_zipped() {
 	# Clean input directory name:
 	if [ "${1: -1}" == "/" ]; then
-		CLEANED_DIR=${1%/*1}
+		CLEANED_DIR=${1%/*}
 	else
 		CLEANED_DIR=$1
 	fi

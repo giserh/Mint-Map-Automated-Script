@@ -15,4 +15,9 @@ proc_newres () {
 	-tr 10 10 \
 	$1 `#Input filename`\
 	$2 `#Output filename`
+
+	if [[ $? != 0 ]]; then
+		echo "gdalwarp failed in proc_newres.sh  Exiting script."
+		exit 1
+	fi
 }
