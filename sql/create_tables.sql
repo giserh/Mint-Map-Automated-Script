@@ -12,6 +12,8 @@ insert into metadata values ('mbtiles_location','');
 insert into metadata values ('metajson_location','');
 insert into metadata values ('border_features','{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"properties\":{\"stroke\":\"#000000\",\"stroke-width\":3,\"stroke-opacity\":1,\"fill\":\"#555555\",\"fill-opacity\":0.3},\"geometry\":{\"type\":\"Polygon\",\"coordinates\":[]}}]}');
 
+-- color_no_qml
+
 CREATE TABLE layer (
 	id int(11) AUTO_INCREMENT primary key,
 	layerid varchar(64) not null COMMENT 'layer id used for identifier of mbtiles',
