@@ -11,10 +11,10 @@
 # - Clip with gdalwarp
 
 # Clip to South Sudan Boundary:
+# 	-dstnodata 255 \
 proc_clip () {
 	gdalwarp \
 	-te 22.4 3.4 37.0 23.2 \
-	-dstnodata 255 \
 	--config GDALWARP_IGNORE_BAD_CUTLINE YES \
 	-cutline $3 `#South Sudan boundary shapefile` \
 	$1 `#Input filename`\

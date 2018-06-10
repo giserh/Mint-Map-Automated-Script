@@ -12,7 +12,10 @@ handle_netcdf(){
 	SUBDATASET_LAYAERS_ARRAY=()
 	for netcdf_file in "${NETCDF_FILES[@]}"; do
 		proc_getnetcdf_subdataset "$netcdf_file"
+		echo $netcdf_file
 		echo "${SUBDATASETS_ARRAY[@]}"
+		exit 0
+		# OUT_DIR="$MINTCAST_PATH/dist/"
 		index=0
 		for subset_tiff in SUBDATASETS_ARRAY; do
 			DATAFILE_PATH="$subset_tiff"
