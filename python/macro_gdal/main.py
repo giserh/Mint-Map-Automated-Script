@@ -27,6 +27,16 @@ def main():
 		lrx, lry, elv = transform.TransformPoint(lrx, lry)
 		# ulx, uly is the upper left corner, lrx, lry is the lower right corner
 		print("[%s, %s, %s, %s]" % (ulx, uly, lrx, lry))
+	elif method == 'bounds-geojson-format':
+		target = osr.SpatialReference()
+		target.ImportFromEPSG(4326)
+		transform = osr.CoordinateTransformation(srs, target)
+		lrx = ulx + (sizeX * xres)
+		lry = uly + (sizeY * yres)
+		ulx, uly, elv = transform.TransformPoint(ulx, uly)
+		lrx, lry, elv = transform.TransformPoint(lrx, lry)
+
+		print("[[[%s,%s],[%s,%s],[%s,%s],[%s,%s],[%s,%s]]]" % (ulx, uly, ulx, lry, lrx, lry, lrx, uly, ulx, uly))
 	elif method == 'size':
 		print("%s %s" % (sizeX, sizeY))
 	elif method == 'res':
@@ -89,6 +99,7 @@ usage = '''
 USAGE:
 	main.py size "tiff"
 	main.py bounds "tiff"
+	main.py bounds-geojson-format "tiff"
 	main.py res "tiff"
 	main.py newres "tiff is better to be EPSG:3857 standard"
 	main.py projection "tiff"
