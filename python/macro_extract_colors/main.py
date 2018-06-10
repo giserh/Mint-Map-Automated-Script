@@ -60,12 +60,12 @@ if __name__ == '__main__':
 			qmlfile = sys.argv[1]
 			output = sys.argv[2]
 			main(qmlfile, output)
-			print(table_generated_msg % output)
+			print(table_generated_msg % output, file = sys.stderr)
 		except: 
-			print(bad_args_msg)
+			print(bad_args_msg, file = sys.stderr)
 			exit()
 	else:
-		print(wrong_num_args_msg)
+		print(wrong_num_args_msg, file = sys.stderr)
 		exit()
 
 

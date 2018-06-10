@@ -36,12 +36,15 @@ check_type () {
 		echo "Maximum value: $MAX_VAL"
 
 		# Rescale values and convert data to Byte:
-		gdal_translate \
-		-ot Byte \
-		-scale $MIN_VAL $MAX_VAL 0 254 \
-		-a_nodata 255 \
-		$1 \
-		$2
+
+		# no need to convert to byte  by libo
+		
+		# gdal_translate \
+		# -ot Byte \
+		# -scale $MIN_VAL $MAX_VAL 0 254 \
+		# -a_nodata 255 \
+		# $1 \
+		# $2
 
 		# Remove temporary stats file:
 		rm $STATS
