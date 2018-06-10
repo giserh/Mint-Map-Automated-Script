@@ -28,9 +28,16 @@ check_projection() {
 		-t_srs EPSG:3857 \
 		-r near \
 		$1 $2
-
+		if [[ $? != 0 ]]; then
+			echo "gdalwarp failed in check_projection.sh  Exiting script."
+			exit 1
+		fi
 	else
 		cp $1 $2
+		if [[ $? != 0 ]]; then
+			echo "Copy failed in check_projection.sh  Exiting script."
+			exit 1
+		fi
 	fi
 
 	# Remove temporary file:

@@ -17,4 +17,9 @@ proc_polygonize () {
 	$2 `#Output filename`\
 	$3 `#Layer name`\
 	'Value'
+
+	if [[ $? != 0 ]]; then
+		echo "gdal_polygonize.py failed in proc_polygonize.sh  Exiting script."
+		exit 1
+	fi
 }

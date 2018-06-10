@@ -17,12 +17,16 @@ proc_geojson2mbtiles() {
 	-B11 \
 	-Z3 \
 	-z14 \
-	-m8 \
+	-m5 \
+	-d16 \
+	-D13 \
 	-pf \
-	--maximum-tile-bytes=200000 \
 	-s EPSG:3857 \
-	--coalesce-smallest-as-needed \
-	--extend-zooms-if-still-dropping \
 	--layer=$3 `#Layer name`\
 	$1 `#Input filename`
+
+	if [[ $? != 0 ]]; then
+		echo "tippecanoe failed in proc_geojson2mbtiles.sh  Exiting script."
+		exit 1
+	fi
 }
