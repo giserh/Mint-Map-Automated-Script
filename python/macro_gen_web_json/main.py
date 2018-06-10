@@ -26,7 +26,35 @@ def getMetadata():
         conn.close()
 
 def updateMetadata():
-    pass
+    conn = getConn()
+    c = conn.cursor()
+    metadataJson = {}
+    metadataJson['server'] = METADATA['server']
+    metadataJson['tiles'] = METADATA['tileurl']
+    metadataJson['originalDataset'] = METADATA['border_features']
+
+    metadataJson['layerNames'] = []
+    metadataJson['layerIds'] = []
+    metadataJson['sourceLayers'] = []
+    metadataJson['hasData'] = []
+    metadataJson['hasTimeline'] = []
+    metadataJson['layers'] = []
+    try:
+        for row in c.execute('SELECT * FROM layer'):
+            metadataJson['layerNames'].append(row[4])
+            metadataJson['layerIds'].append(row[1])
+            metadataJson['sourceLayers'].append(row[5])
+            metadataJson['hasData'].append(False if row[7] == 0 else True)
+            metadataJson['hasTimeline'].append(False if row[8] == 0 else True)
+            if row[7] == 1:
+                metadataJson['layers'].append({'id':row[1], 'minzoom': row[10], 'maxzoom':row[9], 'type':row[2], 'mapping':'', 'startTime': row[14], 'endtime':row[15], 'directory_format':row[13]})
+            else:
+                metadataJson['layers'].append({'id':row[1], 'minzoom': row[10], 'maxzoom':row[9], 'type':row[2], 'mapping':''})
+    except Exception as e:
+        raise e
+    finally:
+        conn.close()
+    return metadataJson
 
 def update(identifier):
     conn = getConn()
@@ -40,16 +68,27 @@ def update(identifier):
         conn.close()
 
 def toJson(row):
-    metadataJson = {}
-    rowJson = {}
+
+    layerJson = {}
     if row[2] == 'raster':
         # TODO
         return
-    metadataJson['server'] = METADATA['server']
-    metadataJson['tiles'] = METADATA['tiles']
-    updateMetadata(metadataJson)
 
+    layerJson['id'] = row[1]
+    layerJson['incre'] = row[0]
+    layerJson['source-layer'] = row[5]
+    layerJson['propertyName'] = 'value'
+    layerJson['minzoom'] = row[10]
+    layerJson['maxzoom'] = row[9]
+    layerJson['bounds'] = row[11]
+    layerJson['originalDatasetCoordinate'] = row[24]
+    layerJson['values'] = row[22]
+    layerJson['colormap'] = row[23]
+    layerJson['legend-type'] = row[20]
+    layerJson['legend'] = row[21]
 
+    layerJsonStr = json.dumps(layerJson)
+    print(layerJsonStr)
 
 
 def updateAll():
@@ -62,6 +101,10 @@ def updateAll():
         raise e
     finally:
         conn.close()
+    metadataJson = updateMetadata()
+    metaJsonStr = json.dumps(metadataJson, indent=4)
+    print(metaJsonStr)
+
 
 def updateTileserver():
     pass
