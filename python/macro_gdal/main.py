@@ -34,9 +34,9 @@ def main():
 	elif method == 'newres':
 		if srs.IsProjected :
 			if(srs.GetAttrValue('projcs') != 'WGS 84 / Pseudo-Mercator'):
-				print("\e[31mInput file better to be EPSG:3857 WGS 84 / Pseudo-Mercator, but EPSG:4326 WGS 84 is fine", file=sys.stderr)
+				print("\033[31mInput file better to be EPSG:3857 WGS 84 / Pseudo-Mercator, but EPSG:4326 WGS 84 is fine\033[0m", file=sys.stderr)
 		else:
-			print("\e[31mERROR",file=sys.stderr)
+			print("\033[31mERROR",file=sys.stderr)
 			exit(1)
 		'''
 		Original
@@ -82,15 +82,16 @@ def main():
 		if srs.IsProjected :
 			print(srs.GetAttrValue('projcs'))
 		else:
-			print("\e[31mERROR", file=sys.stderr)
+			print("\033[31mERROR", file=sys.stderr)
 			exit(1)
 
 usage = '''
-main.py size "tiff"
-main.py bounds "tiff"
-main.py res "tiff"
-main.py newres "tiff is better to be EPSG:3857 standard"
-main.py projection "tiff"
+USAGE:
+	main.py size "tiff"
+	main.py bounds "tiff"
+	main.py res "tiff"
+	main.py newres "tiff is better to be EPSG:3857 standard"
+	main.py projection "tiff"
 '''
 if __name__ == '__main__':
 	num_args = len(sys.argv)
