@@ -6,7 +6,7 @@ import sys
 import sqlite3
 import os
 import datetime
-import gdal
+import gdal 
 
 MINTCAST_PATH = os.environ.get('MINTCAST_PATH')
 DATABASE_PATH = '/sql/database.sqlite'
