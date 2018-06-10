@@ -29,13 +29,13 @@ handle_tiff(){
 	LAYER_NAME=$LAYER_NAME
 
 	# Hard-coded paths (passed from mintcast.sh?):
-	OUT_DIR="$MINTCAST_PATH/dist"
+	if [[ -z "$OUT_DIR" ]]; then
+		OUT_DIR="$MINTCAST_PATH/dist"
+	fi
 	if [[ ! -d "$OUT_DIR" ]]; then
 		mkdir -p "$OUT_DIR"
 	fi
-	if [[ $DEV_MODE != 'NO' ]]; then
-		OUT_DIR=$TARGET_MBTILES_PATH
-	fi
+	
 	#OUT_DIR=$MINTCAST_PATH/dist
 	TEMP_DIR=$OUT_DIR
 	#TEMP_DIR=$MINTCAST_PATH/tmp
@@ -78,7 +78,11 @@ handle_tiff(){
 	#scp $RASTER_MBTILES $OUT_DIR/
 	#scp $VECTOR_MBTILES $OUT_DIR/
 
+	#TODO by Libo
+	# if [[ $DEV_MODE != 'NO' ]]; then
+	# 	# move to OUT_DIR=$TARGET_MBTILES_PATH
+	# fi
+
 	# Delete intermediate files:
 	rm $BYTE_OUT $CLIP_OUT $PROJ_OUT $RES_OUT $COLOR_OUT $POLY_OUT
-
 }
