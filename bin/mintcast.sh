@@ -53,3 +53,6 @@ else
 	echo "$DATASET_TYPE is an invalid dataset type." 
 	echo "Valid choices include: tiff, tiled-tiff, tiff-qml, netcdf"
 fi
+
+# store data to sqlite3
+# python3 $MINTCAST_PATH/python/sqlite3_curd/main.py insert layer "null, "
