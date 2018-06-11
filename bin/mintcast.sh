@@ -40,8 +40,19 @@ WITH_QUALITIY_ASSESSMENT=NO # for tiled dataset, if with --with-quality-assessme
 DATASET_NAME="output" 		# output mbtiles name like -o elevation, output will be elevation.raster.mbtiles and elevation.vector.mbtiles
 DATAFILE_PATH=""            # Single file path like tiff
 
+OUTPUT_DIR_STRUCTURE_FOR_TIMESERIES="". # how netcdf's timeseries mbtiles are stored
+
+# store mbtiles in a specific folder and read by website
+
 helper_parameter $@
 
+if [[ ! -z "$START_TIME" ]]; then
+	if [[ -z "$OUTPUT_DIR_STRUCTURE_FOR_TIMESERIES" ]]; then
+		echo "Please set up --output-dir-structure/-z which is how timeseries mbtiles are stored"
+		exit 1
+	fi
+fi
+	
 if [[ $DATASET_TYPE == "tiff" ]]; then
 	if [[ -z "$QML_FILE" ]]; then
 		handle_tiff
@@ -57,4 +68,21 @@ else
 	echo "Valid choices include: tiff, tiled, netcdf"
 fi
 
+# save vector
+COL_RASTER_OR_VECTOR_TYPE="vector"
+MBTILES_FILEPATH=$VECTOR_MBTILES
 handle_sqlite
+
+# save raster
+COL_RASTER_OR_VECTOR_TYPE="raster"
+MBTILES_FILEPATH=$RASTER_MBTILES
+handle_sqlite
+
+if [[ -z "$TARGET_JSON_PATH" ]]; then
+	TARGET_JSON_PATH="$MINTCAST_PATH/dist/json"
+fi
+
+if [[ ! -d "$TARGET_JSON_PATH" ]]; then
+	mkdir -p $TARGET_JSON_PATH
+fi
+python3 $MINTCAST_PATH/python/macro_gen_web_json/main.py update-all 
