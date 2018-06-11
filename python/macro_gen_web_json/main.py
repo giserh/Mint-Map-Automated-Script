@@ -7,6 +7,8 @@ import json
 MINTCAST_PATH = os.environ.get('MINTCAST_PATH')
 DATABASE_PATH = '/sql/database.sqlite'
 
+JSON_FILEPATH = os.environ.get('TARGET_JSON_PATH')
+
 METADATA = {}
 
 def getConn():
@@ -89,7 +91,10 @@ def toJson(row):
 
     layerJsonStr = json.dumps(layerJson)
     print(layerJsonStr)
-
+    f = open(METADATA_JSON_FILEPATH + "/%s.json" % row[1],'w')
+    f.write(metaJsonStr)
+    f.close()
+    print(METADATA_JSON_FILEPATH + "/%s.json" % row[1])
 
 def updateAll():
     conn = getConn()
@@ -103,8 +108,10 @@ def updateAll():
         conn.close()
     metadataJson = updateMetadata()
     metaJsonStr = json.dumps(metadataJson, indent=4)
-    print(metaJsonStr)
-
+    # print(metaJsonStr)
+    f = open(METADATA_JSON_FILEPATH + "/metadata.json",'w')
+    f.write(metaJsonStr)
+    f.close()
 
 def updateTileserver():
     pass
@@ -128,7 +135,7 @@ USAGE:
     main.py update-all
         update all layers' json and config.json 
         update tileserver's config json
-    main.py update identifier
+    main.py update identifier 
         update a specific layer
         update all config files
     main.py reload
@@ -136,6 +143,9 @@ USAGE:
         restart tilesever
 '''
 if __name__ == '__main__':
+    if len(JSON_FILEPATH) == 0:
+        print('Please set up JSON_FILEPATH environment variable')
+        exit(1)
     num_args = len(sys.argv)
     if num_args < 2:
         print(usage)

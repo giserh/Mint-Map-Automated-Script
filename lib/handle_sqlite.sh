@@ -38,7 +38,6 @@ handle_sqlite() {
 	COL_MAPPING=''
 
 
-	$MBTILES_FILEPATH
 	COL_MBTILES_FILENAME=$(python3 $MINTCAST_PATH/python/macro_path/main.py basename $MBTILES_FILEPATH)
 	COL_BOUNDS=$(python3 $MINTCAST_PATH/python/macro_mbtiles/main.py bounds $MBTILES_FILEPATH)
 	COL_MAXZOOM=$(python3 $MINTCAST_PATH/python/macro_mbtiles/main.py minzoom $MBTILES_FILEPATH)
@@ -52,13 +51,18 @@ handle_sqlite() {
 	
 
 	# TODO
-	COL_HAS_TIMELINE=$COL_HAS_TIMELINE
-	COL_DIRECTORY_FORMAT=$COL_DIRECTORY_FORMAT
-	COL_JSON_FILENAME=$COL_JSON_FILENAME
+	COL_HAS_TIMELINE=0
+	COL_DIRECTORY_FORMAT=''
+	if [[ -z "$START_TIME" ]]; then
+		COL_HAS_TIMELINE=1
+		COL_DIRECTORY_FORMAT=$OUTPUT_DIR_STRUCTURE_FOR_TIMESERIES
+	fi
+
+	COL_JSON_FILENAME="$COL_LAYER_ID.json"
 	COL_CKAN_URL=$(python3 $MINTCAST_PATH/python/macro_upload_ckan/main.py $COL_JSON_FILENAME)
 
 	if [[ -z "$QML_FILE" ]]; then
-		------TODO-------Apply to different occassion like: netcdf??or only tiff
+		# ------TODO-------Apply to different occassion like: netcdf??or only tiff
 		MAX_VAL=$(python3 $MINTCAST_PATH/python/macro_gdal/main.py max-value $DATAFILE_PATH)
 		MIN_VAL=$(python3 $MINTCAST_PATH/python/macro_gdal/main.py min-value $DATAFILE_PATH)
 		COL_LEGEND_TYPE=$(python3 $MINTCAST_PATH/python/macro_extract_legend/main.py legend-type noqml $MIN_VAL $MAX_VAL)
@@ -71,11 +75,16 @@ handle_sqlite() {
 	fi
 
 	COL_ORIGINAL_DATASET_BOUNDS=$(python3 $MINTCAST_PATH/python/macro_gdal/main.py bounds-geojson-format $DATAFILE_PATH)
-	
 
-
-	python3 $MINTCAST_PATH/python/sqlite3_curd/main.py insert layer \
-	"null, '$COL_LAYER_ID', '$COL_RASTER_OR_VECTOR_TYPE', '$COL_TILE_FORMAT', '$COL_LAYER_NAME', '$COL_SOURCE_LAYER', $COL_ORIGINIAL_ID, $COL_HAS_DATA, $COL_HAS_TIMELINE, $COL_MAXZOOM, $COL_MINZOOM, '$COL_BOUNDS', '$COL_MBTILES_FILENAME', '$COL_DIRECTORY_FORMAT', '$COL_START_TIME', '$COL_END_TIME', '$COL_JSON_FILENAME', '$COL_SERVER', '$COL_TILE_URL', '$COL_STYLE_TYPE', '$COL_LEGEND_TYPE', '$COL_LEGEND', '$COL_VALUE_ARRAY', '$COL_VECTOR_JSON', '$COL_COLORMAP', '$COL_ORIGINAL_DATASET_BOUNDS', '$COL_MAPPING', '$COL_CKAN_URL', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP"
+	HAS_LAYER=$(python3 $MINTCAST_PATH/python/macro_sqlite_curd/main.py has_layer $COL_LAYER_ID)
+	if [[ "$HAS_LAYER" = "None" ]]; then
+		python3 $MINTCAST_PATH/python/sqlite3_curd/main.py insert layer \
+			"null, '$COL_LAYER_ID', '$COL_RASTER_OR_VECTOR_TYPE', '$COL_TILE_FORMAT', '$COL_LAYER_NAME', '$COL_SOURCE_LAYER', $COL_ORIGINIAL_ID, $COL_HAS_DATA, $COL_HAS_TIMELINE, $COL_MAXZOOM, $COL_MINZOOM, '$COL_BOUNDS', '$COL_MBTILES_FILENAME', '$COL_DIRECTORY_FORMAT', '$COL_START_TIME', '$COL_END_TIME', '$COL_JSON_FILENAME', '$COL_SERVER', '$COL_TILE_URL', '$COL_STYLE_TYPE', '$COL_LEGEND_TYPE', '$COL_LEGEND', '$COL_VALUE_ARRAY', '$COL_VECTOR_JSON', '$COL_COLORMAP', '$COL_ORIGINAL_DATASET_BOUNDS', '$COL_MAPPING', '$COL_CKAN_URL', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP"
+	else
+		python3 $MINTCAST_PATH/python/sqlite3_curd/main.py update layer \
+			"layerid='$COL_LAYER_ID', type='$COL_RASTER_OR_VECTOR_TYPE', tileformat='$COL_TILE_FORMAT', name='$COL_LAYER_NAME', sourceLayer='$COL_SOURCE_LAYER', original_id=$COL_ORIGINIAL_ID, hasData=$COL_HAS_DATA, hasTimeline=$COL_HAS_TIMELINE, maxzoom=$COL_MAXZOOM, minzoom=$COL_MINZOOM, bounds='$COL_BOUNDS', mbfilename='$COL_MBTILES_FILENAME', directory_format='$COL_DIRECTORY_FORMAT', starttime='$COL_START_TIME', endtime='$COL_END_TIME', json_filename='$COL_JSON_FILENAME', server='$COL_SERVER', tileurl='$COL_TILE_URL', styleType='$COL_STYLE_TYPE', legend_type='$COL_LEGEND_TYPE', legend='$COL_LEGEND', valueArray='$COL_VALUE_ARRAY', vector_json='$COL_VECTOR_JSON', colormap='$COL_COLORMAP', original_dataset_bounds='$COL_ORIGINAL_DATASET_BOUNDS', mapping='$COL_MAPPING', ckan_url='$COL_CKAN_URL', create_at=CURRENT_TIMESTAMP, modified_at=CURRENT_TIMESTAMP" \
+			"id=$HAS_LAYER"
+	fi
 }
 
 	

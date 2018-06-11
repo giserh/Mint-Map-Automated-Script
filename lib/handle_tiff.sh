@@ -85,4 +85,5 @@ handle_tiff(){
 
 	# Delete intermediate files:
 	rm $BYTE_OUT $CLIP_OUT $PROJ_OUT $RES_OUT $COLOR_OUT $POLY_OUT
+
 }
