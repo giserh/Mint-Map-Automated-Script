@@ -9,6 +9,7 @@ source $MINTCAST_PATH/lib/handle_tiff.sh
 source $MINTCAST_PATH/lib/handle_tiled_tiff.sh
 source $MINTCAST_PATH/lib/handle_tiff_qml.sh
 source $MINTCAST_PATH/lib/handle_netcdf.sh
+source $MINTCAST_PATH/lib/handle_sqlite.sh
 
 VERSION="$(cat package.json | sed -nE 's/.+@ver.*:.*\"(.*)\".*/\1/p' | tr -d '\r')"
 
@@ -54,5 +55,4 @@ else
 	echo "Valid choices include: tiff, tiled-tiff, tiff-qml, netcdf"
 fi
 
-# store data to sqlite3
-# python3 $MINTCAST_PATH/python/sqlite3_curd/main.py insert layer "null, "
+handle_sqlite
