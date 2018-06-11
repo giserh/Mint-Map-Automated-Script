@@ -11,8 +11,14 @@
 
 # Set raster tile resolution:
 proc_newres () {
+	NEWRES=$(python3 $MINTCAST_PATH/python/macro_gdal/main.py newres $1)
+	
+	old="$IFS"
+	IFS=$' '
+	NEWRES_A=($NEWRES)
+
 	gdalwarp \
-	-tr 10 10 \
+	-tr ${NEWRES_A[0]} ${NEWRES_A[1]} \
 	$1 `#Input filename`\
 	$2 `#Output filename`
 
@@ -20,4 +26,5 @@ proc_newres () {
 		echo "gdalwarp failed in proc_newres.sh  Exiting script."
 		exit 1
 	fi
+	IFS=$old
 }
