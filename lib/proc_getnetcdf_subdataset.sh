@@ -7,7 +7,7 @@ proc_getnetcdf_subdataset(){
 	SUBDATASET_STRING="$(gdalinfo $NETCDF_FILEPATH | sed -nE 's/SUBDATASET_.{1,2}_NAME=(.*)/\1/p' | grep -o 'N.*')"
 	IFS=$'\n'
 	SUBDATASETS=($SUBDATASET_STRING)
-
+	old=$IFS
 	for dataset in "${SUBDATASETS[@]}"; do
 		IFS=$':'
 		name=($dataset)
@@ -20,5 +20,6 @@ proc_getnetcdf_subdataset(){
 		# gdalwarp -te 22.4 3.4 37.0 23.2  -dstnodata 255 -cutline $MINTCAST_PATH/shp/ss.shp 
 		# exit 0
 	done
+	IFS=$old
 }
  
