@@ -43,16 +43,18 @@ DATAFILE_PATH=""            # Single file path like tiff
 helper_parameter $@
 
 if [[ $DATASET_TYPE == "tiff" ]]; then
-	handle_tiff
-elif [[ $DATASET_TYPE == "tiled-tiff" ]]; then
+	if [[ -z "$QML_FILE" ]]; then
+		handle_tiff
+	else
+		handle_tiff_qml
+	fi
+elif [[ $DATASET_TYPE == "tiled" ]]; then
 	handle_tiled_tiff
-elif [[ $DATASET_TYPE == "tiff-qml" ]]; then
-	handle_tiff_qml
 elif [[ $DATASET_TYPE == "netcdf" ]]; then
 	handle_netcdf
 else
 	echo "$DATASET_TYPE is an invalid dataset type." 
-	echo "Valid choices include: tiff, tiled-tiff, tiff-qml, netcdf"
+	echo "Valid choices include: tiff, tiled, netcdf"
 fi
 
 handle_sqlite
