@@ -21,7 +21,7 @@ if [[ $# -lt 1 ]]; then
     exit 0
 fi
 
-DATASET_TYPE="tiff"         # DATASET_TYPE, tiff, nc or tiled
+DATASET_TYPE="tiff"         # DATASET_TYPE, tiff, netcdf or tiled
 QML_FILE=""                 # QML file path
 DATASET_DIR=""              # If dataset has timeseries or tiled
 DATASET_DIR_STRUCTURE=""    # If DATASET_DIR is set, set structure `{year}/{month}/{day}/*.nc` or `*.zip`
@@ -40,21 +40,29 @@ WITH_QUALITIY_ASSESSMENT=NO # for tiled dataset, if with --with-quality-assessme
 DATASET_NAME="output" 		# output mbtiles name like -o elevation, output will be elevation.raster.mbtiles and elevation.vector.mbtiles
 DATAFILE_PATH=""            # Single file path like tiff
 
-OUTPUT_DIR_STRUCTURE_FOR_TIMESERIES="". # how netcdf's timeseries mbtiles are stored
+OUTPUT_DIR_STRUCTURE_FOR_TIMESERIES="" # how netcdf's timeseries mbtiles are stored
 
 # store mbtiles in a specific folder and read by website
 
 helper_parameter $@
 
-if [[ -z "$LAYER_NAME" ]]; then
-	echo "Please set up -l|--layer-name which is the LAYER_NAME and also part of Layer ID"
-	exit 1
-fi
-if [[ ! -z "$START_TIME" ]]; then
+echo $START_TIME
+
+if [[ -z "$START_TIME" ]]; then
+	if [[ -z "$LAYER_NAME" ]]; then
+		echo "Please set up -l|--layer-name which is the LAYER_NAME and also part of Layer ID"
+		exit 1
+	fi
+else
 	if [[ -z "$OUTPUT_DIR_STRUCTURE_FOR_TIMESERIES" ]]; then
 		echo "Please set up -z|--output-dir-structure which is how timeseries mbtiles are stored"
 		exit 1
 	fi
+	if [[ -z "$DATASET_DIR" ]]; then
+		echo "Please set up -d|--dir which is used for traversal"
+		exit 1
+	fi
+	
 fi
 	
 if [[ $DATASET_TYPE == "tiff" ]]; then
@@ -70,6 +78,7 @@ elif [[ $DATASET_TYPE == "netcdf" ]]; then
 else
 	echo "$DATASET_TYPE is an invalid dataset type." 
 	echo "Valid choices include: tiff, tiled, netcdf"
+	exit 1
 fi
 
 # save raster
