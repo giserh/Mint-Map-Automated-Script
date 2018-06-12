@@ -13,6 +13,9 @@
 # Clip to South Sudan Boundary:
 # 	-dstnodata 255 \
 proc_clip () {
+	# in case there is one
+	rm $2
+
 	gdalwarp \
 	-overwrite \
 	-te 22.4 3.4 37.0 23.2 \
