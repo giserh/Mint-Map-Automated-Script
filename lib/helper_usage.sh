@@ -5,7 +5,7 @@ helper_usage(){
             filename is optional if dir is passed in.
 
             -t, --type
-                --type nc|tiff|tiled|zip
+                --type netcdf|tiff|tiled
             -q, --qml
                 --qml qml_file_path
             -d, --dir
