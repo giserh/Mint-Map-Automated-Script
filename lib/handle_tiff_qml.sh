@@ -60,7 +60,7 @@ handle_tiff_qml(){
 
 	# Generate raster tiles:
 	proc_newres $PROJ_OUT $RES_OUT #Set resolution for raster tiles
-	python $QML_EXTRACT_PATH $QML_FILE $COLOR_TABLE #Make colortable
+	python3 $QML_EXTRACT_PATH $QML_FILE $COLOR_TABLE #Make colortable
 	proc_gdaldem $RES_OUT $COLOR_TABLE $COLOR_OUT #Add colors
 	proc_tif2mbtiles $COLOR_OUT $RASTER_MBTILES #Make .mbtiles
 	proc_gdaladdo $RASTER_MBTILES #Generate zoom levels
