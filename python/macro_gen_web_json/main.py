@@ -95,7 +95,7 @@ def toJson(row):
     layerJsonStr = json.dumps(layerJson, indent=4)
     # print(layerJsonStr)
     f = open(JSON_FILEPATH + "/%s.json" % row[1],'w')
-    f.write(decode(layerJsonStr))
+    f.write(layerJsonStr)
     f.close()
     print(JSON_FILEPATH + "/%s.json" % row[1])
 
@@ -113,7 +113,7 @@ def updateAll():
     metaJsonStr = json.dumps(metadataJson, indent=4)
     # print(metaJsonStr)
     f = open(JSON_FILEPATH + "/metadata.json",'w')
-    f.write(decode(metaJsonStr))
+    f.write(metaJsonStr)
     f.close()
 
 def updateTileserver():
@@ -130,6 +130,13 @@ def main():
     elif method == 'update':
         identifier = sys.argv[2]
         update(identifier)
+    elif method == 'update-config':
+        metadataJson = updateMetadata()
+        metaJsonStr = json.dumps(metadataJson, indent=4)
+        # print(metaJsonStr)
+        f = open(JSON_FILEPATH + "/metadata.json",'w')
+        f.write(metaJsonStr)
+        f.close()
     elif method == 'reload':
         updateTileserver()
         restartTileserver()
