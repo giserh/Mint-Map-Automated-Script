@@ -20,18 +20,20 @@ source $MINTCAST_PATH/lib/proc_gdaladdo.sh
 source $MINTCAST_PATH/lib/proc_polygonize.sh
 source $MINTCAST_PATH/lib/proc_geojson2mbtiles.sh
 
-handle_tiff(){
+handle_tiff_qml(){
 	# Parse arguments from mintcast.sh:
 	INPUT=$DATAFILE_PATH
 	LAYER_NAME=$LAYER_NAME
 	QML_FILE=$QML_FILE
 
 	# Hard-coded paths (passed from mintcast.sh?):
-	OUT_DIR="$MINTCAST_PATH/dist"
+	if [[ -z "$OUT_DIR" ]]; then
+		OUT_DIR="$MINTCAST_PATH/dist"
+	fi
 	if [[ ! -d "$OUT_DIR" ]]; then
 		mkdir -p "$OUT_DIR"
 	fi
-	if [[ $DEV_MODE != 'NO' ]]; then
+	if [[ $DEV_MODE != 'YES' ]]; then
 		OUT_DIR=$TARGET_MBTILES_PATH
 	fi
 	TEMP_DIR=$OUT_DIR
@@ -58,7 +60,7 @@ handle_tiff(){
 
 	# Generate raster tiles:
 	proc_newres $PROJ_OUT $RES_OUT #Set resolution for raster tiles
-	python $QML_EXTRACT_PATH $QML_FILE $COLOR_TABLE #Make colortable
+	python3 $QML_EXTRACT_PATH $QML_FILE $COLOR_TABLE #Make colortable
 	proc_gdaldem $RES_OUT $COLOR_TABLE $COLOR_OUT #Add colors
 	proc_tif2mbtiles $COLOR_OUT $RASTER_MBTILES #Make .mbtiles
 	proc_gdaladdo $RASTER_MBTILES #Generate zoom levels

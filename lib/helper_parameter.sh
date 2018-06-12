@@ -25,6 +25,11 @@ helper_parameter(){
         shift 
         shift 
         ;;
+        -z|--output-dir-structure)
+        OUTPUT_DIR_STRUCTURE_FOR_TIMESERIES="$2"
+        shift
+        shift
+        ;;
         -s|--start-time)
         START_TIME="$2"
         shift 

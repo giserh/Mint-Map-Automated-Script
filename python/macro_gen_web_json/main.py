@@ -7,7 +7,12 @@ import json
 MINTCAST_PATH = os.environ.get('MINTCAST_PATH')
 DATABASE_PATH = '/sql/database.sqlite'
 
+JSON_FILEPATH = os.environ.get('TARGET_JSON_PATH')
+
 METADATA = {}
+
+def decode(string):
+    return bytes(string, "utf-8").decode("unicode_escape")
 
 def getConn():
     conn = sqlite3.connect(MINTCAST_PATH + DATABASE_PATH)
@@ -19,7 +24,7 @@ def getMetadata():
     try:
         for row in c.execute('SELECT * FROM metadata'):
             METADATA['%s' % row[0]] = row[1]
-        print(METADATA)
+        # print(METADATA)
     except Exception as e:
         raise e
     finally:
@@ -87,9 +92,12 @@ def toJson(row):
     layerJson['legend-type'] = row[20]
     layerJson['legend'] = row[21]
 
-    layerJsonStr = json.dumps(layerJson)
-    print(layerJsonStr)
-
+    layerJsonStr = json.dumps(layerJson, indent=4)
+    # print(layerJsonStr)
+    f = open(JSON_FILEPATH + "/%s.json" % row[1],'w')
+    f.write(decode(layerJsonStr))
+    f.close()
+    print(JSON_FILEPATH + "/%s.json" % row[1])
 
 def updateAll():
     conn = getConn()
@@ -103,8 +111,10 @@ def updateAll():
         conn.close()
     metadataJson = updateMetadata()
     metaJsonStr = json.dumps(metadataJson, indent=4)
-    print(metaJsonStr)
-
+    # print(metaJsonStr)
+    f = open(JSON_FILEPATH + "/metadata.json",'w')
+    f.write(decode(metaJsonStr))
+    f.close()
 
 def updateTileserver():
     pass
@@ -128,7 +138,7 @@ USAGE:
     main.py update-all
         update all layers' json and config.json 
         update tileserver's config json
-    main.py update identifier
+    main.py update identifier 
         update a specific layer
         update all config files
     main.py reload
@@ -136,6 +146,9 @@ USAGE:
         restart tilesever
 '''
 if __name__ == '__main__':
+    if JSON_FILEPATH == None:
+        print('Please set up JSON_FILEPATH environment variable')
+        exit(1)
     num_args = len(sys.argv)
     if num_args < 2:
         print(usage)

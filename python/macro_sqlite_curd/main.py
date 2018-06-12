@@ -33,6 +33,13 @@ def main():
             c.execute("UPDATE %s SET %s WHERE %s" % (tableName, sys.argv[3], sys.argv[4]))
         elif method == 'delete':
             c.execute("DELETE FROM %s WHERE %s" % (tableName, sys.argv[3], sys.argv[4]))
+        elif method == 'has_layer':
+            c.execute("SELECT id FROM layer WHERE layerid = '%s'" % sys.argv[2])
+            row = c.fetchone()
+            if row == None:
+                print("None")
+            else:
+                print(row[0])
     except Exception as e:
         print(e,file=sys.stderr)
     finally:
@@ -76,7 +83,7 @@ delete
 if __name__ == '__main__':
     num_args = len(sys.argv)
     if num_args > 2:
-        main()
+        pass
     else:
         print(wrong_num_args_msg)
         exit()
