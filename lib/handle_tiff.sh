@@ -64,11 +64,11 @@ handle_tiff(){
 	# Generate raster tiles:
 	
 	# with new res proc
-	# proc_newres $PROJ_OUT $RES_OUT #Set resolution for raster tiles
-	# proc_gdaldem $RES_OUT $COLOR_TABLE $COLOR_OUT
+	proc_newres $PROJ_OUT $RES_OUT #Set resolution for raster tiles
+	proc_gdaldem $RES_OUT $COLOR_TABLE $COLOR_OUT
 
 	# without new res proc
-	proc_gdaldem $PROJ_OUT $COLOR_TABLE $COLOR_OUT
+	# proc_gdaldem $PROJ_OUT $COLOR_TABLE $COLOR_OUT
 
 	proc_tif2mbtiles $COLOR_OUT $RASTER_MBTILES #Make .mbtiles
 	proc_gdaladdo $RASTER_MBTILES #Generate zoom levels
