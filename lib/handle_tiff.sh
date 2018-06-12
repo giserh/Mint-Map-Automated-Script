@@ -35,7 +35,9 @@ handle_tiff(){
 	if [[ ! -d "$OUT_DIR" ]]; then
 		mkdir -p "$OUT_DIR"
 	fi
-	
+	if [[ $DEV_MODE != 'YES' ]]; then
+		OUT_DIR=$TARGET_MBTILES_PATH
+	fi
 	#OUT_DIR=$MINTCAST_PATH/dist
 	TEMP_DIR=$OUT_DIR
 	#TEMP_DIR=$MINTCAST_PATH/tmp
@@ -60,8 +62,14 @@ handle_tiff(){
 	check_projection $CLIP_OUT $PROJ_OUT #Check projection/change to EPSG 3857
 
 	# Generate raster tiles:
-	proc_newres $PROJ_OUT $RES_OUT #Set resolution for raster tiles
-	proc_gdaldem $RES_OUT $COLOR_TABLE $COLOR_OUT
+	
+	# with new res proc
+	# proc_newres $PROJ_OUT $RES_OUT #Set resolution for raster tiles
+	# proc_gdaldem $RES_OUT $COLOR_TABLE $COLOR_OUT
+
+	# without new res proc
+	proc_gdaldem $PROJ_OUT $COLOR_TABLE $COLOR_OUT
+
 	proc_tif2mbtiles $COLOR_OUT $RASTER_MBTILES #Make .mbtiles
 	proc_gdaladdo $RASTER_MBTILES #Generate zoom levels
 	### TO DO: read MBTiles metadata table/store to database

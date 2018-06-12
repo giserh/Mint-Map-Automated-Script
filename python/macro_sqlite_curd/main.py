@@ -34,7 +34,7 @@ def main():
         elif method == 'delete':
             c.execute("DELETE FROM %s WHERE %s" % (tableName, sys.argv[3], sys.argv[4]))
         elif method == 'has_layer':
-            c.execute("SELECT id FROM layer WHERE layerid = %s" % sys.argv[2])
+            c.execute("SELECT id FROM layer WHERE layerid = '%s'" % sys.argv[2])
             row = c.fetchone()
             if row == None:
                 print("None")
