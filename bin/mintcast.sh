@@ -99,4 +99,10 @@ if [[ ! -d "$TARGET_JSON_PATH" ]]; then
 	mkdir -p $TARGET_JSON_PATH
 fi
 python3 $MINTCAST_PATH/python/macro_gen_web_json/main.py update-all 
-python3 $MINTCAST_PATH/python/macro_upload_ckan/main.py "$TARGET_JSON_PATH/$COL_JSON_FILENAME"
+CKAN_URL=$(python3 $MINTCAST_PATH/python/macro_upload_ckan/main.py "$TARGET_JSON_PATH/$COL_JSON_FILENAME")
+echo $CKAN_URL
+# update database
+python3 $MINTCAST_PATH/python/macro_sqlite_curd/main.py update layer \
+"ckan_url='$CKAN_URL'" \
+"layerid='$COL_LAYER_ID'"
+python3 $MINTCAST_PATH/python/macro_gen_web_json/main.py update-config

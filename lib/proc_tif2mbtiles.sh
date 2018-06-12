@@ -11,11 +11,16 @@
 
 # Convert GeoJSON to MBTiles:
 proc_tif2mbtiles() {
+	# fix ERROR 1: attempt to write a readonly database
+	if [[ -f "$2" ]]; then
+		rm "$2"
+	fi
+
 	gdal_translate \
 	-co QUALITY=100 \
 	-co ZOOM_LEVEL_STRATEGY=UPPER \
 	-of mbtiles \
-	$1`#Input TIFF` \
+	$1 `#Input TIFF` \
 	$2 `#Output MBTiles`
 
 	if [[ $? -ne 0 ]]; then

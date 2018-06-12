@@ -14,7 +14,9 @@
 # 	-dstnodata 255 \
 proc_clip () {
 	# in case there is one
-	rm $2
+	if [[ -f "$2" ]]; then
+		rm "$2"
+	fi
 
 	gdalwarp \
 	-overwrite \
