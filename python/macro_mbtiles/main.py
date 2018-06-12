@@ -38,7 +38,7 @@ def main():
         row = c.fetchone()
         if row != None:
             if method == 'vector_json':
-                print(row[0].replace('"','\\"'))
+                print(row[0])
             elif method == 'values':
                 jd = json.loads(row[0])
                 print(jd["tilestats"]["layers"][0]['attributes'][0]['values'])

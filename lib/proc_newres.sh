@@ -18,6 +18,7 @@ proc_newres () {
 	NEWRES_A=($NEWRES)
 
 	gdalwarp \
+	-overwrite \
 	-tr ${NEWRES_A[0]} ${NEWRES_A[1]} \
 	$1 `#Input filename`\
 	$2 `#Output filename`
