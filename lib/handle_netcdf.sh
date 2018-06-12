@@ -5,7 +5,7 @@ source $MINTCAST_PATH/lib/handle_tiff.sh
 
 handle_netcdf(){
 	# python3 $MINTCAST_PATH/python/macro_traversal/main.py "/Users/liber/Documents/South_Sudan/RawData/Forcing/FLDAS_NOAH01_A_EA_D/" "{year}/{month}/*.nc" "2001 01" "2001 03"
-	NETCDF_FILES_STRING=$(python3 $MINTCAST_PATH/python/macro_traversal/main.py "$DATASET_DIR" "$DATASET_DIR_STRUCTURE" "$START_TIME" "$END_TIME")
+	NETCDF_FILES_STRING=$(python3 $MINTCAST_PATH/python/macro_traversal/main.py "$DATASET_DIR/" "$DATASET_DIR_STRUCTURE" "$START_TIME" "$END_TIME")
 	old=$IFS
 	IFS=$'\n'
 	NETCDF_FILES=($NETCDF_FILES_STRING)

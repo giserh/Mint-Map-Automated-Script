@@ -16,7 +16,7 @@ def main(argv):
 	_dir = sys.argv[1]
 	_wildcardStructure = sys.argv[2].replace('{year}','%Y').replace('{month}', '%m').replace('{day}','%d')
 	_structure = os.path.dirname(_wildcardStructure)
-	__timeFormat = _structure.replace('/', ' ')
+	__timeFormat = _structure.replace('/', '')
 	_start = datetime.strptime(sys.argv[3], __timeFormat)
 	_end = datetime.strptime(sys.argv[4], __timeFormat)
 	_filetype = os.path.splitext(sys.argv[2])[1]

@@ -11,10 +11,13 @@ proc_getnetcdf_subdataset(){
 	for dataset in "${SUBDATASETS[@]}"; do
 		IFS=$':'
 		name=($dataset)
-		# gdalwarp -t_srs EPSG:4326 "$dataset" "$MINTCAST_PATH/tmp/$DATASET_NAME.subset.${name[2]}.tif"
-		gdalwarp -t_srs EPSG:3857 "$dataset" "$MINTCAST_PATH/tmp/$DATASET_NAME.subset.${name[2]}.tif"
-		SUBDATASETS_ARRAY+=("$MINTCAST_PATH/tmp/$DATASET_NAME.subset.${name[2]}.tif")
-		SUBDATASET_LAYAERS_ARRAY+=(${name[2]})
+		if [[ ${name[2]} != 'time_bnds' ]]; then
+			gdalwarp -t_srs EPSG:4326 "$dataset" "$MINTCAST_PATH/tmp/$DATASET_NAME.subset.${name[2]}.tif"
+			# gdalwarp -t_srs EPSG:3857 "$dataset" "$MINTCAST_PATH/tmp/$DATASET_NAME.subset.${name[2]}.tif"
+			SUBDATASETS_ARRAY+=("$MINTCAST_PATH/tmp/$DATASET_NAME.subset.${name[2]}.tif")
+			SUBDATASET_LAYAERS_ARRAY+=(${name[2]})
+		fi
+		
 		# gdalwarp -te 22.4 3.4 37.0 23.2 -cutline $MINTCAST_PATH/shp/ss.shp
 		# gdal_translate -a_srs EPSG:3857 -tr 0.01 0.01 "$dataset" "$MINTCAST_PATH/tmp/${name[2]}.tif"
 		# gdalwarp -te 22.4 3.4 37.0 23.2  -dstnodata 255 -cutline $MINTCAST_PATH/shp/ss.shp 
