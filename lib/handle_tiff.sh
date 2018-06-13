@@ -63,7 +63,9 @@ handle_tiff(){
 	echo "INPUT: $INPUT"
 	echo "CLIP_OUT: $CLIP_OUT"
 	echo "SS_BOUNDARY: $SS_BOUNDARY"
+	echo "Clipping..."
 	proc_clip $INPUT $CLIP_OUT $SS_BOUNDARY #Clip to South Sudan boundary
+	echo "Projecting..."
 	check_projection $CLIP_OUT $PROJ_OUT #Check projection/change to EPSG 3857
 
 	# Generate raster tiles:
@@ -73,14 +75,20 @@ handle_tiff(){
 	# proc_gdaldem $RES_OUT $COLOR_TABLE $COLOR_OUT
 
 	# without new res proc
+	echo "Adding colors..."
+	echo "COLOR_TABLE: $COLOR_TABLE"
 	proc_gdaldem $PROJ_OUT $COLOR_TABLE $COLOR_OUT
 
+	echo "Making raster tiles..."
 	proc_tif2mbtiles $COLOR_OUT $RASTER_MBTILES #Make .mbtiles
+	echo "Generating zoom levels..."
 	proc_gdaladdo $RASTER_MBTILES #Generate zoom levels
 	### TO DO: read MBTiles metadata table/store to database
 
 	# Generate vector tiles:
+	echo "Generating polygonized GeoJSON..."
 	proc_polygonize $PROJ_OUT $POLY_OUT $LAYER_NAME #Make GeoJSON
+	echo "Making vector tiles..."
 	proc_geojson2mbtiles $POLY_OUT $VECTOR_MBTILES $LAYER_NAME #Make .mbtiles
 	### TO DO: read MBTiles metadata table/store to database
 	### TO DO: generate dataset.json file for vector tile
