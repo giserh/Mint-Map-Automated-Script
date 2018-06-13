@@ -45,6 +45,7 @@ handle_tiff(){
 	COLOR_TABLE="$MINTCAST_PATH/shp/colortable.txt"
 
 	# Remove path from inpust:
+	echo "INPUT: $INPUT"
 	FILENAME=$(basename $INPUT)
 
 	# Set names for intermediary and output files:
@@ -58,6 +59,10 @@ handle_tiff(){
 
 	# Pre-processing:
 	#check_type $INPUT $BYTE_OUT #Check data type/convert to byte
+	echo "handle_tiff.sh"
+	echo "INPUT: $INPUT"
+	echo "CLIP_OUT: $CLIP_OUT"
+	echo "SS_BOUNDARY: $SS_BOUNDARY"
 	proc_clip $INPUT $CLIP_OUT $SS_BOUNDARY #Clip to South Sudan boundary
 	check_projection $CLIP_OUT $PROJ_OUT #Check projection/change to EPSG 3857
 
