@@ -40,7 +40,7 @@ handle_tiff_qml(){
 	SS_BOUNDARY="$MINTCAST_PATH/shp/ss.shp"
 	QML_EXTRACT_PATH="$MINTCAST_PATH/python/macro_extract_colors/main.py"
 
-	# Remove path from inpust:
+	# Remove path from input:
 	FILENAME=$(basename $INPUT)
 
 	# Set names for intermediary and output files:

@@ -59,12 +59,13 @@ handle_tiled_tiff(){
 	gdal_merge.py \
 	-o $MERGE_OUT \
 	$CLEANED_TILE_DIR/*$FILE_EXT
+	INPUT=$MERGE_OUT
 
 	# Choose and execute routine (TIFF or TIFF w/ QML):
 	if [ "$QML_FILE" == "" ]; then
-		handle_tiff $MERGE_OUT $LAYER_NAME
+		handle_tiff
 	else
-		#handle_tiff_qml $MERGE_OUT $LAYER_NAME $QML_FILE
+		handle_tiff_qml
 		echo $QML_FILE #placeholder
 	fi
 
