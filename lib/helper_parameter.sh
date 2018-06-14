@@ -92,6 +92,18 @@ helper_parameter(){
         WITH_QUALITIY_ASSESSMENT=YES
         shift
         ;;
+        --disable-new-res)
+        GENERATE_NEW_RES=NO
+        shift
+        ;;
+        --disable-raster-tile)
+        GENERATE_RASTER_TILE=NO
+        shift
+        ;;
+        --disable-vector-tile)
+        GENERATE_VECTOR_TILE=NO
+        shift
+        ;;
         -v|--version)
         echo "$VERSION"
         exit 0

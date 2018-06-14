@@ -71,13 +71,16 @@ handle_tiff(){
 	# Generate raster tiles:
 	
 	# with new res proc
-	# proc_newres $PROJ_OUT $RES_OUT #Set resolution for raster tiles
-	# proc_gdaldem $RES_OUT $COLOR_TABLE $COLOR_OUT
-
-	# without new res proc
+	echo "Setting new resolution..."
+	proc_newres $PROJ_OUT $RES_OUT #Set resolution for raster tiles
 	echo "Adding colors..."
 	echo "COLOR_TABLE: $COLOR_TABLE"
-	proc_gdaldem $PROJ_OUT $COLOR_TABLE $COLOR_OUT
+	proc_gdaldem $RES_OUT $COLOR_TABLE $COLOR_OUT
+
+	# without new res proc
+	#echo "Adding colors..."
+	#echo "COLOR_TABLE: $COLOR_TABLE"
+	#proc_gdaldem $PROJ_OUT $COLOR_TABLE $COLOR_OUT
 
 	echo "Making raster tiles..."
 	proc_tif2mbtiles $COLOR_OUT $RASTER_MBTILES #Make .mbtiles

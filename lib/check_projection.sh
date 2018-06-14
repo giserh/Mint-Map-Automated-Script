@@ -25,6 +25,7 @@ check_projection() {
 	# Check to see if data is projected:
 	if ! grep -q 'PROJCS\["WGS 84 / Pseudo-Mercator"' $TEMP; then
 		gdalwarp \
+		-overwrite \
 		-t_srs EPSG:3857 \
 		-r near \
 		$1 $2
