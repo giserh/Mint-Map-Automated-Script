@@ -15,7 +15,7 @@
 proc_clip () {
 	# in case there is one
 	if [[ -f "$2" ]]; then
-		rm "$2"
+		rm -f "$2"
 	fi
 
 	gdalwarp \
