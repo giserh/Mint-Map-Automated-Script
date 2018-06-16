@@ -109,3 +109,11 @@ python3 $MINTCAST_PATH/python/macro_sqlite_curd/main.py update layer \
 "ckan_url='$CKAN_URL'" \
 "layerid='$COL_LAYER_ID'"
 python3 $MINTCAST_PATH/python/macro_gen_web_json/main.py update-config
+
+# update tileserver config
+
+# scp MBtiles and json to jonsnow
+
+
+#remove intermediate files
+#rm -f $OUT_DIR/*.tif

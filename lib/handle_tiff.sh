@@ -29,14 +29,19 @@ handle_tiff(){
 	if [[ ! -d "$OUT_DIR" ]]; then
 		mkdir -p "$OUT_DIR"
 	fi
+	if [[ -z "$TEMP_DIR" ]]; then
+		TEMP_DIR="$MINTCAST_PATH/tmp"
+	fi
+	if [[ ! -d "$TEMP_DIR" ]]; then
+		mkdir -p "$TEMP_DIR"
+	fi
 	if [[ $DEV_MODE != 'YES' ]]; then
 		OUT_DIR=$TARGET_MBTILES_PATH
 	fi
 	#OUT_DIR=$MINTCAST_PATH/dist
-	TEMP_DIR=$OUT_DIR
+	#TEMP_DIR=$OUT_DIR
 	#TEMP_DIR=$MINTCAST_PATH/tmp
 	SS_BOUNDARY="$MINTCAST_PATH/shp/ss.shp"
-	COLOR_TABLE="$MINTCAST_PATH/shp/colortable.txt"
 
 	# Remove path from inpust:
 	echo "INPUT: $INPUT"
@@ -51,6 +56,14 @@ handle_tiff(){
 	RASTER_MBTILES=$OUT_DIR/${FILENAME%.*}.raster.mbtiles
 	VECTOR_MBTILES=$OUT_DIR/${FIlENAME%.*}.vector.mbtiles
 
+	# Check for QML file:
+	if [[ -z "$QML_FILE" ]]; then
+		COLOR_TABLE="$MINTCAST_PATH/shp/colortable.txt"
+	else
+		COLOR_TABLE=$TEMP_DIR/${FILENAME%.*}_color.txt
+		python3 $QML_EXTRACT_PATH $QML_FILE $COLOR_TABLE #Make colortable
+	fi
+
 	# Pre-processing:
 	#check_type $INPUT $BYTE_OUT #Check data type/convert to byte
 	echo "handle_tiff.sh"
@@ -62,9 +75,13 @@ handle_tiff(){
 	echo "Projecting..."
 	check_projection $CLIP_OUT $PROJ_OUT #Check projection/change to EPSG 3857
 
-	if [[ GENERATE_RASTER_TILE == "YES" ]]; then
+	echo "GENERATE_RASTER_TILE: $GENERATE_RASTER_TILE"
+	echo "GENERATE_NEW_RES: $GENERATE_NEW_RES"
+	echo "GENERATE_VECTOR_TILE $GENERATE_VECTOR_TILE"
+	if [[ $GENERATE_RASTER_TILE == "YES" ]]; then
+		echo "Generating raster tiles..."
 	# Generate raster tiles:
-		if [[ GENERATE_NEW_RES == "YES" ]]; then
+		if [[ $GENERATE_NEW_RES == "YES" ]]; then
 			# with new res proc
 			echo "Setting new resolution..."
 			proc_newres $PROJ_OUT $RES_OUT #Set resolution for raster tiles
@@ -84,7 +101,7 @@ handle_tiff(){
 	### TO DO: read MBTiles metadata table/store to database
 	fi
 
-	if [[ GENERATE_VECTOR_TILE == "YES" ]]; then
+	if [[ $GENERATE_VECTOR_TILE == "YES" ]]; then
 		# Generate vector tiles:
 		echo "Generating polygonized GeoJSON..."
 		proc_polygonize $PROJ_OUT $POLY_OUT $LAYER_NAME #Make GeoJSON
@@ -106,6 +123,6 @@ handle_tiff(){
 	# fi
 
 	# Delete intermediate files:
-	rm $CLIP_OUT $PROJ_OUT $RES_OUT $COLOR_OUT $POLY_OUT
+	#rm $CLIP_OUT $PROJ_OUT $RES_OUT $COLOR_OUT $POLY_OUT
 
 }
