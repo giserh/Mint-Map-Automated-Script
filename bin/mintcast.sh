@@ -36,9 +36,12 @@ TILESEVER_BIND="0.0.0.0"    # Used by tileserver
 DEV_MODE=YES                # Default is dev mode. Generate all files (mbtiles or json) in dist/.
 NO_WEBSITE_UPDATE=NO        # Only generate tiles in dist/, no json, no restart tileserver
 TILED_FILE_EXT="dem.tif"	# for tiled dataset, the suffix and extension of the files to be merged
-WITH_QUALITIY_ASSESSMENT=NO # for tiled dataset, if with --with-quality-assessment, then generate like elevation.num.raster.mbtiles
+WITH_QUALITY_ASSESSMENT=NO # for tiled dataset, if with --with-quality-assessment, then generate like elevation.num.raster.mbtiles
 DATASET_NAME="output" 		# output mbtiles name like -o elevation, output will be elevation.raster.mbtiles and elevation.vector.mbtiles
 DATAFILE_PATH=""            # Single file path like tiff
+GENERATE_NEW_RES="YES"		# Generate new resolution during creation of tiles
+GENERATE_RASTER_TILE="YES"	# Generate raster MBTiles as output
+GENERATE_VECTOR_TILE="YES"	# Generate vector MBTiles as output
 
 OUTPUT_DIR_STRUCTURE_FOR_TIMESERIES="" # how netcdf's timeseries mbtiles are stored
 
