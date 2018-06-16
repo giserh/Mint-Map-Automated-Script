@@ -6,12 +6,6 @@
 # 1) Input filepath, 2) Layer name
 
 ### TO DO: figure out what to use for no data value depending on data type
-### TO DO: figure out new resolution for each file
-### TO DO: return YES or NO at EOF (can just use #?)
-### TO DO: exit on non-zero status (using #?)
-### TO DO: add mintcast path
-### TO DO: add error handling (using #?)
-### TO DO: change inputs to names from positional to names from mintcast.sh
 
 # Source functions:
 source $MINTCAST_PATH/lib/check_projection.sh
@@ -68,33 +62,37 @@ handle_tiff(){
 	echo "Projecting..."
 	check_projection $CLIP_OUT $PROJ_OUT #Check projection/change to EPSG 3857
 
+	if [[ GENERATE_RASTER_TILE == "YES" ]]; then
 	# Generate raster tiles:
-	
-	# with new res proc
-	echo "Setting new resolution..."
-	proc_newres $PROJ_OUT $RES_OUT #Set resolution for raster tiles
-	echo "Adding colors..."
-	echo "COLOR_TABLE: $COLOR_TABLE"
-	proc_gdaldem $RES_OUT $COLOR_TABLE $COLOR_OUT
-
-	# without new res proc
-	#echo "Adding colors..."
-	#echo "COLOR_TABLE: $COLOR_TABLE"
-	#proc_gdaldem $PROJ_OUT $COLOR_TABLE $COLOR_OUT
-
+		if [[ GENERATE_NEW_RES == "YES" ]]; then
+			# with new res proc
+			echo "Setting new resolution..."
+			proc_newres $PROJ_OUT $RES_OUT #Set resolution for raster tiles
+			echo "Adding colors..."
+			echo "COLOR_TABLE: $COLOR_TABLE"
+			proc_gdaldem $RES_OUT $COLOR_TABLE $COLOR_OUT
+		else
+			# without new res proc
+			echo "Adding colors..."
+			echo "COLOR_TABLE: $COLOR_TABLE"
+			proc_gdaldem $PROJ_OUT $COLOR_TABLE $COLOR_OUT
+		fi
 	echo "Making raster tiles..."
 	proc_tif2mbtiles $COLOR_OUT $RASTER_MBTILES #Make .mbtiles
 	echo "Generating zoom levels..."
 	proc_gdaladdo $RASTER_MBTILES #Generate zoom levels
 	### TO DO: read MBTiles metadata table/store to database
+	fi
 
-	# Generate vector tiles:
-	echo "Generating polygonized GeoJSON..."
-	proc_polygonize $PROJ_OUT $POLY_OUT $LAYER_NAME #Make GeoJSON
-	echo "Making vector tiles..."
-	proc_geojson2mbtiles $POLY_OUT $VECTOR_MBTILES $LAYER_NAME #Make .mbtiles
-	### TO DO: read MBTiles metadata table/store to database
-	### TO DO: generate dataset.json file for vector tile
+	if [[ GENERATE_VECTOR_TILE == "YES" ]]; then
+		# Generate vector tiles:
+		echo "Generating polygonized GeoJSON..."
+		proc_polygonize $PROJ_OUT $POLY_OUT $LAYER_NAME #Make GeoJSON
+		echo "Making vector tiles..."
+		proc_geojson2mbtiles $POLY_OUT $VECTOR_MBTILES $LAYER_NAME #Make .mbtiles
+		### TO DO: read MBTiles metadata table/store to database
+		### TO DO: generate dataset.json file for vector tile
+	fi
 
 	### TO DO: update website's config.json
 
@@ -108,6 +106,6 @@ handle_tiff(){
 	# fi
 
 	# Delete intermediate files:
-	rm $BYTE_OUT $CLIP_OUT $PROJ_OUT $RES_OUT $COLOR_OUT $POLY_OUT
+	rm $CLIP_OUT $PROJ_OUT $RES_OUT $COLOR_OUT $POLY_OUT
 
 }

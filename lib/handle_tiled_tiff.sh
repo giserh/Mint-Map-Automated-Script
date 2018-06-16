@@ -67,6 +67,7 @@ handle_tiled_tiff(){
 	check_zipped $CLEANED_TILE_DIR $FILE_EXT
 
 	# Merge tiles:
+	echo "gdal_merge.py -o $MERGE_OUT $CLEANED_TILE_DIR/*$FILE_EXT DATAFILE_PATH=$MERGE_OUT"
 	gdal_merge.py \
 	-o $MERGE_OUT \
 	$CLEANED_TILE_DIR/*$FILE_EXT
