@@ -83,5 +83,5 @@ handle_tiled_tiff(){
 	fi
 
 	# Delete intermediate files:
-	rm $MERGE_OUT
+	#rm $MERGE_OUT
 }
