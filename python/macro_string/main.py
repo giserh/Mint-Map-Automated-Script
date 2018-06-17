@@ -13,6 +13,8 @@ def main():
 		tileFormat = sys.argv[4]
 		output = "%s_%s_%s" % (string, theType, tileFormat)
 		print(output.lower().replace(' ', '_'))
+	elif method == 'path_to_suffix':
+		print(string.lower().replace('/','_').replace(' ', '_').replace('.','_'))
 	elif method == 'lowercase':
 		print(string.lower())
 	elif method == 'underline':

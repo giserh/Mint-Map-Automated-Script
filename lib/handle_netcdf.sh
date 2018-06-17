@@ -19,6 +19,7 @@ handle_netcdf(){
 			DATAFILE_PATH="$subset_tiff"
 			LAYER_NAME="${SUBDATASET_LAYAERS_ARRAY[$index]}"
 			OUT_DIR="$MINTCAST_PATH/dist/$PARTIAL_PATH"
+			LAYER_ID_SUFFIX=$(python3 $MINTCAST_PATH/python/macro_string/main.py path_to_suffix $PARTIAL_PATH)
 			handle_tiff
 			index=$((index+1))
 		done
