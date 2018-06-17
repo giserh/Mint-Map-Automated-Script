@@ -1,13 +1,13 @@
 {
     "options": {
         "paths": {
-            "root": "./",
+            "root": "./dist",
             "mbtiles": ""
         },
         "domains": [
-            "0.0.0.0:8080",
-            "localhost:8080",
-            "127.0.0.1:8080"
+            "0.0.0.0:8082",
+            "localhost:8082",
+            "127.0.0.1:8082"
         ],
         "formatQuality": {
             "png": 100,
@@ -20,5 +20,51 @@
         "serveAllFonts": false,
         "serveStaticMaps": false
     },
-    "data": {}
+    "data": {
+        "59feb8015325307ba6e75078519c424a": {
+            "mbtiles": "./dist/landuse_raster_png.mbtiles"
+        },
+        "6b32072136822b88b5ad906816b07c9f": {
+            "mbtiles": "./dist/soil_raster_png.mbtiles"
+        },
+        "66290048830900aeb633cbc4153a49ae": {
+            "mbtiles": "./dist//2001/02/FLDAS_NOAH01_A_EA_D.A20010201.001.nc/evap_tavg_2001_02_fldas_noah01_a_ea_d_a20010201_001_nc_raster_png.mbtiles"
+        },
+        "350f263b248743c237cea844e815dd62": {
+            "mbtiles": "./dist//2001/02/FLDAS_NOAH01_A_EA_D.A20010201.001.nc/lwdown_f_tavg_2001_02_fldas_noah01_a_ea_d_a20010201_001_nc_raster_png.mbtiles"
+        },
+        "a9f6a153a647ef145b58efc4b91ca1ff": {
+            "mbtiles": "./dist//2001/02/FLDAS_NOAH01_A_EA_D.A20010201.001.nc/lwnet_tavg_2001_02_fldas_noah01_a_ea_d_a20010201_001_nc_raster_png.mbtiles"
+        },
+        "ec263bbda89ba2631acbc025d2926842": {
+            "mbtiles": "./dist//2001/02/FLDAS_NOAH01_A_EA_D.A20010201.001.nc/psurf_f_tavg_2001_02_fldas_noah01_a_ea_d_a20010201_001_nc_raster_png.mbtiles"
+        },
+        "7b1025851ac627afdfdd997626aa26b4": {
+            "mbtiles": "./dist//2001/02/FLDAS_NOAH01_A_EA_D.A20010201.001.nc/qair_f_tavg_2001_02_fldas_noah01_a_ea_d_a20010201_001_nc_raster_png.mbtiles"
+        },
+        "d6c7f5678ac09391e1a4fc96c943be20": {
+            "mbtiles": "./dist//2001/02/FLDAS_NOAH01_A_EA_D.A20010201.001.nc/qg_tavg_2001_02_fldas_noah01_a_ea_d_a20010201_001_nc_raster_png.mbtiles"
+        },
+        "7e33538482b5182ed5d669eba959b9a5": {
+            "mbtiles": "./dist//2001/02/FLDAS_NOAH01_A_EA_D.A20010201.001.nc/qh_tavg_2001_02_fldas_noah01_a_ea_d_a20010201_001_nc_raster_png.mbtiles"
+        },
+        "6b918712090449d662c053e2c5244d01": {
+            "mbtiles": "./dist//2001/02/FLDAS_NOAH01_A_EA_D.A20010201.001.nc/qle_tavg_2001_02_fldas_noah01_a_ea_d_a20010201_001_nc_raster_png.mbtiles"
+        },
+        "0864eda2d7018bab77e2164b30babae5": {
+            "mbtiles": "./dist//2001/02/FLDAS_NOAH01_A_EA_D.A20010201.001.nc/qs_tavg_2001_02_fldas_noah01_a_ea_d_a20010201_001_nc_raster_png.mbtiles"
+        },
+        "f8335009c122522523026dc71bbc7ac8": {
+            "mbtiles": "./dist//2001/02/FLDAS_NOAH01_A_EA_D.A20010201.001.nc/qsb_tavg_2001_02_fldas_noah01_a_ea_d_a20010201_001_nc_raster_png.mbtiles"
+        },
+        "b2b49ff2e3588a5a00c9f24678ba9eb7": {
+            "mbtiles": "./dist//2001/02/FLDAS_NOAH01_A_EA_D.A20010201.001.nc/radt_tavg_2001_02_fldas_noah01_a_ea_d_a20010201_001_nc_raster_png.mbtiles"
+        },
+        "47afd5e47f820325c9ffa777a74efc1a": {
+            "mbtiles": "./dist//2001/02/FLDAS_NOAH01_A_EA_D.A20010201.001.nc/rainf_f_tavg_2001_02_fldas_noah01_a_ea_d_a20010201_001_nc_raster_png.mbtiles"
+        },
+        "8d35796982efa822142a0246b0981010": {
+            "mbtiles": "./dist//2001/02/FLDAS_NOAH01_A_EA_D.A20010201.001.nc/sm01_percentile_2001_02_fldas_noah01_a_ea_d_a20010201_001_nc_raster_png.mbtiles"
+        }
+    }
 }

@@ -24,6 +24,8 @@ handle_sqlite() {
 	fi
 	# echo "$MINTCAST_PATH/python/macro_string/main.py layer_name_to_layer_id $LAYER_NAME$LAYER_ID_SUFFIX $COL_RASTER_OR_VECTOR_TYPE $COL_TILE_FORMAT"
 	COL_LAYER_ID=$(python3 $MINTCAST_PATH/python/macro_string/main.py layer_name_to_layer_id "$LAYER_NAME$LAYER_ID_SUFFIX" $COL_RASTER_OR_VECTOR_TYPE $COL_TILE_FORMAT)
+	# This layer name is not the layer name we are using.
+	# Source Layer is the actually layer name
 	COL_LAYER_NAME=$(python3 $MINTCAST_PATH/python/macro_string/main.py gen_layer_name $LAYER_NAME)
 	COL_SOURCE_LAYER=$LAYER_NAME
 	COL_ORIGINIAL_ID=0
