@@ -7,7 +7,6 @@ source $MINTCAST_PATH/lib/helper_usage.sh
 source $MINTCAST_PATH/lib/helper_parameter.sh
 source $MINTCAST_PATH/lib/handle_tiff.sh
 source $MINTCAST_PATH/lib/handle_tiled_tiff.sh
-source $MINTCAST_PATH/lib/handle_tiff_qml.sh
 source $MINTCAST_PATH/lib/handle_netcdf.sh
 source $MINTCAST_PATH/lib/handle_sqlite.sh
 
@@ -72,11 +71,6 @@ fi
 	
 if [[ $DATASET_TYPE == "tiff" ]]; then
 	handle_tiff
-	#if [[ -z "$QML_FILE" ]]; then
-	#	handle_tiff
-	#else
-	#	handle_tiff_qml
-	#fi
 elif [[ $DATASET_TYPE == "tiled" ]]; then
 	handle_tiled_tiff
 elif [[ $DATASET_TYPE == "netcdf" ]]; then
