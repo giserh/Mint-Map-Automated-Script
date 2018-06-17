@@ -48,7 +48,7 @@ setupDaemon() {
     touch "$logFile"
   else
     # Check to see if we need to rotate the logs.
-    size=$((`ls -l "$logFile" | cut -d " " -f 8`/1024))
+    size=$((`du -k "$logFile" | cut -f1`/1024))
     if [[ $size -gt $logMaxSize ]]; then
       mv $logFile "$logFile.old"
       touch "$logFile"
