@@ -1,1 +1,1 @@
- ./bin/mintcast.sh -t netcdf --structure "{year}/{month}/*.nc" -s '2001 01' --end-time "2001 03" --dir /Users/liber/Documents/South_Sudan/RawData/Forcing/FLDAS_NOAH01_A_EA_D -z "{year}/{month}/FLDAS_NOAH01_A_EA_D.A{year}{month}{day}.001.nc/*.mbtiles"
+ ./bin/mintcast.sh -t netcdf --structure "{year}/{month}/*.nc" -s '200101' --end-time "200103" --dir /Users/liber/Documents/South_Sudan/RawData/Forcing/FLDAS_NOAH01_A_EA_D -z "{year}/{month}/FLDAS_NOAH01_A_EA_D.A{year}{month}{day}.001.nc/*.mbtiles"
