@@ -57,10 +57,13 @@ handle_tiff(){
 	VECTOR_MBTILES=$OUT_DIR/${FIlENAME%.*}.vector.mbtiles
 
 	# Check for QML file:
+	echo "QML_FILE: $QML_FILE"
 	if [[ -z "$QML_FILE" ]]; then
 		COLOR_TABLE="$MINTCAST_PATH/shp/colortable.txt"
 	else
+		QML_EXTRACT_PATH="$MINTCAST_PATH/python/macro_extract_colors/main.py"
 		COLOR_TABLE=$TEMP_DIR/${FILENAME%.*}_color.txt
+		echo "COLOR_TABLE: $COLOR_TABLE"
 		python3 $QML_EXTRACT_PATH $QML_FILE $COLOR_TABLE #Make colortable
 	fi
 
