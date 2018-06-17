@@ -22,7 +22,7 @@ runInterval=60 # In seconds
 
 #source tileserver-paths.sh
 export MINTCAST_PATH="."
-configPath="$MINTCAST_PATH/../configure/config.json"
+configPath="$MINTCAST_PATH/../config/config.json"
 doCommands() {
   # This is where you put all the commands for the daemon.
   echo "Running commands."
