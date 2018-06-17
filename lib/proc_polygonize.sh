@@ -16,7 +16,7 @@ proc_polygonize () {
 	-f geojson \
 	$2 `#Output filename`\
 	$3 `#Layer name`\
-	'Value'
+	'value'
 
 	if [[ $? != 0 ]]; then
 		echo "gdal_polygonize.py failed in proc_polygonize.sh  Exiting script."

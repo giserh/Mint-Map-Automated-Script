@@ -53,8 +53,27 @@ handle_tiff(){
 	RES_OUT=${PROJ_OUT%.*}_newres.tif
 	COLOR_OUT=${RES_OUT%.*}_color.tif
 	POLY_OUT=${PROJ_OUT%.*}_poly.geojson
-	RASTER_MBTILES=$OUT_DIR/${FILENAME%.*}.raster.mbtiles
-	VECTOR_MBTILES=$OUT_DIR/${FIlENAME%.*}.vector.mbtiles
+	if [[ -z "$LAYER_ID_SUFFIX" ]]; then
+		LAYER_ID_SUFFIX=''
+	fi
+
+	RASTER_LAYER_ID=$(python3 $MINTCAST_PATH/python/macro_string/main.py layer_name_to_layer_id $LAYER_NAME$LAYER_ID_SUFFIX raster png)
+	RASTER_LAYER_ID_MD5=$(python3 $MINTCAST_PATH/python/macro_md5/main.py $RASTER_LAYER_ID)
+	RASTER_MBTILES=$OUT_DIR/$RASTER_LAYER_ID.mbtiles
+
+	HAS_LAYER=$(python3 $MINTCAST_PATH/python/macro_sqlite_curd/main.py has_tileserver_config $RASTER_LAYER_ID)
+	if [[ "$HAS_LAYER" = "None" ]]; then
+		python3 $MINTCAST_PATH/python/macro_sqlite_curd/main.py insert tileserverconfig \
+			"null, '$RASTER_LAYER_ID', '$RASTER_MBTILES', '$RASTER_LAYER_ID_MD5'"
+	else
+		python3 $MINTCAST_PATH/python/macro_sqlite_curd/main.py update tileserverconfig \
+			"layerid='$RASTER_LAYER_ID', mbtiles='$RASTER_MBTILES', md5='$RASTER_LAYER_ID_MD5'" \
+			"id=$HAS_LAYER"
+	fi
+
+	VECTOR_LAYER_ID=$(python3 $MINTCAST_PATH/python/macro_string/main.py layer_name_to_layer_id $LAYER_NAME$LAYER_ID_SUFFIX vector pbf)
+	VECTOR_LAYER_ID_MD5=$(python3 $MINTCAST_PATH/python/macro_md5/main.py $VECTOR_LAYER_ID)
+	VECTOR_MBTILES=$OUT_DIR/$VECTOR_LAYER_ID.mbtiles
 
 	# Check for QML file:
 	echo "QML_FILE: $QML_FILE"

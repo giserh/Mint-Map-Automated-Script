@@ -40,6 +40,13 @@ def main():
                 print("None")
             else:
                 print(row[0])
+        elif method == 'has_tileserver_config':
+            c.execute("SELECT id FROM tileserverconfig WHERE layerid = '%s'" % sys.argv[2])
+            row = c.fetchone()
+            if row == None:
+                print("None")
+            else:
+                print(row[0])
     except Exception as e:
         print(e,file=sys.stderr)
     finally:
