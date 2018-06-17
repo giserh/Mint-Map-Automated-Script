@@ -20,6 +20,11 @@ helper_parameter(){
         shift 
         shift 
         ;;
+        -h|--ssh-user)
+        SSH_USER="$2"
+        shift 
+        shift 
+        ;;
         -u|--structure)
         DATASET_DIR_STRUCTURE="$2"
         shift 
@@ -102,6 +107,10 @@ helper_parameter(){
         ;;
         --disable-vector-tile)
         GENERATE_VECTOR_TILE=NO
+        shift
+        ;;
+        --add-ssh-key)
+        NEW_SSH_KEY=YES
         shift
         ;;
         -v|--version)

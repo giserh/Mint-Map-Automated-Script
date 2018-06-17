@@ -42,6 +42,8 @@ DATAFILE_PATH=""            # Single file path like tiff
 GENERATE_NEW_RES="YES"		# Generate new resolution during creation of tiles
 GENERATE_RASTER_TILE="YES"	# Generate raster MBTiles as output
 GENERATE_VECTOR_TILE="YES"	# Generate vector MBTiles as output
+NEW_SSH_KEY="NO"			# Add ssh key 
+SSH_USER="vaccaro"			# User-name to ssh/scp into jonsnow (e.g. liboliu, vaccaro, shiwei)
 
 OUTPUT_DIR_STRUCTURE_FOR_TIMESERIES="" # how netcdf's timeseries mbtiles are stored
 
@@ -69,11 +71,12 @@ else
 fi
 	
 if [[ $DATASET_TYPE == "tiff" ]]; then
-	if [[ -z "$QML_FILE" ]]; then
-		handle_tiff
-	else
-		handle_tiff_qml
-	fi
+	handle_tiff
+	#if [[ -z "$QML_FILE" ]]; then
+	#	handle_tiff
+	#else
+	#	handle_tiff_qml
+	#fi
 elif [[ $DATASET_TYPE == "tiled" ]]; then
 	handle_tiled_tiff
 elif [[ $DATASET_TYPE == "netcdf" ]]; then
@@ -110,10 +113,30 @@ python3 $MINTCAST_PATH/python/macro_sqlite_curd/main.py update layer \
 "layerid='$COL_LAYER_ID'"
 python3 $MINTCAST_PATH/python/macro_gen_web_json/main.py update-config
 
-# update tileserver config
-
 # scp MBtiles and json to jonsnow
+if [[ "$DEV_MODE" != "YES" ]]; then
+	JONSNOW_STR="$SSH_USER@jonsnow.usc.edu"
+	JONSNOW_MBTILES="/home/mint-webmap/mbtiles/"
+	JONSNOW_JSON="/home/mint-webmap/json/"
+	HOME_DIR="/home/$SSH_USER/"
+	if [[ $NEW_SSH_KEY == "YES" ]]; then
+		ssh-copy-id $JONSNOW_STR
+	fi
+	RASTER_NAME=$(basename $RASTER_MBTILES)
+	VECTOR_NAME=$(basename $VECTOR_MBTILES)
+	scp $RASTER_MBTILES $JONSNOW_STR:$HOME_DIR
+	ssh $JONSNOW_STR
+	# this does not work, need to use tar:
+	#sudo mv $RASTER_NAME $JONSNOW_MBTILES
+	#sudo mv $VECTOR_NAME $JONSNOW_MBTILES
+	#sudo mv json1 $JONSNOW_JSON
+fi
 
+# update tileserver config
+#python3 $MINTCAST_PATH/python/macro_create_config/main.py 
+
+# restart tile server
+#nohup $MINTCAST_PATH/bin/tileserver-daemon.sh restart &
 
 #remove intermediate files
 #rm -f $OUT_DIR/*.tif
