@@ -5,7 +5,7 @@ import sys, json, sqlite3, os
 MINTCAST_PATH = os.environ.get('MINTCAST_PATH')
 DATABASE_PATH = '/sql/database.sqlite'
 
-def main(root = './', port='8080', server='0.0.0.0'):
+def main(root = '../', port='8080', server='0.0.0.0'):
     config = {'options': {'paths': {'root': root, 'mbtiles': ''}, 'domains': ['%s:%s'%(server, port),'localhost:%s'%port, '127.0.0.1:%s'%port], 'formatQuality': {'png': 100, 'jpeg': 80, 'webp': 90}, 'maxScaleFactor': 3, 'maxSize': 2048, 'pbfAlias': 'pbf', 'serveAllFonts': False, 'serveStaticMaps': False}, 'data': {}}
     conn = sqlite3.connect(MINTCAST_PATH + DATABASE_PATH)
     c = conn.cursor()

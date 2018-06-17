@@ -107,7 +107,7 @@ python3 $MINTCAST_PATH/python/macro_sqlite_curd/main.py update layer \
 "layerid='$COL_LAYER_ID'"
 python3 $MINTCAST_PATH/python/macro_gen_web_json/main.py update-config
 
-python3 $MINTCAST_PATH/python/macro_tileserver_config/main.py ./dist 8082
+python3 $MINTCAST_PATH/python/macro_tileserver_config/main.py ../ 8082
 
 # scp MBtiles and json to jonsnow
 if [[ "$DEV_MODE" != "YES" ]]; then

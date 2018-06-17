@@ -20,14 +20,15 @@ logMaxSize=1024   # 1mb
 
 runInterval=60 # In seconds
 
+PORT=$2
 #source tileserver-paths.sh
-export MINTCAST_PATH="./"
+export MINTCAST_PATH="."
 configPath="$MINTCAST_PATH/config/config.json"
 doCommands() {
   # This is where you put all the commands for the daemon.
   echo "Running commands."
   #$lightPath -c $configPath # /dev/null
-  tileserver-gl-light -c $configPath
+  tileserver-gl-light -b 0.0.0.0 -p $PORT -c $configPath
 }
 
 ################################################################################
@@ -169,7 +170,9 @@ log() {
 ################################################################################
 # Parse the command.
 ################################################################################
-
+if [[ -z "$2" ]]; then
+  PORT=8082
+fi
 if [ -f "$pidFile" ]; then
   oldPid=`cat "$pidFile"`
 fi
