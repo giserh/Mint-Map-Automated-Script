@@ -15,25 +15,26 @@
 
 check_type () {
 	# Make temporary stats file:
-	STATS=${1%.*}_stats.tif
-	gdal_translate -stats $1 $STATS
+	STATS=$1 
+	#${1%.*}_stats.tif
+	# gdal_translate -stats $1 $STATS
 
 	# Get gdalinfo of stats:
 	GDALINFO="$(gdalinfo $STATS)"
 
 	# Check to see if data is byte format:
 	if echo $GDALINFO | grep -q 'Type=Byte'; then
-		mv $STATS $2 # Set temporary stats file as output
+		# mv $STATS $2 # Set temporary stats file as output
 		echo "Data is already Byte type"
-	else
-
+		NODATAFLAG='-dstnodata 255 '
+	# else
 		# Extract min and max values from GDAL info:
-		tmp_min=${GDALINFO#*Minimum=}
-		MIN_VAL=${tmp_min%", Max"*}
-		echo "Minimum value: $MIN_VAL"
-		tmp_max=${GDALINFO#*Maximum=}
-		MAX_VAL=${tmp_max%", M"*}
-		echo "Maximum value: $MAX_VAL"
+		# tmp_min=${GDALINFO#*Minimum=}
+		# MIN_VAL=${tmp_min%", Max"*}
+		# echo "Minimum value: $MIN_VAL"
+		# tmp_max=${GDALINFO#*Maximum=}
+		# MAX_VAL=${tmp_max%", M"*}
+		# echo "Maximum value: $MAX_VAL"
 
 		# Rescale values and convert data to Byte:
 
@@ -47,6 +48,6 @@ check_type () {
 		# $2
 
 		# Remove temporary stats file:
-		rm $STATS
+		# rm $STATS
 	fi
 }

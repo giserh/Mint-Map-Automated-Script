@@ -72,6 +72,15 @@ def main():
         '''
         AIM_SIZEX = 32558
         ratio = AIM_SIZEX/sizeX
+        if(srs.GetAttrValue('projcs') == 'WGS 84 / Pseudo-Mercator'):
+            if ratio < 1:
+                newxres = xres / ratio
+                newyres = abs(yres) / ratio
+                print("%s %s" % (newxres, newyres))
+                exit(0)
+            else:
+                pass
+
         digits = (len(str(math.ceil(ratio))) - 1)
         
         # magificant of the ratio/// for easy calc purpose

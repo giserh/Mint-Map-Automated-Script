@@ -20,7 +20,7 @@ proc_clip () {
 
 	gdalwarp \
 	-overwrite \
-	-te 22.4 3.4 37.0 23.2 \
+	-te 22.4 3.4 37.0 23.2 $NODATAFLAG\
 	--config GDALWARP_IGNORE_BAD_CUTLINE YES \
 	-cutline $3 `#South Sudan boundary shapefile` \
 	$1 `#Input filename`\
