@@ -52,9 +52,9 @@ def updateMetadata():
             metadataJson['hasData'].append(False if row[7] == 0 else True)
             metadataJson['hasTimeline'].append(False if row[8] == 0 else True)
             if row[7] == 1:
-                metadataJson['layers'].append({'id':row[1], 'minzoom': row[10], 'maxzoom':row[9], 'type':row[2], 'mapping':'', 'startTime': row[14], 'endtime':row[15], 'directory_format':row[13]})
-            else:
-                metadataJson['layers'].append({'id':row[1], 'minzoom': row[10], 'maxzoom':row[9], 'type':row[2], 'mapping':''})
+                metadataJson['layers'].append({'id':row[1], 'source-layer': row[5], 'minzoom': row[10], 'maxzoom':row[9], 'type':row[2], 'mapping':'', 'startTime': row[14], 'endtime':row[15], 'directory_format':row[13]})
+            if row[7] == 0:
+                metadataJson['layers'].append({'id':row[1], 'source-layer': row[5], 'minzoom': row[10], 'maxzoom':row[9], 'type':row[2], 'mapping':''})
     except Exception as e:
         raise e
     finally:
@@ -65,7 +65,7 @@ def update(identifier):
     conn = getConn()
     c = conn.cursor()
     try:
-        for row in c.execute('SELECT * FROM layer WHERE layerid = %s' % identifier):
+        for row in c.execute('SELECT * FROM layer WHERE layerid = "%s"' % identifier):
             toJson(row)
     except Exception as e:
         raise e
@@ -88,7 +88,7 @@ def toJson(row):
     layerJson['bounds'] = row[11]
     layerJson['originalDatasetCoordinate'] = row[24]
     layerJson['values'] = row[22]
-    layerJson['colormap'] = row[23]
+    layerJson['colormap'] = row[24]
     layerJson['legend-type'] = row[20]
     layerJson['legend'] = row[21]
 
@@ -154,7 +154,7 @@ USAGE:
 '''
 if __name__ == '__main__':
     if JSON_FILEPATH == None:
-        print('Please set up JSON_FILEPATH environment variable')
+        print('Please set up TARGET_JSON_PATH environment variable')
         exit(1)
     num_args = len(sys.argv)
     if num_args < 2:
