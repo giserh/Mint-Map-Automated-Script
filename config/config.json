@@ -1,7 +1,7 @@
 {
     "options": {
         "paths": {
-            "root": "./dist",
+            "root": "../",
             "mbtiles": ""
         },
         "domains": [
@@ -27,20 +27,161 @@
         "6b32072136822b88b5ad906816b07c9f": {
             "mbtiles": "./dist/soil_raster_png.mbtiles"
         },
+        "66290048830900aeb633cbc4153a49ae": {
+            "mbtiles": "./dist//2001/02/FLDAS_NOAH01_A_EA_D.A20010201.001.nc/evap_tavg_2001_02_fldas_noah01_a_ea_d_a20010201_001_nc_raster_png.mbtiles"
+        },
+        "350f263b248743c237cea844e815dd62": {
+            "mbtiles": "./dist//2001/02/FLDAS_NOAH01_A_EA_D.A20010201.001.nc/lwdown_f_tavg_2001_02_fldas_noah01_a_ea_d_a20010201_001_nc_raster_png.mbtiles"
+        },
+        "a9f6a153a647ef145b58efc4b91ca1ff": {
+            "mbtiles": "./dist//2001/02/FLDAS_NOAH01_A_EA_D.A20010201.001.nc/lwnet_tavg_2001_02_fldas_noah01_a_ea_d_a20010201_001_nc_raster_png.mbtiles"
+        },
+        "ec263bbda89ba2631acbc025d2926842": {
+            "mbtiles": "./dist//2001/02/FLDAS_NOAH01_A_EA_D.A20010201.001.nc/psurf_f_tavg_2001_02_fldas_noah01_a_ea_d_a20010201_001_nc_raster_png.mbtiles"
+        },
+        "7b1025851ac627afdfdd997626aa26b4": {
+            "mbtiles": "./dist//2001/02/FLDAS_NOAH01_A_EA_D.A20010201.001.nc/qair_f_tavg_2001_02_fldas_noah01_a_ea_d_a20010201_001_nc_raster_png.mbtiles"
+        },
+        "d6c7f5678ac09391e1a4fc96c943be20": {
+            "mbtiles": "./dist//2001/02/FLDAS_NOAH01_A_EA_D.A20010201.001.nc/qg_tavg_2001_02_fldas_noah01_a_ea_d_a20010201_001_nc_raster_png.mbtiles"
+        },
+        "7e33538482b5182ed5d669eba959b9a5": {
+            "mbtiles": "./dist//2001/02/FLDAS_NOAH01_A_EA_D.A20010201.001.nc/qh_tavg_2001_02_fldas_noah01_a_ea_d_a20010201_001_nc_raster_png.mbtiles"
+        },
+        "6b918712090449d662c053e2c5244d01": {
+            "mbtiles": "./dist//2001/02/FLDAS_NOAH01_A_EA_D.A20010201.001.nc/qle_tavg_2001_02_fldas_noah01_a_ea_d_a20010201_001_nc_raster_png.mbtiles"
+        },
+        "0864eda2d7018bab77e2164b30babae5": {
+            "mbtiles": "./dist//2001/02/FLDAS_NOAH01_A_EA_D.A20010201.001.nc/qs_tavg_2001_02_fldas_noah01_a_ea_d_a20010201_001_nc_raster_png.mbtiles"
+        },
+        "f8335009c122522523026dc71bbc7ac8": {
+            "mbtiles": "./dist//2001/02/FLDAS_NOAH01_A_EA_D.A20010201.001.nc/qsb_tavg_2001_02_fldas_noah01_a_ea_d_a20010201_001_nc_raster_png.mbtiles"
+        },
+        "b2b49ff2e3588a5a00c9f24678ba9eb7": {
+            "mbtiles": "./dist//2001/02/FLDAS_NOAH01_A_EA_D.A20010201.001.nc/radt_tavg_2001_02_fldas_noah01_a_ea_d_a20010201_001_nc_raster_png.mbtiles"
+        },
+        "47afd5e47f820325c9ffa777a74efc1a": {
+            "mbtiles": "./dist//2001/02/FLDAS_NOAH01_A_EA_D.A20010201.001.nc/rainf_f_tavg_2001_02_fldas_noah01_a_ea_d_a20010201_001_nc_raster_png.mbtiles"
+        },
+        "8d35796982efa822142a0246b0981010": {
+            "mbtiles": "./dist//2001/02/FLDAS_NOAH01_A_EA_D.A20010201.001.nc/sm01_percentile_2001_02_fldas_noah01_a_ea_d_a20010201_001_nc_raster_png.mbtiles"
+        },
+        "0f4dd6cca0bc061a8061f7eb7b822abf": {
+            "mbtiles": "./dist//2001/02/FLDAS_NOAH01_A_EA_D.A20010201.001.nc/swdown_f_tavg_2001_02_fldas_noah01_a_ea_d_a20010201_001_nc_raster_png.mbtiles"
+        },
+        "237ea291d5f67d64cd1a78c8b7b5fa29": {
+            "mbtiles": "./dist//2001/02/FLDAS_NOAH01_A_EA_D.A20010201.001.nc/soilmoi00_10cm_tavg_2001_02_fldas_noah01_a_ea_d_a20010201_001_nc_raster_png.mbtiles"
+        },
+        "d8447b8798ddf49b5be858995c0eec5b": {
+            "mbtiles": "./dist//2001/02/FLDAS_NOAH01_A_EA_D.A20010201.001.nc/soilmoi100_200cm_tavg_2001_02_fldas_noah01_a_ea_d_a20010201_001_nc_raster_png.mbtiles"
+        },
+        "989dfabd6203b25a134a52572cc15bd3": {
+            "mbtiles": "./dist//2001/02/FLDAS_NOAH01_A_EA_D.A20010201.001.nc/soilmoi10_40cm_tavg_2001_02_fldas_noah01_a_ea_d_a20010201_001_nc_raster_png.mbtiles"
+        },
+        "279600f497edfaf30048ee0ea87fbf35": {
+            "mbtiles": "./dist//2001/02/FLDAS_NOAH01_A_EA_D.A20010201.001.nc/soilmoi40_100cm_tavg_2001_02_fldas_noah01_a_ea_d_a20010201_001_nc_raster_png.mbtiles"
+        },
+        "c7f720001775b745811faa3c78fd4571": {
+            "mbtiles": "./dist//2001/02/FLDAS_NOAH01_A_EA_D.A20010201.001.nc/soiltemp00_10cm_tavg_2001_02_fldas_noah01_a_ea_d_a20010201_001_nc_raster_png.mbtiles"
+        },
+        "abeb78a73c49e74e73b2af5bdfcc404f": {
+            "mbtiles": "./dist//2001/02/FLDAS_NOAH01_A_EA_D.A20010201.001.nc/soiltemp100_200cm_tavg_2001_02_fldas_noah01_a_ea_d_a20010201_001_nc_raster_png.mbtiles"
+        },
+        "0d540628bca5c9222343fecc64b3e35c": {
+            "mbtiles": "./dist//2001/02/FLDAS_NOAH01_A_EA_D.A20010201.001.nc/soiltemp10_40cm_tavg_2001_02_fldas_noah01_a_ea_d_a20010201_001_nc_raster_png.mbtiles"
+        },
+        "df83026853383e228005a2a04a5c43f4": {
+            "mbtiles": "./dist//2001/02/FLDAS_NOAH01_A_EA_D.A20010201.001.nc/soiltemp40_100cm_tavg_2001_02_fldas_noah01_a_ea_d_a20010201_001_nc_raster_png.mbtiles"
+        },
+        "36a3ca2e1b90ed37f4c3089f996008f4": {
+            "mbtiles": "./dist//2001/02/FLDAS_NOAH01_A_EA_D.A20010201.001.nc/swnet_tavg_2001_02_fldas_noah01_a_ea_d_a20010201_001_nc_raster_png.mbtiles"
+        },
+        "41af5173173fe2b487031fc74bb19af9": {
+            "mbtiles": "./dist//2001/02/FLDAS_NOAH01_A_EA_D.A20010201.001.nc/tair_f_tavg_2001_02_fldas_noah01_a_ea_d_a20010201_001_nc_raster_png.mbtiles"
+        },
+        "c2fd91473043e151a966b56e979284fc": {
+            "mbtiles": "./dist//2001/02/FLDAS_NOAH01_A_EA_D.A20010201.001.nc/wind_f_tavg_2001_02_fldas_noah01_a_ea_d_a20010201_001_nc_raster_png.mbtiles"
+        },
+        "68d4b6e5567467fd75e0c166764e533f": {
+            "mbtiles": "./dist//2001/02/FLDAS_NOAH01_A_EA_D.A20010202.001.nc/evap_tavg_2001_02_fldas_noah01_a_ea_d_a20010202_001_nc_raster_png.mbtiles"
+        },
+        "02cd4924c3980d9ac4907c8375cfe5fc": {
+            "mbtiles": "./dist//2001/02/FLDAS_NOAH01_A_EA_D.A20010202.001.nc/lwdown_f_tavg_2001_02_fldas_noah01_a_ea_d_a20010202_001_nc_raster_png.mbtiles"
+        },
+        "542fdb5ed50a7f48a0830290b6370429": {
+            "mbtiles": "./dist//2001/02/FLDAS_NOAH01_A_EA_D.A20010202.001.nc/lwnet_tavg_2001_02_fldas_noah01_a_ea_d_a20010202_001_nc_raster_png.mbtiles"
+        },
+        "eb405955a3e3811061a623d20a96a704": {
+            "mbtiles": "./dist//2001/02/FLDAS_NOAH01_A_EA_D.A20010202.001.nc/psurf_f_tavg_2001_02_fldas_noah01_a_ea_d_a20010202_001_nc_raster_png.mbtiles"
+        },
+        "2b0de6c6faed86df8dd28e15e599259d": {
+            "mbtiles": "./dist//2001/02/FLDAS_NOAH01_A_EA_D.A20010202.001.nc/qair_f_tavg_2001_02_fldas_noah01_a_ea_d_a20010202_001_nc_raster_png.mbtiles"
+        },
+        "24b478dca3ad171300365c273904157c": {
+            "mbtiles": "./dist//2001/02/FLDAS_NOAH01_A_EA_D.A20010202.001.nc/qg_tavg_2001_02_fldas_noah01_a_ea_d_a20010202_001_nc_raster_png.mbtiles"
+        },
+        "9f2d57a25b15a49a05edc79540657fe2": {
+            "mbtiles": "./dist//2001/02/FLDAS_NOAH01_A_EA_D.A20010202.001.nc/qh_tavg_2001_02_fldas_noah01_a_ea_d_a20010202_001_nc_raster_png.mbtiles"
+        },
+        "435d0bc07cf4f0cc2ca94bb23d9b36dd": {
+            "mbtiles": "./dist//2001/02/FLDAS_NOAH01_A_EA_D.A20010202.001.nc/qle_tavg_2001_02_fldas_noah01_a_ea_d_a20010202_001_nc_raster_png.mbtiles"
+        },
+        "ee1593aff2711f08a2a5dff297de76a9": {
+            "mbtiles": "./dist//2001/02/FLDAS_NOAH01_A_EA_D.A20010202.001.nc/qs_tavg_2001_02_fldas_noah01_a_ea_d_a20010202_001_nc_raster_png.mbtiles"
+        },
+        "2222dd815fc017aba1e3be7eb7830a52": {
+            "mbtiles": "./dist//2001/02/FLDAS_NOAH01_A_EA_D.A20010202.001.nc/qsb_tavg_2001_02_fldas_noah01_a_ea_d_a20010202_001_nc_raster_png.mbtiles"
+        },
+        "52226b43d3410957e53d9562858f6a0d": {
+            "mbtiles": "./dist//2001/02/FLDAS_NOAH01_A_EA_D.A20010202.001.nc/radt_tavg_2001_02_fldas_noah01_a_ea_d_a20010202_001_nc_raster_png.mbtiles"
+        },
+        "ec319f91a598606dde5b9864befcd186": {
+            "mbtiles": "./dist//2001/02/FLDAS_NOAH01_A_EA_D.A20010202.001.nc/rainf_f_tavg_2001_02_fldas_noah01_a_ea_d_a20010202_001_nc_raster_png.mbtiles"
+        },
+        "931b8527618e25efc94d080677cb3dac": {
+            "mbtiles": "./dist//2001/02/FLDAS_NOAH01_A_EA_D.A20010202.001.nc/sm01_percentile_2001_02_fldas_noah01_a_ea_d_a20010202_001_nc_raster_png.mbtiles"
+        },
+        "c7d7455707842f95dcb40ce36ed7f1d6": {
+            "mbtiles": "./dist//2001/02/FLDAS_NOAH01_A_EA_D.A20010202.001.nc/swdown_f_tavg_2001_02_fldas_noah01_a_ea_d_a20010202_001_nc_raster_png.mbtiles"
+        },
+        "39c1b5a7349726ff61682e7724bf7a9b": {
+            "mbtiles": "./dist//2001/02/FLDAS_NOAH01_A_EA_D.A20010202.001.nc/soilmoi00_10cm_tavg_2001_02_fldas_noah01_a_ea_d_a20010202_001_nc_raster_png.mbtiles"
+        },
+        "03f13ce47604072b08870665e3ae4a89": {
+            "mbtiles": "./dist//2001/02/FLDAS_NOAH01_A_EA_D.A20010202.001.nc/soilmoi100_200cm_tavg_2001_02_fldas_noah01_a_ea_d_a20010202_001_nc_raster_png.mbtiles"
+        },
+        "b704055e0a5a4194909e9c912119935d": {
+            "mbtiles": "./dist//2001/02/FLDAS_NOAH01_A_EA_D.A20010202.001.nc/soilmoi10_40cm_tavg_2001_02_fldas_noah01_a_ea_d_a20010202_001_nc_raster_png.mbtiles"
+        },
+        "d4b9b56e5c581db38df2d084de69c67c": {
+            "mbtiles": "./dist//2001/02/FLDAS_NOAH01_A_EA_D.A20010202.001.nc/soilmoi40_100cm_tavg_2001_02_fldas_noah01_a_ea_d_a20010202_001_nc_raster_png.mbtiles"
+        },
+        "7ba16eca1092f1b857ebcfb8360dac37": {
+            "mbtiles": "./dist//2001/02/FLDAS_NOAH01_A_EA_D.A20010202.001.nc/soiltemp00_10cm_tavg_2001_02_fldas_noah01_a_ea_d_a20010202_001_nc_raster_png.mbtiles"
+        },
+        "61c85fd7659b1244c0fa2115c34146a5": {
+            "mbtiles": "./dist//2001/02/FLDAS_NOAH01_A_EA_D.A20010202.001.nc/soiltemp100_200cm_tavg_2001_02_fldas_noah01_a_ea_d_a20010202_001_nc_raster_png.mbtiles"
+        },
+        "9c023665fc5238e41b5b3ddd2e02cadb": {
+            "mbtiles": "./dist//2001/02/FLDAS_NOAH01_A_EA_D.A20010202.001.nc/soiltemp10_40cm_tavg_2001_02_fldas_noah01_a_ea_d_a20010202_001_nc_raster_png.mbtiles"
+        },
+        "ecb06bf0be21eb43ca36c0799a81ee16": {
+            "mbtiles": "./dist//2001/02/FLDAS_NOAH01_A_EA_D.A20010202.001.nc/soiltemp40_100cm_tavg_2001_02_fldas_noah01_a_ea_d_a20010202_001_nc_raster_png.mbtiles"
+        },
+        "925f418cb882f2c1e2bf527d9c698c43": {
+            "mbtiles": "./dist//2001/02/FLDAS_NOAH01_A_EA_D.A20010202.001.nc/swnet_tavg_2001_02_fldas_noah01_a_ea_d_a20010202_001_nc_raster_png.mbtiles"
+        },
+        "28dc7d008766d00fe15617258441c7f3": {
+            "mbtiles": "./dist//2001/02/FLDAS_NOAH01_A_EA_D.A20010202.001.nc/tair_f_tavg_2001_02_fldas_noah01_a_ea_d_a20010202_001_nc_raster_png.mbtiles"
+        },
+        "eeefb60ada5fa2e1b278b076cfa9b28f": {
+            "mbtiles": "./dist//2001/02/FLDAS_NOAH01_A_EA_D.A20010202.001.nc/wind_f_tavg_2001_02_fldas_noah01_a_ea_d_a20010202_001_nc_raster_png.mbtiles"
+        },
         "1475cedbae81c96c8c378deb28963ee7": {
             "mbtiles": "./dist/landuse_vector_pbf.mbtiles"
         },
         "ba3482fe0f0ab580f7411605c65270d6": {
             "mbtiles": "./dist/soil_vector_pbf.mbtiles"
-        },
-        "66290048830900aeb633cbc4153a49ae": {
-            "mbtiles": "./dist/2001/02/FLDAS_NOAH01_A_EA_D.A20010201.001.nc/evap_tavg_2001_02_fldas_noah01_a_ea_d_a20010201_001_nc_raster_png.mbtiles"
-        },
-        "350f263b248743c237cea844e815dd62": {
-            "mbtiles": "./dist/2001/02/FLDAS_NOAH01_A_EA_D.A20010201.001.nc/lwdown_f_tavg_2001_02_fldas_noah01_a_ea_d_a20010201_001_nc_raster_png.mbtiles"
-        },
-        "a9f6a153a647ef145b58efc4b91ca1ff": {
-            "mbtiles": "./dist/2001/02/FLDAS_NOAH01_A_EA_D.A20010201.001.nc/lwnet_tavg_2001_02_fldas_noah01_a_ea_d_a20010201_001_nc_raster_png.mbtiles"
-        },
+        }
     }
 }

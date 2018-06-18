@@ -46,6 +46,8 @@ def updateMetadata():
     metadataJson['layers'] = []
     try:
         for row in c.execute('SELECT * FROM layer'):
+            if row[2] == 'raster':
+                continue
             metadataJson['layerNames'].append(row[4])
             metadataJson['layerIds'].append(row[1])
             metadataJson['sourceLayers'].append(row[5])

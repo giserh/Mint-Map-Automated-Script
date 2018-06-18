@@ -1,5 +1,8 @@
 # Automated Script
 
+![Published by Libo Liu](https://img.shields.io/badge/Libo%20Liu-Author-blue.svg)
+![Published by Adam Vaccaro](https://img.shields.io/badge/Adam%20Vaccaro-Author-blue.svg)
+![Published by Shiwei Huang](https://img.shields.io/badge/Shiwei%20Huang-Author-blue.svg)
 
 ## GDAL Version conflict
 

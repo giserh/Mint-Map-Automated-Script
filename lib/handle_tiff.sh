@@ -9,6 +9,7 @@
 
 # Source functions:
 source $MINTCAST_PATH/lib/check_projection.sh
+source $MINTCAST_PATH/lib/check_type.sh
 source $MINTCAST_PATH/lib/proc_clip.sh
 source $MINTCAST_PATH/lib/proc_newres.sh
 source $MINTCAST_PATH/lib/proc_tif2mbtiles.sh
@@ -74,7 +75,7 @@ handle_tiff(){
 	VECTOR_LAYER_ID=$(python3 $MINTCAST_PATH/python/macro_string/main.py layer_name_to_layer_id $LAYER_NAME$LAYER_ID_SUFFIX vector pbf)
 	VECTOR_LAYER_ID_MD5=$(python3 $MINTCAST_PATH/python/macro_md5/main.py $VECTOR_LAYER_ID)
 	VECTOR_MBTILES=$OUT_DIR/$VECTOR_LAYER_ID.mbtiles
-	
+
 	HAS_LAYER=$(python3 $MINTCAST_PATH/python/macro_sqlite_curd/main.py has_tileserver_config $VECTOR_LAYER_ID)
 	if [[ "$HAS_LAYER" = "None" ]]; then
 		python3 $MINTCAST_PATH/python/macro_sqlite_curd/main.py insert tileserverconfig \
@@ -94,7 +95,9 @@ handle_tiff(){
 		echo "COLOR_TABLE: $COLOR_TABLE"
 		python3 $QML_EXTRACT_PATH $QML_FILE $COLOR_TABLE #Make colortable
 	fi
-
+	# CheckType for Already Byted file and add nodata flag
+	NODATAFLAG=''
+	check_type $INPUT
 	# Pre-processing:
 	#check_type $INPUT $BYTE_OUT #Check data type/convert to byte
 	echo "handle_tiff.sh"
