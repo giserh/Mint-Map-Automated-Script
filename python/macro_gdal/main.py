@@ -72,31 +72,27 @@ def main():
         '''
         AIM_SIZEX = 32558
         ratio = AIM_SIZEX/sizeX
-        if(srs.GetAttrValue('projcs') == 'WGS 84 / Pseudo-Mercator'):
-            if ratio < 1:
-                newxres = xres / ratio
-                newyres = abs(yres) / ratio
-                print("%s %s" % (newxres, newyres))
-                exit(0)
-            else:
-                pass
+        if(srs.GetAttrValue('projcs') == 'WGS 84 / Pseudo-Mercator' and ratio < 1):
+            newxres = xres / ratio
+            newyres = abs(yres) / ratio
+            print("%s %s" % (newxres, newyres))
+        else:
+            digits = (len(str(math.ceil(ratio))) - 1)
+            
+            # magificant of the ratio/// for easy calc purpose
+            mag = 10**digits
 
-        digits = (len(str(math.ceil(ratio))) - 1)
-        
-        # magificant of the ratio/// for easy calc purpose
-        mag = 10**digits
+            # detect the second significant value of the numbers
+            secondSign = 0
+            if str(ratio)[1]!='.':
+                secondSign = int(str(ratio)[1])
+            if secondSign >= 5:
+                mag = mag*1.5
 
-        # detect the second significant value of the numbers
-        secondSign = 0
-        if str(ratio)[1]!='.':
-            secondSign = int(str(ratio)[1])
-        if secondSign >= 5:
-            mag = mag*1.5
+            newxres = xres / mag
+            newyres = abs(yres) / mag
 
-        newxres = xres / mag
-        newyres = abs(yres) / mag
-
-        print("%s %s" % (newxres, newyres))
+            print("%s %s" % (newxres, newyres))
     elif method == 'projection':
         if srs.IsProjected :
             print(srs.GetAttrValue('projcs'))
