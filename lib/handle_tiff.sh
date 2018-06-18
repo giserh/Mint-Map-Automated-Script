@@ -74,7 +74,16 @@ handle_tiff(){
 	VECTOR_LAYER_ID=$(python3 $MINTCAST_PATH/python/macro_string/main.py layer_name_to_layer_id $LAYER_NAME$LAYER_ID_SUFFIX vector pbf)
 	VECTOR_LAYER_ID_MD5=$(python3 $MINTCAST_PATH/python/macro_md5/main.py $VECTOR_LAYER_ID)
 	VECTOR_MBTILES=$OUT_DIR/$VECTOR_LAYER_ID.mbtiles
-
+	
+	HAS_LAYER=$(python3 $MINTCAST_PATH/python/macro_sqlite_curd/main.py has_tileserver_config $VECTOR_LAYER_ID)
+	if [[ "$HAS_LAYER" = "None" ]]; then
+		python3 $MINTCAST_PATH/python/macro_sqlite_curd/main.py insert tileserverconfig \
+			"null, '$VECTOR_LAYER_ID', '$VECTOR_MBTILES', '$VECTOR_LAYER_ID_MD5'"
+	else
+		python3 $MINTCAST_PATH/python/macro_sqlite_curd/main.py update tileserverconfig \
+			"layerid='$VECTOR_LAYER_ID', mbtiles='$VECTOR_MBTILES', md5='$VECTOR_LAYER_ID_MD5'" \
+			"id=$HAS_LAYER"
+	fi
 	# Check for QML file:
 	echo "QML_FILE: $QML_FILE"
 	if [[ -z "$QML_FILE" ]]; then
