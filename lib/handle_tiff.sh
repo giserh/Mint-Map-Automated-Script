@@ -99,7 +99,6 @@ handle_tiff(){
 	NODATAFLAG=''
 	check_type $INPUT
 	# Pre-processing:
-	#check_type $INPUT $BYTE_OUT #Check data type/convert to byte
 	echo "handle_tiff.sh"
 	echo "INPUT: $INPUT"
 	echo "CLIP_OUT: $CLIP_OUT"
@@ -141,15 +140,7 @@ handle_tiff(){
 		proc_polygonize $PROJ_OUT $POLY_OUT $LAYER_NAME #Make GeoJSON
 		echo "Making vector tiles..."
 		proc_geojson2mbtiles $POLY_OUT $VECTOR_MBTILES $LAYER_NAME #Make .mbtiles
-		### TO DO: read MBTiles metadata table/store to database
-		### TO DO: generate dataset.json file for vector tile
 	fi
-
-	### TO DO: update website's config.json
-
-	### TO DO: copy mbtiles files to location
-	#scp $RASTER_MBTILES $OUT_DIR/
-	#scp $VECTOR_MBTILES $OUT_DIR/
 
 	#TODO by Libo
 	# if [[ $DEV_MODE != 'NO' ]]; then

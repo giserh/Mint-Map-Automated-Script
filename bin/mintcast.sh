@@ -111,28 +111,28 @@ python3 $MINTCAST_PATH/python/macro_tileserver_config/main.py ../ 8082
 
 # scp MBtiles and json to jonsnow
 if [[ "$DEV_MODE" != "YES" ]]; then
-	JONSNOW_STR="$SSH_USER@jonsnow.usc.edu"
+	#JONSNOW_STR="$SSH_USER@jonsnow.usc.edu"
+	ROOT_STR="root@jonsnow.usc.edu"
 	JONSNOW_MBTILES="/home/mint-webmap/mbtiles/"
 	JONSNOW_JSON="/home/mint-webmap/json/"
 	HOME_DIR="/home/$SSH_USER/"
 	if [[ $NEW_SSH_KEY == "YES" ]]; then
-		ssh-copy-id $JONSNOW_STR
+		#ssh-copy-id $JONSNOW_STR
+		ssh-copy-id -i $ROOT_STR
+
 	fi
-	RASTER_NAME=$(basename $RASTER_MBTILES)
-	VECTOR_NAME=$(basename $VECTOR_MBTILES)
-	scp $RASTER_MBTILES $JONSNOW_STR:$HOME_DIR
-	ssh $JONSNOW_STR
-	# this does not work, need to use tar:
-	#sudo mv $RASTER_NAME $JONSNOW_MBTILES
-	#sudo mv $VECTOR_NAME $JONSNOW_MBTILES
-	#sudo mv json1 $JONSNOW_JSON
+	#RASTER_NAME=$(basename $RASTER_MBTILES)
+	#VECTOR_NAME=$(basename $VECTOR_MBTILES)
+	#scp $RASTER_MBTILES $JONSNOW_STR:$HOME_DIR
+	scp $RASTER_MBTILES $JONSNOW_MBTILES
+	scp $VECTOR_MBTILES $JONSNOW_MBTILES
+	scp $TARGET_JSON_PATH/$COL_JSON_FILENAME $JONSNOW_JSON
+	#ssh -t $JONSNOW_STR "sudo mv $RASTER_MBTILES $JONSNOW_MBTILES"
+
 fi
 
-# update tileserver config
-#python3 $MINTCAST_PATH/python/macro_create_config/main.py 
-
 # restart tile server
-#nohup $MINTCAST_PATH/bin/tileserver-daemon.sh restart &
+nohup $MINTCAST_PATH/bin/tileserver-daemon.sh restart &
 
 #remove intermediate files
-#rm -f $OUT_DIR/*.tif
+rm -f $TEMP_DIR/*.tif
