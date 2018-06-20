@@ -124,15 +124,15 @@ if [[ "$DEV_MODE" != "YES" ]]; then
 	#RASTER_NAME=$(basename $RASTER_MBTILES)
 	#VECTOR_NAME=$(basename $VECTOR_MBTILES)
 	#scp $RASTER_MBTILES $JONSNOW_STR:$HOME_DIR
-	scp $RASTER_MBTILES $JONSNOW_MBTILES
-	scp $VECTOR_MBTILES $JONSNOW_MBTILES
-	scp $TARGET_JSON_PATH/$COL_JSON_FILENAME $JONSNOW_JSON
+	scp $RASTER_MBTILES $ROOT_STR:$JONSNOW_MBTILES
+	scp $VECTOR_MBTILES $ROOT_STR:$JONSNOW_MBTILES
+	scp $TARGET_JSON_PATH/$COL_JSON_FILENAME $ROOT_STR:$JONSNOW_JSON
 	#ssh -t $JONSNOW_STR "sudo mv $RASTER_MBTILES $JONSNOW_MBTILES"
 
 fi
 
 # restart tile server
-nohup $MINTCAST_PATH/bin/tileserver-daemon.sh restart &
+nohup $MINTCAST_PATH/bin/tileserver-daemon.sh restart $TILESEVER_PORT &
 
 #remove intermediate files
-rm -f $TEMP_DIR/*.tif
+rm -f $TEMP_DIR/*
