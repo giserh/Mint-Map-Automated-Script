@@ -20,29 +20,32 @@ if [[ $# -lt 1 ]]; then
     exit 0
 fi
 
-DATASET_TYPE="tiff"         # DATASET_TYPE, tiff, netcdf or tiled
-QML_FILE=""                 # QML file path
-DATASET_DIR=""              # If dataset has timeseries or tiled
-DATASET_DIR_STRUCTURE=""    # If DATASET_DIR is set, set structure `{year}/{month}/{day}/*.nc` or `*.zip`
-START_TIME=""               # If dataset has timeseries, start time string, like `2018 05 01`
-END_TIME=""                 # Same as start time
-LAYER_NAME=""               # Layer name could be a string or a json file, as input of tippecanoe
-TARGET_MBTILES_PATH=""      # Production mode: path to store mbtiles files and config files
-TARGET_JSON_PATH=""         # Production mode: path to store json files
-TILESEVER_PROG=""           # Path of tileserver program
-TILESEVER_PORT="8082"       # Used by tileserver
-TILESEVER_BIND="0.0.0.0"    # Used by tileserver
-DEV_MODE=YES                # Default is dev mode. Generate all files (mbtiles or json) in dist/.
-NO_WEBSITE_UPDATE=NO        # Only generate tiles in dist/, no json, no restart tileserver
-TILED_FILE_EXT="dem.tif"	# for tiled dataset, the suffix and extension of the files to be merged
-WITH_QUALITY_ASSESSMENT=NO # for tiled dataset, if with --with-quality-assessment, then generate like elevation.num.raster.mbtiles
-DATASET_NAME="output" 		# output mbtiles name like -o elevation, output will be elevation.raster.mbtiles and elevation.vector.mbtiles
-DATAFILE_PATH=""            # Single file path like tiff
-GENERATE_NEW_RES="YES"		# Generate new resolution during creation of tiles
-GENERATE_RASTER_TILE="YES"	# Generate raster MBTiles as output
-GENERATE_VECTOR_TILE="YES"	# Generate vector MBTiles as output
-NEW_SSH_KEY="NO"			# Add ssh key 
-SSH_USER="vaccaro"			# User-name to ssh/scp into jonsnow (e.g. liboliu, vaccaro, shiwei)
+DATASET_TYPE="tiff"         		# DATASET_TYPE, tiff, netcdf or tiled
+QML_FILE=""                 		# QML file path
+DATASET_DIR=""              		# If dataset has timeseries or tiled
+DATASET_DIR_STRUCTURE=""    		# If DATASET_DIR is set, set structure `{year}/{month}/{day}/*.nc` or `*.zip`
+START_TIME=""               		# If dataset has timeseries, start time string, like `2018 05 01`
+END_TIME=""                 		# Same as start time
+LAYER_NAME=""               		# Layer name could be a string or a json file, as input of tippecanoe
+TARGET_MBTILES_PATH=""      		# Production mode: path to store mbtiles files and config files
+TARGET_JSON_PATH=""         		# Production mode: path to store json files
+TILESEVER_PROG=""           		# Path of tileserver program
+TILESEVER_PORT="8082"       		# Used by tileserver
+TILESEVER_BIND="0.0.0.0"    		# Used by tileserver
+DEV_MODE=YES                		# Default is dev mode. Generate all files (mbtiles or json) in dist/.
+NO_WEBSITE_UPDATE=NO        		# Only generate tiles in dist/, no json, no restart tileserver
+TILED_FILE_EXT="dem.tif"			# for tiled dataset, the suffix and extension of the files to be merged
+WITH_QUALITY_ASSESSMENT=NO 			# for tiled dataset, if with --with-quality-assessment, then generate like elevation.num.raster.mbtiles
+DATASET_NAME="output" 				# output mbtiles name like -o elevation, output will be elevation.raster.mbtiles and elevation.vector.mbtiles
+DATAFILE_PATH=""            		# Single file path like tiff
+GENERATE_NEW_RES="YES"				# Generate new resolution during creation of tiles
+GENERATE_RASTER_TILE="YES"			# Generate raster MBTiles as output
+GENERATE_VECTOR_TILE="YES"			# Generate vector MBTiles as output
+NEW_SSH_KEY="NO"					# Add ssh key 
+SSH_USER="vaccaro"					# User-name to ssh/scp into jonsnow (e.g. liboliu, vaccaro, shiwei)
+USE_SS_SHAPE="NO"					# Clip using South Sudan boundary shapefile
+CLIP_BOUNDS="22.4 3.4 37.0 23.2"	# Coordinates for rectangular clipping boundary			
+
 
 OUTPUT_DIR_STRUCTURE_FOR_TIMESERIES="" # how netcdf's timeseries mbtiles are stored
 

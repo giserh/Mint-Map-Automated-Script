@@ -111,7 +111,12 @@ handle_tiff(){
 	echo "CLIP_OUT: $CLIP_OUT"
 	echo "SS_BOUNDARY: $SS_BOUNDARY"
 	echo "Clipping..."
-	proc_clip $INPUT $CLIP_OUT $SS_BOUNDARY #Clip to South Sudan boundary
+	if [[ USE_SS_SHAPE == "YES" ]]; then
+		proc_clip $INPUT $CLIP_OUT $SS_BOUNDARY #Clip to South Sudan boundary
+	else
+		proc_clip $INPUT $CLIP_OUT
+	fi
+	
 	echo "Projecting..."
 	check_projection $CLIP_OUT $PROJ_OUT #Check projection/change to EPSG 3857
 
