@@ -18,14 +18,30 @@ proc_clip () {
 		rm -f "$2"
 	fi
 
-	gdalwarp \
-	-overwrite \
-	-te 22.4 3.4 37.0 23.2 $NODATAFLAG\
-	--config GDALWARP_IGNORE_BAD_CUTLINE YES \
-	-cutline $3 `#South Sudan boundary shapefile` \
-	$1 `#Input filename`\
-	$2 `#Output filename`
-	
+	# check if there are commas in input bounds, replace with spaces, convert to array
+	if [[ $CLIP_BOUNDS = *","* ]]; then
+		CLIP_BOUNDS_ARRAY=`(echo $CLIP_BOUNDS | tr , " ")`	
+	else
+		CLIP_BOUNDS_ARRAY=(`echo ${CLIP_BOUNDS}`)
+	fi
+
+	if [[ USE_SS_SHAPE == "YES" ]]; then
+		gdalwarp \
+		-overwrite \
+		-te $CLIP_BOUNDS_ARRAY $NODATAFLAG\
+		--config GDALWARP_IGNORE_BAD_CUTLINE YES \
+		-cutline $3 `#South Sudan boundary shapefile` \
+		$1 `#Input filename`\
+		$2 `#Output filename`
+	else
+		gdalwarp \
+		-overwrite \
+		-te $CLIP_BOUNDS_ARRAY $NODATAFLAG\
+		--config GDALWARP_IGNORE_BAD_CUTLINE YES \
+		$1 `#Input filename`\
+		$2 `#Output filename`
+	fi
+		
 	if [[ $? != 0 ]]; then
 		echo "gdalwarp failed in proc_clip.sh Exiting script."
 		exit 1

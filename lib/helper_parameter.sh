@@ -55,6 +55,11 @@ helper_parameter(){
         shift
         shift
         ;;
+        -b|--bounds)
+        CLIP_BOUNDS="$2"
+        shift
+        shift
+        ;;
         --target-mbtiles-path)
         TARGET_MBTILES_PATH="$2"
         shift
@@ -107,6 +112,10 @@ helper_parameter(){
         ;;
         --disable-vector-tile)
         GENERATE_VECTOR_TILE=NO
+        shift
+        ;;
+        --with-south-sudan-shp)
+        USE_SS_SHAPE=YES
         shift
         ;;
         --add-ssh-key)
