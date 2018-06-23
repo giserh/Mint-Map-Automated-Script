@@ -14,32 +14,46 @@
 # 	-dstnodata 255 \
 proc_clip () {
 	# in case there is one
+	echo "Checking for existing file..."
 	if [[ -f "$2" ]]; then
 		rm -f "$2"
 	fi
+	echo "Done."
 
 	# check if there are commas in input bounds, replace with spaces, convert to array
+	echo "Checking boundary string for commas..."
 	if [[ $CLIP_BOUNDS = *","* ]]; then
-		CLIP_BOUNDS_ARRAY=`(echo $CLIP_BOUNDS | tr , " ")`	
+		echo "Commas found in boundary string."
+		CLIP_BOUNDS_ARRAY=`(echo $CLIP_BOUNDS | tr , " ")`
+		echo "Commas removed."	
 	else
-		CLIP_BOUNDS_ARRAY=(`echo ${CLIP_BOUNDS}`)
+		echo "No commas found."
+		CLIP_BOUNDS_ARRAY=(`echo $CLIP_BOUNDS`)
 	fi
+	echo "Boundary string converted to array."
+	echo "CLIP_BOUNDS_ARRAY: $CLIP_BOUNDS_ARRAY"
 
 	if [[ USE_SS_SHAPE == "YES" ]]; then
+		echo "Using SS shapefile..."
+		echo "gdalwarp -overwrite -te ${CLIP_BOUNDS_ARRAY[*]} $NODATAFLAG --config GDALWARP_IGNORE_BAD_CUTLINE YES -cutline $3 $1 $2"
 		gdalwarp \
 		-overwrite \
-		-te $CLIP_BOUNDS_ARRAY $NODATAFLAG\
+		-te ${CLIP_BOUNDS_ARRAY[*]} \
+		$NODATAFLAG \
 		--config GDALWARP_IGNORE_BAD_CUTLINE YES \
-		-cutline $3 `#South Sudan boundary shapefile` \
-		$1 `#Input filename`\
-		$2 `#Output filename`
+		-cutline $3 \
+		$1 \
+		$2
 	else
+		echo "Not using SS shapefile..."
+		echo "gdalwarp -overwrite -te ${CLIP_BOUNDS_ARRAY[*]} $NODATAFLAG --config GDALWARP_IGNORE_BAD_CUTLINE YES $1 $2"
 		gdalwarp \
 		-overwrite \
-		-te $CLIP_BOUNDS_ARRAY $NODATAFLAG\
+		-te ${CLIP_BOUNDS_ARRAY[*]} \
+		$NODATAFLAG \
 		--config GDALWARP_IGNORE_BAD_CUTLINE YES \
-		$1 `#Input filename`\
-		$2 `#Output filename`
+		$1 \
+		$2
 	fi
 		
 	if [[ $? != 0 ]]; then
