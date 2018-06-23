@@ -188,6 +188,15 @@
         },
         "669d07c69e055b2754aacd1be513f07d": {
             "mbtiles": "./dist/periodicity_vector_pbf.mbtiles"
+        },
+        "1b468aefdaca7702654143af18a3dd77": {
+            "mbtiles": "./dist//2001/02/FLDAS_NOAH01_A_EA_D.A20010201.001.nc/evap_tavg_2001_02_fldas_noah01_a_ea_d_a20010201_001_nc_vector_pbf.mbtiles"
+        },
+        "a05858a650fa15c049c1c195d20fd09b": {
+            "mbtiles": "./dist/precipitation_raster_png.mbtiles"
+        },
+        "b49b26d6cb0db1fd626a352e0baf17e7": {
+            "mbtiles": "./dist/precipitation_vector_pbf.mbtiles"
         }
     }
 }
