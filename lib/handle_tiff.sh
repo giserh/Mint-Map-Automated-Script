@@ -113,7 +113,7 @@ handle_tiff(){
 	echo "Clipping..."
 	echo "USE_SS_SHAPE: $USE_SS_SHAPE"
 	echo "CLIP_BOUNDS: $CLIP_BOUNDS"
-	if [[ USE_SS_SHAPE == "YES" ]]; then
+	if [[ USE_SS_SHAPE != "NO" ]]; then
 		echo "Using SS shapefile..."
 		echo "SS_BOUNDARY: $SS_BOUNDARY"
 		proc_clip $INPUT $CLIP_OUT $SS_BOUNDARY #Clip to South Sudan boundary
