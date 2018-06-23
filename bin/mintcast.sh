@@ -1,14 +1,17 @@
 #!/usr/bin/env bash
 
 # export MINTCAST_PATH='/usr/local/bin/mintcast'
+oldIFS=$IFS
 export MINTCAST_PATH='.'
 
 source $MINTCAST_PATH/lib/helper_usage.sh
 source $MINTCAST_PATH/lib/helper_parameter.sh
+source $MINTCAST_PATH/lib/helper_create_array.sh
 source $MINTCAST_PATH/lib/handle_tiff.sh
 source $MINTCAST_PATH/lib/handle_tiled_tiff.sh
 source $MINTCAST_PATH/lib/handle_netcdf.sh
 source $MINTCAST_PATH/lib/handle_sqlite.sh
+source $MINTCAST_PATH/lib/proc_getnetcdf_subdataset.sh
 
 VERSION="$(cat package.json | sed -nE 's/.+@ver.*:.*\"(.*)\".*/\1/p' | tr -d '\r')"
 
@@ -37,7 +40,6 @@ NO_WEBSITE_UPDATE=NO        		# Only generate tiles in dist/, no json, no restar
 TILED_FILE_EXT="dem.tif"			# for tiled dataset, the suffix and extension of the files to be merged
 WITH_QUALITY_ASSESSMENT=NO 			# for tiled dataset, if with --with-quality-assessment, then generate like elevation.num.raster.mbtiles
 DATASET_NAME="output" 				# output mbtiles name like -o elevation, output will be elevation.raster.mbtiles and elevation.vector.mbtiles
-DATAFILE_PATH=""            		# Single file path like tiff
 GENERATE_NEW_RES="YES"				# Generate new resolution during creation of tiles
 GENERATE_RASTER_TILE="YES"			# Generate raster MBTiles as output
 GENERATE_VECTOR_TILE="YES"			# Generate vector MBTiles as output
@@ -48,6 +50,11 @@ CLIP_BOUNDS="22.4 3.4 37.0 23.2"	# Coordinates for rectangular clipping boundary
 
 
 OUTPUT_DIR_STRUCTURE_FOR_TIMESERIES="" # how netcdf's timeseries mbtiles are stored
+
+
+DATAFILE_PATH=""            		# Single file path like tiff
+
+
 
 # store mbtiles in a specific folder and read by website
 
@@ -77,7 +84,9 @@ if [[ $DATASET_TYPE == "tiff" ]]; then
 elif [[ $DATASET_TYPE == "tiled" ]]; then
 	handle_tiled_tiff
 elif [[ $DATASET_TYPE == "netcdf" ]]; then
+	# proc_getnetcdf_subdataset $DATAFILE_PATH
 	handle_netcdf
+	# exit
 else
 	echo "$DATASET_TYPE is an invalid dataset type." 
 	echo "Valid choices include: tiff, tiled, netcdf"
@@ -139,3 +148,4 @@ nohup $MINTCAST_PATH/bin/tileserver-daemon.sh restart $TILESEVER_PORT &
 
 #remove intermediate files
 # rm -f $TEMP_DIR/*
+IFS=$oldIFS
