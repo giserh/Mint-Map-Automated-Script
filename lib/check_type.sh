@@ -31,6 +31,7 @@ check_type () {
 		NODATAFLAG='-dstnodata 255 '
 	elif [[ ! -z "$IS_FLOAT" ]]; then
 		NODATAFLAG='-dstnodata -9999 '
+		POLYGOINZE_FLOAT_FLAG="-float "
 	elif [[ ! -z "$IS_INT" ]]; then
 		NODATAFLAG='-dstnodata 32222 '
 	else
