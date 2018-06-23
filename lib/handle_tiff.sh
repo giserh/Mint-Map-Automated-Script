@@ -109,14 +109,19 @@ handle_tiff(){
 	echo "handle_tiff.sh"
 	echo "INPUT: $INPUT"
 	echo "CLIP_OUT: $CLIP_OUT"
-	echo "SS_BOUNDARY: $SS_BOUNDARY"
 	echo "Clipping..."
+	echo "USE_SS_SHAPE: $USE_SS_SHAPE"
+	echo "CLIP_BOUNDS: $CLIP_BOUNDS"
 	if [[ USE_SS_SHAPE == "YES" ]]; then
+		echo "Using SS shapefile..."
+		echo "SS_BOUNDARY: $SS_BOUNDARY"
 		proc_clip $INPUT $CLIP_OUT $SS_BOUNDARY #Clip to South Sudan boundary
 	else
+		echo "Not using SS shapefile..."
+		#CLIP_OUT=$INPUT
 		proc_clip $INPUT $CLIP_OUT
 	fi
-	
+
 	echo "Projecting..."
 	check_projection $CLIP_OUT $PROJ_OUT #Check projection/change to EPSG 3857
 
