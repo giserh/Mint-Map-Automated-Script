@@ -14,8 +14,9 @@ proc_polygonize () {
 	if [[ -f "$2" ]]; then
 		rm -f "$2"
 	fi
-	
+
 	POLYGONIZED="python3 $MINTCAST_PATH/python/gdal_polygonize.py $1 `#Input filename` -f geojson $POLYGOINZE_FLOAT_FLAG $2 `#Output filename` $3 `#Layer name` 'value'"
+	echo "$POLYGONIZED"
 	eval "$POLYGONIZED"
 
 	
