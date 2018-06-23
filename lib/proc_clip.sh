@@ -32,6 +32,7 @@ proc_clip () {
 	fi
 	echo "Boundary string converted to array."
 	echo "CLIP_BOUNDS_ARRAY: $CLIP_BOUNDS_ARRAY"
+	echo "NODATAFLAG: $NODATAFLAG"
 
 	if [[ USE_SS_SHAPE == "YES" ]]; then
 		echo "Using SS shapefile..."
