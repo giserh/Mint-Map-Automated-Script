@@ -138,4 +138,4 @@ fi
 nohup $MINTCAST_PATH/bin/tileserver-daemon.sh restart $TILESEVER_PORT &
 
 #remove intermediate files
-rm -f $TEMP_DIR/*
+# rm -f $TEMP_DIR/*

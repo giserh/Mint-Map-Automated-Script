@@ -182,6 +182,12 @@
         },
         "ba3482fe0f0ab580f7411605c65270d6": {
             "mbtiles": "./dist/soil_vector_pbf.mbtiles"
+        },
+        "8fd23970f754fa8748e7b523ec7601d2": {
+            "mbtiles": "./dist/periodicity_raster_png.mbtiles"
+        },
+        "669d07c69e055b2754aacd1be513f07d": {
+            "mbtiles": "./dist/periodicity_vector_pbf.mbtiles"
         }
     }
 }

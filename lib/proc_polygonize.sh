@@ -11,7 +11,10 @@
 
 # Polygonize data:
 proc_polygonize () {
-	gdal_polygonize.py \
+	if [[ -f "$2" ]]; then
+		rm -f "$2"
+	fi
+	python3 $MINTCAST_PATH/python/gdal_polygonize.py \
 	$1 `#Input filename`\
 	-f geojson \
 	$2 `#Output filename`\
