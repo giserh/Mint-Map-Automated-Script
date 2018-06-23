@@ -29,4 +29,5 @@ proc_geojson2mbtiles() {
 		echo "tippecanoe failed in proc_geojson2mbtiles.sh  Exiting script."
 		exit 1
 	fi
+	# --attribute-type=value:float \
 }
