@@ -47,13 +47,12 @@ proc_clip () {
         $2
     else
         echo "Not using SS shapefile..."
-        echo "gdalwarp -overwrite -te ${CLIP_BOUNDS_ARRAY[*]} $NODATAFLAG $1 $2"
+        # echo "gdalwarp -overwrite -te ${CLIP_BOUNDS_ARRAY[*]} $NODATAFLAG $1 $2"
         # gdalwarp -overwrite -te ${CLIP_BOUNDS_ARRAY[0]} ${CLIP_BOUNDS_ARRAY[1]} ${CLIP_BOUNDS_ARRAY[2]} ${CLIP_BOUNDS_ARRAY[3]} $NODATAFLAG $1 $2
-        echo $(which gdalwarp)
+        # echo $(which gdalwarp)
         gdalwarp \
-        -overwrite \
-        $NODATAFLAG \
-        -te ${CLIP_BOUNDS_ARRAY[0]} ${CLIP_BOUNDS_ARRAY[1]} ${CLIP_BOUNDS_ARRAY[2]} ${CLIP_BOUNDS_ARRAY[3]} \
+        -overwrite `$NODATAFLAG`\
+        `-te ${CLIP_BOUNDS_ARRAY[0]} ${CLIP_BOUNDS_ARRAY[1]} ${CLIP_BOUNDS_ARRAY[2]} ${CLIP_BOUNDS_ARRAY[3]}` \
         $1 \
         $2
         echo "hello"

@@ -16,7 +16,7 @@ proc_polygonize () {
 	fi
 	python3 $MINTCAST_PATH/python/gdal_polygonize.py \
 	$1 `#Input filename`\
-	-f geojson $POLYGOINZE_FLOAT_FLAG\
+	-f geojson `$POLYGOINZE_FLOAT_FLAG`\
 	$2 `#Output filename`\
 	$3 `#Layer name`\
 	'value'
