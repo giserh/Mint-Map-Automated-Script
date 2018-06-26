@@ -10,6 +10,7 @@ source $MINTCAST_PATH/lib/helper_create_array.sh
 source $MINTCAST_PATH/lib/handle_tiff.sh
 source $MINTCAST_PATH/lib/handle_tiled_tiff.sh
 source $MINTCAST_PATH/lib/handle_netcdf.sh
+source $MINTCAST_PATH/lib/handle_netcdf_single.sh
 source $MINTCAST_PATH/lib/handle_sqlite.sh
 source $MINTCAST_PATH/lib/proc_getnetcdf_subdataset.sh
 
@@ -62,21 +63,28 @@ helper_parameter $@
 
 echo $START_TIME
 
-if [[ -z "$START_TIME" ]]; then
+if [[ -z "$START_TIME" && "$DATASET_TYPE" != "single-netcdf" ]]; then
 	if [[ -z "$LAYER_NAME" ]]; then
 		echo "Please set up -l|--layer-name which is the LAYER_NAME and also part of Layer ID"
 		exit 1
 	fi
 else
-	if [[ -z "$OUTPUT_DIR_STRUCTURE_FOR_TIMESERIES" ]]; then
+	if [[ -z "$OUTPUT_DIR_STRUCTURE_FOR_TIMESERIES" && "$DATASET_TYPE" != "single-netcdf" ]]; then
 		echo "Please set up -z|--output-dir-structure which is how timeseries mbtiles are stored"
 		exit 1
 	fi
 	if [[ -z "$DATASET_DIR" ]]; then
 		echo "Please set up -d|--dir which is used for traversal"
 		exit 1
-	fi
-	
+	fi	
+fi
+
+if [[ -z "$TARGET_JSON_PATH" ]]; then
+	export TARGET_JSON_PATH="$MINTCAST_PATH/dist/json"
+fi
+
+if [[ ! -d "$TARGET_JSON_PATH" ]]; then
+	mkdir -p $TARGET_JSON_PATH
 fi
 	
 if [[ $DATASET_TYPE == "tiff" ]]; then
@@ -87,37 +95,60 @@ elif [[ $DATASET_TYPE == "netcdf" ]]; then
 	# proc_getnetcdf_subdataset $DATAFILE_PATH
 	handle_netcdf
 	# exit
+elif [[ $DATASET_TYPE == "single-netcdf" ]]; then
+	handle_netcdf_single
 else
 	echo "$DATASET_TYPE is an invalid dataset type." 
 	echo "Valid choices include: tiff, tiled, netcdf"
 	exit 1
 fi
 
-# save raster
-COL_RASTER_OR_VECTOR_TYPE="raster"
-MBTILES_FILEPATH=$RASTER_MBTILES
-handle_sqlite
+if [[ $DATASET_TYPE == "tiff" || $DATASET_TYPE == "tiled" ]]; then 
+	# save raster
+	COL_RASTER_OR_VECTOR_TYPE="raster"
+	MBTILES_FILEPATH=$RASTER_MBTILES
+	handle_sqlite
 
-# save vector
-COL_RASTER_OR_VECTOR_TYPE="vector"
-MBTILES_FILEPATH=$VECTOR_MBTILES
-handle_sqlite
+	# save vector
+	COL_RASTER_OR_VECTOR_TYPE="vector"
+	MBTILES_FILEPATH=$VECTOR_MBTILES
+	handle_sqlite
 
-if [[ -z "$TARGET_JSON_PATH" ]]; then
-	export TARGET_JSON_PATH="$MINTCAST_PATH/dist/json"
+	python3 $MINTCAST_PATH/python/macro_gen_web_json/main.py update-all 
+	CKAN_URL=$(python3 $MINTCAST_PATH/python/macro_upload_ckan/main.py "$TARGET_JSON_PATH/$COL_JSON_FILENAME")
+	echo $CKAN_URL
+	# update database
+	python3 $MINTCAST_PATH/python/macro_sqlite_curd/main.py update layer \
+	"ckan_url='$CKAN_URL'" \
+	"layerid='$COL_LAYER_ID'"
+	python3 $MINTCAST_PATH/python/macro_gen_web_json/main.py update-config
+
+# elif [[ $DATASET_TYPE == "netcdf" || $DATASET_TYPE == "single-netcdf" ]]; then
+# 	MBTILES_DIR=$(dirname "${RASTER_MBTILES}")
+# 	echo "MBTILES_DIR: $MBTILES_DIR"
+# 	MBTILES_ARRAY=($MBTILES_DIR/*.mbtiles)
+# 	for ((i=0; i<${#MBTILES_ARRAY[@]}; i++)); do
+# 		MBTILES_FILEPATH=${MBTILES_ARRAY[i]}
+# 		echo "MBTILES_FILEPATH: $MBTILES_FILEPATH"
+# 		if [[ $MBTILES_FILEPATH = *raster* ]]; then
+# 			COL_RASTER_OR_VECTOR_TYPE="raster"
+# 		elif [[ $MBTILES_FILEPATH = *vector* ]]; then
+# 			COL_RASTER_OR_VECTOR_TYPE="vector"
+# 		fi
+# 		handle_sqlite
+# 		python3 $MINTCAST_PATH/python/macro_gen_web_json/main.py update-all 
+# 		CKAN_URL=$(python3 $MINTCAST_PATH/python/macro_upload_ckan/main.py "$TARGET_JSON_PATH/$COL_JSON_FILENAME")
+# 		echo $CKAN_URL
+# 		# update database
+# 		python3 $MINTCAST_PATH/python/macro_sqlite_curd/main.py update layer \
+# 		"ckan_url='$CKAN_URL'" \
+# 		"layerid='$COL_LAYER_ID'"
+# 		python3 $MINTCAST_PATH/python/macro_gen_web_json/main.py update-config
+# 	done	
 fi
 
-if [[ ! -d "$TARGET_JSON_PATH" ]]; then
-	mkdir -p $TARGET_JSON_PATH
-fi
-python3 $MINTCAST_PATH/python/macro_gen_web_json/main.py update-all 
-CKAN_URL=$(python3 $MINTCAST_PATH/python/macro_upload_ckan/main.py "$TARGET_JSON_PATH/$COL_JSON_FILENAME")
-echo $CKAN_URL
-# update database
-python3 $MINTCAST_PATH/python/macro_sqlite_curd/main.py update layer \
-"ckan_url='$CKAN_URL'" \
-"layerid='$COL_LAYER_ID'"
-python3 $MINTCAST_PATH/python/macro_gen_web_json/main.py update-config
+
+
 
 python3 $MINTCAST_PATH/python/macro_tileserver_config/main.py ../ 8082
 
