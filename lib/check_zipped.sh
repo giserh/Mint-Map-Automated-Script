@@ -18,7 +18,7 @@ check_zipped() {
 	else
 		CLEANED_DIR=$1
 	fi
-
+	
 	# Check if there are unzipped files in the directory, unzip them if not:
 	if [ -n "$(ls -A $CLEANED_DIR/*$2 2>/dev/null)" ]; then
 		echo "Files already unzipped."
