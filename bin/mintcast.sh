@@ -115,8 +115,8 @@ if [[ $DATASET_TYPE == "tiff" || $DATASET_TYPE == "tiled" ]]; then
 	handle_sqlite
 
 	python3 $MINTCAST_PATH/python/macro_gen_web_json/main.py update-all 
-	CKAN_URL=$(python3 $MINTCAST_PATH/python/macro_upload_ckan/main.py "$TARGET_JSON_PATH/$COL_JSON_FILENAME")
-	echo $CKAN_URL
+	#CKAN_URL=$(python3 $MINTCAST_PATH/python/macro_upload_ckan/main.py "$TARGET_JSON_PATH/$COL_JSON_FILENAME")
+	#echo $CKAN_URL
 	# update database
 	python3 $MINTCAST_PATH/python/macro_sqlite_curd/main.py update layer \
 	"ckan_url='$CKAN_URL'" \
