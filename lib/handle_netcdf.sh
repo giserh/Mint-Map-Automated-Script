@@ -15,7 +15,7 @@ handle_netcdf(){
 	IFS=$'\n'
 	NETCDF_FILES=($NETCDF_FILES_STRING)
 	SUBDATASETS_ARRAY=()
-	SUBDATASET_LAYAERS_ARRAY=()
+	SUBDATASET_LAYERS_ARRAY=()
 	for netcdf_file in "${NETCDF_FILES[@]}"; do
 		# echo $netcdf_file
 		proc_getnetcdf_subdataset "$netcdf_file"
@@ -25,7 +25,7 @@ handle_netcdf(){
 		for subset_tiff in "${SUBDATASETS_ARRAY[@]}"; do
 			echo $subset_tiff
 			DATAFILE_PATH="$subset_tiff"
-			LAYER_NAME="${SUBDATASET_LAYAERS_ARRAY[$index]}"
+			LAYER_NAME="${SUBDATASET_LAYERS_ARRAY[$index]}"
 			OUT_DIR="$MINTCAST_PATH/dist/$PARTIAL_PATH"
 			LAYER_ID_SUFFIX=$(python3 $MINTCAST_PATH/python/macro_string/main.py path_to_suffix $PARTIAL_PATH)
 			handle_tiff

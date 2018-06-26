@@ -61,6 +61,7 @@ handle_tiff(){
 	RASTER_LAYER_ID=$(python3 $MINTCAST_PATH/python/macro_string/main.py layer_name_to_layer_id $LAYER_NAME$LAYER_ID_SUFFIX raster png)
 	RASTER_LAYER_ID_MD5=$(python3 $MINTCAST_PATH/python/macro_md5/main.py $RASTER_LAYER_ID)
 	RASTER_MBTILES=$OUT_DIR/$RASTER_LAYER_ID.mbtiles
+	echo "RASTER_MBTILES: $RASTER_MBTILES"
 	if [[ -f $RASTER_MBTILES ]]; then
 		rm -f $RASTER_MBTILES
 	fi
@@ -78,6 +79,7 @@ handle_tiff(){
 	VECTOR_LAYER_ID=$(python3 $MINTCAST_PATH/python/macro_string/main.py layer_name_to_layer_id $LAYER_NAME$LAYER_ID_SUFFIX vector pbf)
 	VECTOR_LAYER_ID_MD5=$(python3 $MINTCAST_PATH/python/macro_md5/main.py $VECTOR_LAYER_ID)
 	VECTOR_MBTILES=$OUT_DIR/$VECTOR_LAYER_ID.mbtiles
+	echo "VECTOR_MBTILES: $VECTOR_MBTILES"
 	if [[ -f $VECTOR_MBTILES ]]; then
 		rm -f $VECTOR_MBTILES
 	fi
