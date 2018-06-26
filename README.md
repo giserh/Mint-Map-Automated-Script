@@ -2,7 +2,58 @@
 
 ![Published by Libo Liu](https://img.shields.io/badge/Libo%20Liu-Author-blue.svg)
 ![Published by Adam Vaccaro](https://img.shields.io/badge/Adam%20Vaccaro-Author-blue.svg)
-![Published by Shiwei Huang](https://img.shields.io/badge/Shiwei%20Huang-Author-blue.svg)
+![Contributor by Shiwei Huang](https://img.shields.io/badge/Shiwei%20Huang-Contributor-blue.svg)
+
+
+## Time series convention
+
+### How time series stored in `metadata.json`
+```
+	"layerNames": [
+        "Evap"
+    ],
+    "layerIds": [
+        "evap_vector_pbf"
+    ],
+    "sourceLayers": [
+        "evap"
+    ],
+    "hasData": [
+        true
+    ],
+    "hasTimeline": [
+        true
+    ],
+    "vectorMD5":[
+        null
+    ],
+    "rasterMD5":[
+        null
+    ],
+    "layers": [
+        {
+            "id": "evap_vector_pbf",
+            "source-layer": "evap",
+            "minzoom": 14,
+            "maxzoom": 3,
+            "type": "vector",
+
+            "dataset": "Elevation",
+            "axis":"slider",
+            "stepOption":{"name":"Time","type":"string|unix", "format":"yyyyMMdd", },
+            "step":[],
+            "vectormd5":["59feb8015325307ba6e75078519c424a","xxx"],
+            "rasterMD5":["x","xxx"]
+        },
+```
+### How time series stored in `config.json`
+
+```
+	"data": {
+        "59feb8015325307ba6e75078519c424a": {
+            "mbtiles": "./dist/{dataset}/{year}/{month}/whatever-it-is{day}.nc/evap_vector_pbf.mbtiles"
+        }
+```
 
 ## GDAL Version conflict
 
