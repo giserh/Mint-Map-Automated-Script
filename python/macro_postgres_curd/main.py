@@ -19,15 +19,19 @@ def main():
     try:
         if method == 'select':
             if num_args == 3:
-                for row in c.execute('SELECT * FROM ' + tableName):
+                c.execute('SELECT * FROM ' + tableName)
+                for row in c.fetchall():
                     print(row)
             elif num_args == 4:
-                for row in c.execute('SELECT * FROM %s WHERE %s ' % (tableName, sys.argv[3]) ):
+                c.execute('SELECT * FROM %s WHERE %s ' % (tableName, sys.argv[3]) )
+                for row in c.fetchall():
                     print(row)
             elif num_args == 5:
-                for row in c.execute('SELECT %s FROM %s WHERE %s' % (sys.argv[3], tableName, sys.argv[4])):
+                c.execute('SELECT %s FROM %s WHERE %s' % (sys.argv[3], tableName, sys.argv[4]))
+                for row in c.fetchall():
                     print(row)
         elif method == 'insert':
+            print("inserting...")
             if num_args == 4:
                 c.execute("INSERT INTO %s VALUES (%s)" % (tableName, sys.argv[3]))
             elif num_args == 5:
@@ -37,7 +41,7 @@ def main():
         elif method == 'delete':
             c.execute("DELETE FROM %s WHERE %s" % (tableName, sys.argv[3], sys.argv[4]))
         elif method == 'has_layer':
-            c.execute("SELECT id FROM layer WHERE layerid = '%s'" % sys.argv[2])
+            c.execute("SELECT id FROM mintcast.layer WHERE layerid = '%s'" % sys.argv[2])
             row = c.fetchone()
             if row == None:
                 print("None")
@@ -98,8 +102,12 @@ if __name__ == '__main__':
         print(wrong_num_args_msg)
         exit()
 
-    if os.path.isfile( MINTCAST_PATH + DATABASE_PATH):
+    #if os.path.isfile( MINTCAST_PATH + DATABASE_PATH):
+    conn = psycopg2.connect( host=hostname, user=username, password=password, dbname=database )
+    if conn:
+        conn.close()
         main()
     else:
         print("DATABASE doesn't exist, please check MINTCAST_PATH and MINTCAST_PATH/sql/database.sqlite")
-        exit()
+        exit(1)
+

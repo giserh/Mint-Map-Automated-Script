@@ -6,15 +6,28 @@ CREATE TABLE mintcast.metadata (
 	primary key (k)
 );
 
-insert into metadata values ('server','');
-insert into metadata values ('tileurl',"/{z}/{x}/{y}");
-insert into metadata values ('port','');
-insert into metadata values ('config_file_location','');
-insert into metadata values ('mbtiles_location','');
-insert into metadata values ('metajson_location','');
-insert into metadata values ('border_features','{"type":"FeatureCollection","features":[{"type":"Feature","properties":{"stroke":"#000000","stroke-width":3,"stroke-opacity":1,"fill":"#555555","fill-opacity":0.3},"geometry":{"type":"Polygon","coordinates":[]}}]}');
+insert into mintcast.metadata values ('server','');
+insert into mintcast.metadata values ('tileurl','/{z}/{x}/{y}');
+insert into mintcast.metadata values ('port','');
+insert into mintcast.metadata values ('config_file_location','');
+insert into mintcast.metadata values ('mbtiles_location','');
+insert into mintcast.metadata values ('metajson_location','');
+insert into mintcast.metadata values ('border_features','{"type":"FeatureCollection","features":[{"type":"Feature","properties":{"stroke":"#000000","stroke-width":3,"stroke-opacity":1,"fill":"#555555","fill-opacity":0.3},"geometry":{"type":"Polygon","coordinates":[]}}]}');
 
 -- color_no_qml
+
+CREATE SEQUENCE mintcast.original_seq;
+
+CREATE TABLE mintcast.original (
+	id int DEFAULT NEXTVAL ('mintcast.original_seq') primary key,
+	dataset_name varchar(255) ,
+	filename varchar(255) not null ,
+	filepath varchar(255) not null ,
+	gdalinfo text ,
+	related_json text ,
+	create_at timestamp(0) default NOW(),
+	modified_at timestamp(0) default NOW() 
+);
 
 CREATE SEQUENCE mintcast.layer_seq;
 
@@ -27,7 +40,7 @@ CREATE TABLE mintcast.layer (
 	stdname varchar(255) not null ,
 	md5 varchar(255) not null ,
 	sourceLayer varchar(64) not null ,
-	original_id int not null ,
+	-- original_id int not null ,
 	hasData SMALLINT default 0 ,
 	hasTimeline SMALLINT default 0 ,
 	maxzoom INT default 14 ,
@@ -50,19 +63,7 @@ CREATE TABLE mintcast.layer (
 	original_dataset_bounds text ,
 	mapping varchar(64) ,
 	create_at timestamp(0) default NOW(),
-	modified_at timestamp(0) default NOW(),
-	FOREIGN KEY (original_id) REFERENCES mintcast.original(id)
+	modified_at timestamp(0) default NOW()
+	-- FOREIGN KEY (original_id) REFERENCES mintcast.original(id)
 );
 
-CREATE SEQUENCE mintcast.original_seq;
-
-CREATE TABLE mintcast.original (
-	id int DEFAULT NEXTVAL ('mintcast.original_seq') primary key,
-	dataset_name varchar(255) ,
-	filename varchar(255) not null ,
-	filepath varchar(255) not null ,
-	gdalinfo text ,
-	related_json text ,
-	create_at timestamp(0) default NOW(),
-	modified_at timestamp(0) default NOW() 
-);

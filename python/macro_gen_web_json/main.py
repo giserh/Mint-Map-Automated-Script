@@ -1,11 +1,16 @@
 #!/usr/bin/env python3
 
 import sys, os
-import sqlite3
+#import sqlite3
+import psycopg2
 import json
 
 MINTCAST_PATH = os.environ.get('MINTCAST_PATH')
-DATABASE_PATH = '/sql/database.sqlite'
+#DATABASE_PATH = '/sql/database.sqlite'
+hostname = 'localhost'
+username = 'ADV'
+password = 'password'
+database = 'minttestdb'
 
 JSON_FILEPATH = os.environ.get('TARGET_JSON_PATH')
 
@@ -15,14 +20,17 @@ def decode(string):
     return bytes(string, "utf-8").decode("unicode_escape")
 
 def getConn():
-    conn = sqlite3.connect(MINTCAST_PATH + DATABASE_PATH)
+    #conn = sqlite3.connect(MINTCAST_PATH + DATABASE_PATH)
+    conn = psycopg2.connect( host=hostname, user=username, password=password, dbname=database )
     return conn
 
 def getMetadata():
     conn = getConn()
     c = conn.cursor()
     try:
-        for row in c.execute('SELECT * FROM metadata'):
+        #import pdb; pdb.set_trace()
+        c.execute('SELECT * FROM mintcast.metadata')
+        for row in c.fetchall():
             METADATA['%s' % row[0]] = row[1]
         # print(METADATA)
     except Exception as e:
@@ -45,7 +53,8 @@ def updateMetadata():
     metadataJson['hasTimeline'] = []
     metadataJson['layers'] = []
     try:
-        for row in c.execute('SELECT * FROM layer'):
+        c.execute('SELECT * FROM mintcast.layer')
+        for row in c.fetchall():
             if row[2] == 'raster':
                 continue
             metadataJson['layerNames'].append(row[4])
@@ -67,7 +76,8 @@ def update(identifier):
     conn = getConn()
     c = conn.cursor()
     try:
-        for row in c.execute('SELECT * FROM layer WHERE layerid = "%s"' % identifier):
+        c.execute("SELECT * FROM mintcast.layer WHERE layerid = '%s'" % identifier)
+        for row in c.fetchall():
             toJson(row)
     except Exception as e:
         raise e
@@ -105,7 +115,8 @@ def updateAll():
     conn = getConn()
     c = conn.cursor()
     try:
-        for row in c.execute('SELECT * FROM layer'):
+        c.execute('SELECT * FROM mintcast.layer')
+        for row in c.fetchall():
             toJson(row)
     except Exception as e:
         raise e
