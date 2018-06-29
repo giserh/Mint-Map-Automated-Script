@@ -42,9 +42,6 @@ def handle_metadata(data):
         elif result['filetype'] == 'image/tiff':
             os.system("mintcast ")
     
-for x in xrange(1,10):
-    pass
-
 def handle_dataset_by_md5(md5):
     resp = requests.get(CKAN_BASE_URL + "package_show", 
         headers=CKAN_HEADER, params={"id":md5}).json()
