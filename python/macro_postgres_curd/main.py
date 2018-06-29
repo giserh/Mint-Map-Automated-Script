@@ -3,11 +3,16 @@
 import sys, os, psycopg2
 
 MINTCAST_PATH = os.environ.get('MINTCAST_PATH')
+config_path = MINTCAST_PATH + "/config/"
+sys.path.append(config_path)
 
-hostname = 'localhost'
-username = 'ADV'
-password = 'password'
-database = 'minttestdb'
+from postgres_config import hostname, username, password, database
+
+
+#hostname = 'localhost'
+#username = 'ADV'
+#password = 'password'
+#database = 'minttestdb'
 
 def main():
     num_args = len(sys.argv)
@@ -15,6 +20,7 @@ def main():
     method = sys.argv[1]
     tableName = 'mintcast.' + sys.argv[2]
     conn = psycopg2.connect( host=hostname, user=username, password=password, dbname=database )
+    #from postgres_config import conn
     c = conn.cursor()
     try:
         if method == 'select':
@@ -104,6 +110,7 @@ if __name__ == '__main__':
 
     #if os.path.isfile( MINTCAST_PATH + DATABASE_PATH):
     conn = psycopg2.connect( host=hostname, user=username, password=password, dbname=database )
+    #from postgres_config import conn
     if conn:
         conn.close()
         main()

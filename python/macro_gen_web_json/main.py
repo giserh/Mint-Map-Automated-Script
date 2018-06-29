@@ -6,11 +6,16 @@ import psycopg2
 import json
 
 MINTCAST_PATH = os.environ.get('MINTCAST_PATH')
+config_path = MINTCAST_PATH + "/config/"
+sys.path.append(config_path)
+
+from postgres_config import hostname, username, password, database
+
 #DATABASE_PATH = '/sql/database.sqlite'
-hostname = 'localhost'
-username = 'ADV'
-password = 'password'
-database = 'minttestdb'
+#hostname = 'localhost'
+#username = 'ADV'
+#password = 'password'
+#database = 'minttestdb'
 
 JSON_FILEPATH = os.environ.get('TARGET_JSON_PATH')
 
@@ -22,6 +27,7 @@ def decode(string):
 def getConn():
     #conn = sqlite3.connect(MINTCAST_PATH + DATABASE_PATH)
     conn = psycopg2.connect( host=hostname, user=username, password=password, dbname=database )
+    #from postgres_config import conn
     return conn
 
 def getMetadata():

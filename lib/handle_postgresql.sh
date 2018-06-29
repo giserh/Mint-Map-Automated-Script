@@ -32,7 +32,7 @@ handle_postgresql() {
 	# Source Layer is the actually layer name
 	COL_LAYER_NAME=$(python3 $MINTCAST_PATH/python/macro_string/main.py gen_layer_name $LAYER_NAME)
 	COL_SOURCE_LAYER=$LAYER_NAME
-	COL_ORIGINIAL_ID=0
+	COL_ORIGINAL_ID=0
 	COL_HAS_DATA=1
 	
 	COL_START_TIME=$START_TIME
@@ -85,18 +85,24 @@ handle_postgresql() {
 
 	# HAS_LAYER=$(python3 $MINTCAST_PATH/python/macro_sqlite_curd/main.py has_layer $COL_LAYER_ID)
 	HAS_LAYER=$(python3 $MINTCAST_PATH/python/macro_postgres_curd/main.py has_layer $COL_LAYER_ID)
-	# echo "null, '$COL_LAYER_ID', '$COL_RASTER_OR_VECTOR_TYPE', '$COL_TILE_FORMAT', '$COL_LAYER_NAME', '$COL_SOURCE_LAYER', $COL_ORIGINIAL_ID, $COL_HAS_DATA, $COL_HAS_TIMELINE, $COL_MAXZOOM, $COL_MINZOOM, '$COL_BOUNDS', '$COL_MBTILES_FILENAME', '$COL_DIRECTORY_FORMAT', '$COL_START_TIME', '$COL_END_TIME', '$COL_JSON_FILENAME', '$COL_SERVER', '$COL_TILE_URL', '$COL_STYLE_TYPE', '$COL_LEGEND_TYPE', '$COL_LEGEND', '$COL_VALUE_ARRAY', '$COL_VECTOR_JSON', '$COL_COLORMAP', '$COL_ORIGINAL_DATASET_BOUNDS', '$COL_MAPPING', '$COL_CKAN_URL', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP"
+	# echo "null, '$COL_LAYER_ID', '$COL_RASTER_OR_VECTOR_TYPE', '$COL_TILE_FORMAT', '$COL_LAYER_NAME', '$COL_SOURCE_LAYER', $COL_ORIGINAL_ID, $COL_HAS_DATA, $COL_HAS_TIMELINE, $COL_MAXZOOM, $COL_MINZOOM, '$COL_BOUNDS', '$COL_MBTILES_FILENAME', '$COL_DIRECTORY_FORMAT', '$COL_START_TIME', '$COL_END_TIME', '$COL_JSON_FILENAME', '$COL_SERVER', '$COL_TILE_URL', '$COL_STYLE_TYPE', '$COL_LEGEND_TYPE', '$COL_LEGEND', '$COL_VALUE_ARRAY', '$COL_VECTOR_JSON', '$COL_COLORMAP', '$COL_ORIGINAL_DATASET_BOUNDS', '$COL_MAPPING', '$COL_CKAN_URL', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP"
 	if [[ "$HAS_LAYER" = "None" ]]; then
 		echo "DOES NOT HAVE LAYER"
+		echo "COL_LAYER_ID: $COL_LAYER_ID"
 		python3 $MINTCAST_PATH/python/macro_postgres_curd/main.py insert layer \
-			"layerid, type, tileformat, name, sourceLayer, hasData, hasTimeline, bounds, mbfilename, directory_format, json_filename, server, tileurl, legend_type, legend, valueArray, vector_json, colormap, original_dataset_bounds, mapping, stdname, md5" \
-			"'$COL_LAYER_ID', '$COL_RASTER_OR_VECTOR_TYPE', '$COL_TILE_FORMAT', '$COL_LAYER_NAME', '$COL_SOURCE_LAYER', $COL_HAS_DATA, $COL_HAS_TIMELINE, '$COL_BOUNDS', '$COL_MBTILES_FILENAME', '$COL_DIRECTORY_FORMAT', '$COL_JSON_FILENAME', '$COL_SERVER','$COL_TILE_URL', '$COL_LEGEND_TYPE', '$COL_LEGEND', '$COL_VALUE_ARRAY', '$COL_VECTOR_JSON', '$COL_COLORMAP', '$COL_ORIGINAL_DATASET_BOUNDS', '$COL_MAPPING', '', ''"
-			#"null, '$COL_LAYER_ID', '$COL_RASTER_OR_VECTOR_TYPE', '$COL_TILE_FORMAT', '$COL_LAYER_NAME', '$COL_SOURCE_LAYER', $COL_ORIGINIAL_ID, $COL_HAS_DATA, $COL_HAS_TIMELINE, $COL_MAX_ZOOM, $COL_MIN_ZOOM,'$COL_BOUNDS', '$COL_MBTILES_FILENAME', '$COL_DIRECTORY_FORMAT', '$COL_START_TIME', '$COL_END_TIME', '$COL_JSON_FILENAME', '$COL_SERVER', '$COL_TILE_URL', '$COL_STYLE_TYPE', '$COL_LEGEND_TYPE', '$COL_LEGEND', '$COL_VALUE_ARRAY', '$COL_VECTOR_JSON', '$COL_COLORMAP', '$COL_ORIGINAL_DATASET_BOUNDS', '$COL_MAPPING', '$COL_CKAN_URL', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP"
+			"layerid, type, tileformat, name, sourceLayer, hasData, hasTimeline, bounds, mbfilename, directory_format, json_filename, server, tileurl, legend_type, legend, valueArray, vector_json, colormap, original_dataset_bounds, mapping, stdname, md5, original_id" \
+			"'$COL_LAYER_ID', '$COL_RASTER_OR_VECTOR_TYPE', '$COL_TILE_FORMAT', '$COL_LAYER_NAME', '$COL_SOURCE_LAYER', $COL_HAS_DATA, $COL_HAS_TIMELINE, '$COL_BOUNDS', '$COL_MBTILES_FILENAME', '$COL_DIRECTORY_FORMAT', '$COL_JSON_FILENAME', '$COL_SERVER','$COL_TILE_URL', '$COL_LEGEND_TYPE', '$COL_LEGEND', '$COL_VALUE_ARRAY', '$COL_VECTOR_JSON', '$COL_COLORMAP', '$COL_ORIGINAL_DATASET_BOUNDS', '$COL_MAPPING', '', '', $COL_ORIGINAL_ID"
+			#"null, '$COL_LAYER_ID', '$COL_RASTER_OR_VECTOR_TYPE', '$COL_TILE_FORMAT', '$COL_LAYER_NAME', '$COL_SOURCE_LAYER', $COL_ORIGINAL_ID, $COL_HAS_DATA, $COL_HAS_TIMELINE, $COL_MAX_ZOOM, $COL_MIN_ZOOM,'$COL_BOUNDS', '$COL_MBTILES_FILENAME', '$COL_DIRECTORY_FORMAT', '$COL_START_TIME', '$COL_END_TIME', '$COL_JSON_FILENAME', '$COL_SERVER', '$COL_TILE_URL', '$COL_STYLE_TYPE', '$COL_LEGEND_TYPE', '$COL_LEGEND', '$COL_VALUE_ARRAY', '$COL_VECTOR_JSON', '$COL_COLORMAP', '$COL_ORIGINAL_DATASET_BOUNDS', '$COL_MAPPING', '$COL_CKAN_URL', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP"
+			# NOTE: Changed this insertion because some of the variables are not being set (such as minzoom/maxzoom, CURRENT_TIMESTAMP, etc.)
 	else
 		echo "HAS LAYER"
 		python3 $MINTCAST_PATH/python/macro_postgres_curd/main.py update layer \
-			"layerid='$COL_LAYER_ID', type='$COL_RASTER_OR_VECTOR_TYPE', tileformat='$COL_TILE_FORMAT', name='$COL_LAYER_NAME', sourceLayer='$COL_SOURCE_LAYER', original_id=$COL_ORIGINIAL_ID, hasData=$COL_HAS_DATA, hasTimeline=$COL_HAS_TIMELINE, maxzoom=$COL_MAXZOOM, minzoom=$COL_MINZOOM, bounds='$COL_BOUNDS', mbfilename='$COL_MBTILES_FILENAME', directory_format='$COL_DIRECTORY_FORMAT', starttime='$COL_START_TIME', endtime='$COL_END_TIME', json_filename='$COL_JSON_FILENAME', server='$COL_SERVER', tileurl='$COL_TILE_URL', styleType='$COL_STYLE_TYPE', legend_type='$COL_LEGEND_TYPE', legend='$COL_LEGEND', valueArray='$COL_VALUE_ARRAY', vector_json='$COL_VECTOR_JSON', colormap='$COL_COLORMAP', original_dataset_bounds='$COL_ORIGINAL_DATASET_BOUNDS', mapping='$COL_MAPPING', create_at=CURRENT_TIMESTAMP, modified_at=CURRENT_TIMESTAMP" \
+			"layerid='$COL_LAYER_ID', type='$COL_RASTER_OR_VECTOR_TYPE', tileformat='$COL_TILE_FORMAT', name='$COL_LAYER_NAME', sourceLayer='$COL_SOURCE_LAYER', original_id=$COL_ORIGINAL_ID, hasData=$COL_HAS_DATA, hasTimeline=$COL_HAS_TIMELINE, bounds='$COL_BOUNDS', mbfilename='$COL_MBTILES_FILENAME', directory_format='$COL_DIRECTORY_FORMAT', starttime='$COL_START_TIME', endtime='$COL_END_TIME', json_filename='$COL_JSON_FILENAME', server='$COL_SERVER', tileurl='$COL_TILE_URL', styleType='$COL_STYLE_TYPE', legend_type='$COL_LEGEND_TYPE', legend='$COL_LEGEND', valueArray='$COL_VALUE_ARRAY', vector_json='$COL_VECTOR_JSON', colormap='$COL_COLORMAP', original_dataset_bounds='$COL_ORIGINAL_DATASET_BOUNDS', mapping='$COL_MAPPING', create_at=CURRENT_TIMESTAMP, modified_at=CURRENT_TIMESTAMP" \
 			"id=$HAS_LAYER"
+			#"layerid='$COL_LAYER_ID', type='$COL_RASTER_OR_VECTOR_TYPE', tileformat='$COL_TILE_FORMAT', name='$COL_LAYER_NAME', sourceLayer='$COL_SOURCE_LAYER', original_id=$COL_ORIGINAL_ID, hasData=$COL_HAS_DATA, hasTimeline=$COL_HAS_TIMELINE, maxzoom=$COL_MAXZOOM, minzoom=$COL_MINZOOM, bounds='$COL_BOUNDS', mbfilename='$COL_MBTILES_FILENAME', directory_format='$COL_DIRECTORY_FORMAT', starttime='$COL_START_TIME', endtime='$COL_END_TIME', json_filename='$COL_JSON_FILENAME', server='$COL_SERVER', tileurl='$COL_TILE_URL', styleType='$COL_STYLE_TYPE', legend_type='$COL_LEGEND_TYPE', legend='$COL_LEGEND', valueArray='$COL_VALUE_ARRAY', vector_json='$COL_VECTOR_JSON', colormap='$COL_COLORMAP', original_dataset_bounds='$COL_ORIGINAL_DATASET_BOUNDS', mapping='$COL_MAPPING', create_at=CURRENT_TIMESTAMP, modified_at=CURRENT_TIMESTAMP" \
+			#"id=$HAS_LAYER"
+			# NOTE: Changed this insertion because some of the variables are not being set (such as minzoom/maxzoom, CURRENT_TIMESTAMP, etc.)
+
 	fi
 }
 
