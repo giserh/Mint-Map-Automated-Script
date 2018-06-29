@@ -9,4 +9,4 @@ username = 'vaccaro'
 password = 'm\\tC7;cc'
 database = 'mintcast'
 
-conn = psycopg2.connect( host=hostname, user=username, password=password, dbname=database )
+#conn = psycopg2.connect( host=hostname, user=username, password=password, dbname=database )
