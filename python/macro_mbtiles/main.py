@@ -1,12 +1,6 @@
 #!/usr/bin/env python3
 
-import sys, psycopg2, json, os
-
-MINTCAST_PATH = os.environ.get('MINTCAST_PATH')
-config_path = MINTCAST_PATH + "/config/"
-sys.path.append(config_path)
-
-from postgres_config import hostname, username, password, database
+import sys, sqlite3, json
 
 USAGE='''
 USAGE:
@@ -22,31 +16,23 @@ USAGE:
 def main():
     method = sys.argv[1]
     mbtiles = sys.argv[2]
-
-    #hostname = 'localhost'
-    #username = 'ADV'
-    #password = 'password'
-    #database = 'minttestdb'
-    #from postgres_config import conn
-
-    #conn = psycopg2.connect( host=hostname, user=username, password=password, dbname=database )
-    conn = psycopg2.connect( host=hostname, user=username, password=password, dbname=database )
+    conn = sqlite3.connect(mbtiles)
     c = conn.cursor()
     hasError = False
 
     try:
         if method == 'tile_format':
-            c.execute("SELECT v FROM mintcast.metadata WHERE k = 'format'")
+            c.execute('SELECT value FROM metadata WHERE name = "format"')
         elif method == 'bounds':
-            c.execute("SELECT v FROM mintcast.metadata WHERE k = 'bounds'")
+            c.execute('SELECT value FROM metadata WHERE name = "bounds"')
         elif method =='minzoom':
-            c.execute("SELECT v FROM mintcast.metadata WHERE k = 'minzoom'")
+            c.execute('SELECT value FROM metadata WHERE name = "minzoom"')
         elif method == 'maxzoom':
-            c.execute("SELECT v FROM mintcast.metadata WHERE k = 'maxzoom'")
+            c.execute('SELECT value FROM metadata WHERE name = "maxzoom"')
         elif method == 'vector_json':
-            c.execute("SELECT v FROM mintcast.metadata WHERE k = 'json'")
+            c.execute('SELECT value FROM metadata WHERE name = "json"')
         elif method == 'values':
-            c.execute("SELECT v FROM mintcast.metadata WHERE k = 'json'")
+            c.execute('SELECT value FROM metadata WHERE name = "json"')
 
         # get value
         row = c.fetchone()
@@ -64,7 +50,7 @@ def main():
         raise e
     finally:
         if hasError:
-            print("MBTILES or parameter is invalid\n" + USAGE, file= sys.stderr)
+            print("MBTILES or paramter is invalid\n" + USAGE, file= sys.stderr)
             conn.close()
             exit(2)
         conn.close()
