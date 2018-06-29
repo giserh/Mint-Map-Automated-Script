@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import sys, json, sqlite3, os
+import sys, json, os, psycopg2
 
 MINTCAST_PATH = os.environ.get('MINTCAST_PATH')
 config_path = MINTCAST_PATH + "/config/"
