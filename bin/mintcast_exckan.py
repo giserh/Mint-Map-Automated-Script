@@ -36,10 +36,14 @@ def handle_metadata(data):
     print(header)
     if "Content-Type" in header:
         result['filetype'] = header["Content-Type"]
-    if not result['filetype']:
-        pass
+    if result['filetype']:
+        if result['filetype'] == 'application/x-netcdf':
+            os.system("mintcast ")
+        elif result['filetype'] == 'image/tiff':
+            os.system("mintcast ")
     
-
+for x in xrange(1,10):
+    pass
 
 def handle_dataset_by_md5(md5):
     resp = requests.get(CKAN_BASE_URL + "package_show", 
