@@ -33,14 +33,14 @@ CREATE SEQUENCE mintcast.layer_seq;
 
 CREATE TABLE mintcast.layer (
 	id int DEFAULT NEXTVAL ('mintcast.layer_seq') primary key,
-	layerid varchar(64) not null ,
+	layerid varchar(255) not null ,
 	type varchar(8) default 'vector' ,
 	tileformat varchar(8) default 'pdf' ,
 	name varchar(64) not null ,
 	stdname varchar(255) not null ,
 	md5 varchar(255) not null ,
 	sourceLayer varchar(64) not null ,
-	-- original_id int not null ,
+	original_id int not null ,
 	hasData SMALLINT default 0 ,
 	hasTimeline SMALLINT default 0 ,
 	maxzoom INT default 14 ,

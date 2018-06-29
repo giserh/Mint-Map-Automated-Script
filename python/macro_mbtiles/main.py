@@ -1,6 +1,12 @@
 #!/usr/bin/env python3
 
-import sys, psycopg2, json
+import sys, psycopg2, json, os
+
+MINTCAST_PATH = os.environ.get('MINTCAST_PATH')
+config_path = MINTCAST_PATH + "/config/"
+sys.path.append(config_path)
+
+from postgres_config import hostname, username, password, database
 
 USAGE='''
 USAGE:
@@ -17,11 +23,13 @@ def main():
     method = sys.argv[1]
     mbtiles = sys.argv[2]
 
-    hostname = 'localhost'
-    username = 'ADV'
-    password = 'password'
-    database = 'minttestdb'
+    #hostname = 'localhost'
+    #username = 'ADV'
+    #password = 'password'
+    #database = 'minttestdb'
+    #from postgres_config import conn
 
+    #conn = psycopg2.connect( host=hostname, user=username, password=password, dbname=database )
     conn = psycopg2.connect( host=hostname, user=username, password=password, dbname=database )
     c = conn.cursor()
     hasError = False

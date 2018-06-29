@@ -3,11 +3,18 @@
 import sys, json, sqlite3, os
 
 MINTCAST_PATH = os.environ.get('MINTCAST_PATH')
-DATABASE_PATH = '/sql/database.sqlite'
+config_path = MINTCAST_PATH + "/config/"
+sys.path.append(config_path)
+
+from postgres_config import hostname, username, password, database
+
+#DATABASE_PATH = '/sql/database.sqlite'
 
 def main(root = '../', port='8080', server='0.0.0.0'):
     config = {'options': {'paths': {'root': root, 'mbtiles': ''}, 'domains': ['%s:%s'%(server, port),'localhost:%s'%port, '127.0.0.1:%s'%port], 'formatQuality': {'png': 100, 'jpeg': 80, 'webp': 90}, 'maxScaleFactor': 3, 'maxSize': 2048, 'pbfAlias': 'pbf', 'serveAllFonts': False, 'serveStaticMaps': False}, 'data': {}}
-    conn = sqlite3.connect(MINTCAST_PATH + DATABASE_PATH)
+    #conn = sqlite3.connect(MINTCAST_PATH + DATABASE_PATH)
+    #from postgres_config import conn
+    conn = psycopg2.connect( host=hostname, user=username, password=password, dbname=database )
     c = conn.cursor()
     try:
         for row in c.execute('SELECT * FROM tileserverconfig'):

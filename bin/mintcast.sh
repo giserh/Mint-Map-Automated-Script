@@ -11,6 +11,7 @@ source $MINTCAST_PATH/lib/handle_tiff.sh
 source $MINTCAST_PATH/lib/handle_tiled_tiff.sh
 source $MINTCAST_PATH/lib/handle_netcdf.sh
 source $MINTCAST_PATH/lib/handle_netcdf_single.sh
+source $MINTCAST_PATH/lib/handle_postgresql.sh
 source $MINTCAST_PATH/lib/handle_sqlite.sh
 source $MINTCAST_PATH/lib/proc_getnetcdf_subdataset.sh
 
@@ -107,18 +108,22 @@ if [[ $DATASET_TYPE == "tiff" || $DATASET_TYPE == "tiled" ]]; then
 	# save raster
 	COL_RASTER_OR_VECTOR_TYPE="raster"
 	MBTILES_FILEPATH=$RASTER_MBTILES
-	handle_sqlite
+	#handle_sqlite
+	handle_postgresql
 
 	# save vector
 	COL_RASTER_OR_VECTOR_TYPE="vector"
 	MBTILES_FILEPATH=$VECTOR_MBTILES
-	handle_sqlite
+	#handle_sqlite
+	handle_postgresql
 
 	python3 $MINTCAST_PATH/python/macro_gen_web_json/main.py update-all 
 	#CKAN_URL=$(python3 $MINTCAST_PATH/python/macro_upload_ckan/main.py "$TARGET_JSON_PATH/$COL_JSON_FILENAME")
 	#echo $CKAN_URL
 	# update database
-	python3 $MINTCAST_PATH/python/macro_sqlite_curd/main.py update layer \
+	echo "TARGET_JSON_PATH: $TARGET_JSON_PATH"
+	CKAN_URL="blahblahblah.com"
+	python3 $MINTCAST_PATH/python/macro_postgres_curd/main.py update layer \
 	"ckan_url='$CKAN_URL'" \
 	"layerid='$COL_LAYER_ID'"
 	python3 $MINTCAST_PATH/python/macro_gen_web_json/main.py update-config
@@ -171,7 +176,6 @@ if [[ "$DEV_MODE" != "YES" ]]; then
 	scp $VECTOR_MBTILES $ROOT_STR:$JONSNOW_MBTILES
 	scp $TARGET_JSON_PATH/$COL_JSON_FILENAME $ROOT_STR:$JONSNOW_JSON
 	#ssh -t $JONSNOW_STR "sudo mv $RASTER_MBTILES $JONSNOW_MBTILES"
-
 fi
 
 # restart tile server
