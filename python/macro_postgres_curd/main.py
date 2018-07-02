@@ -70,30 +70,30 @@ def main():
 wrong_num_args_msg = '''
 You have entered an invalid number of arguments.
 USAGE:
-    ./python/macro_sqlite_curd/main.py [method] [table name] [variable names] [values]|[where condition]
+    ./python/macro_postgres_curd/main.py [method] [table name] [variable names] [values]|[where condition]
 EXAMPLE:
 
 select
-    ./python/macro_sqlite_curd/main.py select metadata
+    ./python/macro_postgres_curd/main.py select metadata
         (return all data from the table)
-    ./python/macro_sqlite_curd/main.py select metadata [where]
+    ./python/macro_postgres_curd/main.py select metadata [where]
         (select * from metadata where [where])
-    ./python/macro_sqlite_curd/main.py select metadata [field] [where]
-        ./python/macro_sqlite_curd/main.py select metadata "k,v" "k=''"
+    ./python/macro_postgres_curd/main.py select metadata [field] [where]
+        ./python/macro_postgres_curd/main.py select metadata "k,v" "k=''"
 
 insert
-    ./python/macro_sqlite_curd/main.py insert metadata [columns] [values]
-        ./python/macro_sqlite_curd/main.py insert metadata "k,v" "'foo','bar'"
-    ./python/macro_sqlite_curd/main.py insert metadata [all values]
-        ./python/macro_sqlite_curd/main.py insert metadata "'foo','bar'"
+    ./python/macro_postgres_curd/main.py insert metadata [columns] [values]
+        ./python/macro_postgres_curd/main.py insert metadata "k,v" "'foo','bar'"
+    ./python/macro_postgres_curd/main.py insert metadata [all values]
+        ./python/macro_postgres_curd/main.py insert metadata "'foo','bar'"
 
 update
-    ./python/macro_sqlite_curd/main.py update metadata "v='bar2'" "k='foo'"
-        ./python/macro_sqlite_curd/main.py update metadata "v='bar2'" "k='foo'"
+    ./python/macro_postgres_curd/main.py update metadata "v='bar2'" "k='foo'"
+        ./python/macro_postgres_curd/main.py update metadata "v='bar2'" "k='foo'"
 
 delete
-    ./python/macro_sqlite_curd/main.py delete metadata [where]
-        ./python/macro_sqlite_curd/main.py delete metadata "v='bar2'"
+    ./python/macro_postgres_curd/main.py delete metadata [where]
+        ./python/macro_postgres_curd/main.py delete metadata "v='bar2'"
 
 
 @RETURN
@@ -115,6 +115,6 @@ if __name__ == '__main__':
         conn.close()
         main()
     else:
-        print("DATABASE doesn't exist, please check MINTCAST_PATH and MINTCAST_PATH/sql/database.sqlite")
+        print("DATABASE doesn't exist, please check MINTCAST_PATH and Postgres config")
         exit(1)
 

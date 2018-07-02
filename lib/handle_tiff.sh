@@ -66,7 +66,8 @@ handle_tiff(){
 		rm -f $RASTER_MBTILES
 	fi
 
-	HAS_LAYER=$(python3 $MINTCAST_PATH/python/macro_sqlite_curd/main.py has_tileserver_config $RASTER_LAYER_ID)
+	#HAS_LAYER=$(python3 $MINTCAST_PATH/python/macro_sqlite_curd/main.py has_tileserver_config $RASTER_LAYER_ID)
+	HAS_LAYER=$(python3 $MINTCAST_PATH/python/macro_postgres_curd/main.py has_tileserver_config $RASTER_LAYER_ID)
 	if [[ "$HAS_LAYER" = "None" ]]; then
 		#python3 $MINTCAST_PATH/python/macro_sqlite_curd/main.py insert tileserverconfig \
 		python3 $MINTCAST_PATH/python/macro_postgres_curd/main.py insert tileserverconfig \
@@ -90,10 +91,12 @@ handle_tiff(){
 	#HAS_LAYER=$(python3 $MINTCAST_PATH/python/macro_sqlite_curd/main.py has_tileserver_config $VECTOR_LAYER_ID)
 	HAS_LAYER=$(python3 $MINTCAST_PATH/python/macro_postgres_curd/main.py has_tileserver_config $VECTOR_LAYER_ID)
 	if [[ "$HAS_LAYER" = "None" ]]; then
-		python3 $MINTCAST_PATH/python/macro_sqlite_curd/main.py insert tileserverconfig \
+		#python3 $MINTCAST_PATH/python/macro_sqlite_curd/main.py insert tileserverconfig \
+		python3 $MINTCAST_PATH/python/macro_postgres_curd/main.py insert tileserverconfig \
 			"null, '$VECTOR_LAYER_ID', '$VECTOR_MBTILES', '$VECTOR_LAYER_ID_MD5'"
 	else
-		python3 $MINTCAST_PATH/python/macro_sqlite_curd/main.py update tileserverconfig \
+		#python3 $MINTCAST_PATH/python/macro_sqlite_curd/main.py update tileserverconfig \
+		python3 $MINTCAST_PATH/python/macro_postgres_curd/main.py update tileserverconfig \
 			"layerid='$VECTOR_LAYER_ID', mbtiles='$VECTOR_MBTILES', md5='$VECTOR_LAYER_ID_MD5'," \
 			"id=$HAS_LAYER"
 	fi
