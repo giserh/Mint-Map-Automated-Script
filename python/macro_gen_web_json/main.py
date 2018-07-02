@@ -65,13 +65,13 @@ def updateMetadata():
                 continue
             metadataJson['layerNames'].append(row[4])
             metadataJson['layerIds'].append(row[1])
-            metadataJson['sourceLayers'].append(row[5])
-            metadataJson['hasData'].append(False if row[7] == 0 else True)
-            metadataJson['hasTimeline'].append(False if row[8] == 0 else True)
-            if row[7] == 1:
-                metadataJson['layers'].append({'id':row[1], 'source-layer': row[5], 'minzoom': row[10], 'maxzoom':row[9], 'type':row[2], 'mapping':'', 'startTime': row[14], 'endtime':row[15], 'directory_format':row[13]})
-            if row[7] == 0:
-                metadataJson['layers'].append({'id':row[1], 'source-layer': row[5], 'minzoom': row[10], 'maxzoom':row[9], 'type':row[2], 'mapping':''})
+            metadataJson['sourceLayers'].append(row[7])
+            metadataJson['hasData'].append(False if row[9] == 0 else True)
+            metadataJson['hasTimeline'].append(False if row[10] == 0 else True)
+            if row[10] == 1:
+                metadataJson['layers'].append({'id':row[1], 'source-layer': row[5], 'minzoom': row[11], 'maxzoom':row[12], 'type':row[2], 'mapping':'', 'startTime': row[14], 'endtime':row[15], 'directory_format':row[13]})
+            if row[10] == 0:
+                metadataJson['layers'].append({'id':row[1], 'source-layer': row[5], 'minzoom': row[11], 'maxzoom':row[12], 'type':row[2], 'mapping':''})
     except Exception as e:
         raise e
     finally:
@@ -99,16 +99,16 @@ def toJson(row):
 
     layerJson['id'] = row[1]
     layerJson['incre'] = row[0]
-    layerJson['source-layer'] = row[5]
+    layerJson['source-layer'] = row[7]
     layerJson['propertyName'] = 'value'
-    layerJson['minzoom'] = row[10]
-    layerJson['maxzoom'] = row[9]
-    layerJson['bounds'] = row[11]
-    layerJson['originalDatasetCoordinate'] = row[24]
-    layerJson['values'] = row[22]
-    layerJson['colormap'] = row[24]
-    layerJson['legend-type'] = row[20]
-    layerJson['legend'] = row[21]
+    layerJson['minzoom'] = row[11]
+    layerJson['maxzoom'] = row[12]
+    layerJson['bounds'] = row[13] #not being inserted
+    layerJson['originalDatasetCoordinate'] = row[28]
+    layerJson['values'] = row[25] #not being inserted
+    layerJson['colormap'] = row[27]
+    layerJson['legend-type'] = row[22]
+    layerJson['legend'] = row[23]
 
     layerJsonStr = json.dumps(layerJson, indent=4)
     # print(layerJsonStr)
