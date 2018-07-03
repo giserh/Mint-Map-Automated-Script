@@ -64,7 +64,7 @@ handle_postgresql() {
 	COL_DIRECTORY_FORMAT=$OUTPUT_DIR_STRUCTURE_FOR_TIMESERIES
 	
 	COL_DIRECTORY_FORMAT=''
-	if [[ ! -z "$START_TIME" ]]; then
+	if [[ -z "$START_TIME" ]]; then
 		COL_HAS_TIMELINE=0
 	fi
 
