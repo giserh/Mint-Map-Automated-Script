@@ -118,14 +118,14 @@ if [[ $DATASET_TYPE == "tiff" || $DATASET_TYPE == "tiled" ]]; then
 	handle_postgresql
 
 	python3 $MINTCAST_PATH/python/macro_gen_web_json/main.py update-all 
-	#CKAN_URL=$(python3 $MINTCAST_PATH/python/macro_upload_ckan/main.py "$TARGET_JSON_PATH/$COL_JSON_FILENAME")
+	#CKAN_URL=$(python3 $MINTCAST_PATH/python/macro_upload_ckan/main.py get "$TARGET_JSON_PATH/$COL_JSON_FILENAME")
 	#echo $CKAN_URL
 	# update database
-	echo "TARGET_JSON_PATH: $TARGET_JSON_PATH"
-	CKAN_URL="blahblahblah.com"
-	python3 $MINTCAST_PATH/python/macro_postgres_curd/main.py update layer \
-	"ckan_url='$CKAN_URL'" \
-	"layerid='$COL_LAYER_ID'"
+	#echo "TARGET_JSON_PATH: $TARGET_JSON_PATH"
+	#CKAN_URL=""
+	#python3 $MINTCAST_PATH/python/macro_postgres_curd/main.py update layer \
+	#"ckan_url='$CKAN_URL'" \
+	#"layerid='$COL_LAYER_ID'"
 	python3 $MINTCAST_PATH/python/macro_gen_web_json/main.py update-config
 
 # elif [[ $DATASET_TYPE == "netcdf" || $DATASET_TYPE == "single-netcdf" ]]; then

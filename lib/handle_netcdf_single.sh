@@ -38,18 +38,21 @@ handle_netcdf_single(){
 				echo "Generating web JSON..."
 				python3 $MINTCAST_PATH/python/macro_gen_web_json/main.py update-all 
 				#echo "Getting CKAN_URL"
-				#CKAN_URL=$(python3 $MINTCAST_PATH/python/macro_upload_ckan/main.py "get" "$TARGET_JSON_PATH/$COL_JSON_FILENAME")
-				echo "COL_JSON_FILENAME: $COL_JSON_FILENAME"
-				CKAN_URL="blahblahblah.com"
-				echo "CKAN_URL: $CKAN_URL"
+				#echo "TARGET_JSON_PATH: $TARGET_JSON_PATH"
+				#echo "COL_JSON_FILENAME: $COL_JSON_FILENAME"
+				#CKAN_URL=$(python3 $MINTCAST_PATH/python/macro_upload_ckan/main.py get "$TARGET_JSON_PATH/$COL_JSON_FILENAME")
+				#echo "COL_JSON_FILENAME: $COL_JSON_FILENAME"
+				#CKAN_URL="blahblahblah.com"
+				#echo "CKAN_URL: $CKAN_URL"
 				# update database
 				echo "Updating database..."
 				echo "COL_LAYER_ID: $COL_LAYER_ID"
 				echo "LAYER_ID_SUFFIX: $LAYER_ID_SUFFIX"
 				#python3 $MINTCAST_PATH/python/macro_sqlite_curd/main.py update layer \
-				python3 $MINTCAST_PATH/python/macro_postgres_curd/main.py update layer \
-				"layerid='$COL_LAYER_ID'"
+				#python3 $MINTCAST_PATH/python/macro_postgres_curd/main.py update layer \
 				#"ckan_url='$CKAN_URL'" \
+				#"layerid='$COL_LAYER_ID'"
+				
 				
 				echo "Updating config..."
 				python3 $MINTCAST_PATH/python/macro_gen_web_json/main.py update-config
@@ -84,18 +87,19 @@ handle_netcdf_single(){
 					echo "Generating web JSON..."
 					python3 $MINTCAST_PATH/python/macro_gen_web_json/main.py update-all 
 					#echo "Getting CKAN_URL"
-					#CKAN_URL=$(python3 $MINTCAST_PATH/python/macro_upload_ckan/main.py "get" "$TARGET_JSON_PATH/$COL_JSON_FILENAME")
-					echo "COL_JSON_FILENAME: $COL_JSON_FILENAME"
-					CKAN_URL="blahblahblah.com"
-					echo "CKAN_URL: $CKAN_URL"
+					#CKAN_URL=$(python3 $MINTCAST_PATH/python/macro_upload_ckan/main.py get "$TARGET_JSON_PATH/$COL_JSON_FILENAME")
+					#echo "COL_JSON_FILENAME: $COL_JSON_FILENAME"
+					#CKAN_URL="blahblahblah.com"
+					#echo "CKAN_URL: $CKAN_URL"
 					# update database
-					echo "Updating database..."
-					echo "COL_LAYER_ID: $COL_LAYER_ID"
-					echo "LAYER_ID_SUFFIX: $LAYER_ID_SUFFIX"
+					#echo "Updating database..."
+					#echo "COL_LAYER_ID: $COL_LAYER_ID"
+					#echo "LAYER_ID_SUFFIX: $LAYER_ID_SUFFIX"
 					#python3 $MINTCAST_PATH/python/macro_sqlite_curd/main.py update layer \
-					python3 $MINTCAST_PATH/python/macro_postgres_curd/main.py update layer \
-					"layerid='$COL_LAYER_ID'"
+					#python3 $MINTCAST_PATH/python/macro_postgres_curd/main.py update layer \
 					#"ckan_url='$CKAN_URL'" \
+					#"layerid='$COL_LAYER_ID'"
+					
 					
 					echo "Updating config..."
 					python3 $MINTCAST_PATH/python/macro_gen_web_json/main.py update-config
