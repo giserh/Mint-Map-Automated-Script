@@ -64,17 +64,18 @@ helper_parameter $@
 
 echo $START_TIME
 
-if [[ -z "$START_TIME" && "$DATASET_TYPE" != "single-netcdf" ]]; then
+
+if [[ -z "$START_TIME" && $DATASET_TYPE != "single-netcdf" ]]; then
 	if [[ -z "$LAYER_NAME" ]]; then
 		echo "Please set up -l|--layer-name which is the LAYER_NAME and also part of Layer ID"
 		exit 1
 	fi
 else
-	if [[ -z "$OUTPUT_DIR_STRUCTURE_FOR_TIMESERIES" && "$DATASET_TYPE" != "single-netcdf" ]]; then
+	if [[ -z "$OUTPUT_DIR_STRUCTURE_FOR_TIMESERIES" && $DATASET_TYPE != "single-netcdf" ]]; then
 		echo "Please set up -z|--output-dir-structure which is how timeseries mbtiles are stored"
 		exit 1
 	fi
-	if [[ -z "$DATASET_DIR" ]]; then
+	if [[ -z "$DATASET_DIR"  && $DATASET_TYPE != "single-netcdf" ]]; then
 		echo "Please set up -d|--dir which is used for traversal"
 		exit 1
 	fi	

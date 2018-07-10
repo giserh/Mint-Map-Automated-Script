@@ -9,6 +9,9 @@ MINTCAST_PATH = os.environ.get('MINTCAST_PATH')
 config_path = MINTCAST_PATH + "/config/"
 sys.path.append(config_path)
 
+RASTER_LAYER_ID_MD5 = os.environ.get('RASTER_LAYER_ID_MD5')
+VECTOR_LAYER_ID_MD5 = os.environ.get('VECTOR_LAYER_ID_MD5')
+
 from postgres_config import hostname, username, password, database
 
 #DATABASE_PATH = '/sql/database.sqlite'
@@ -51,7 +54,8 @@ def updateMetadata():
     metadataJson['server'] = METADATA['server']
     metadataJson['tiles'] = METADATA['tileurl']
     metadataJson['originalDataset'] = METADATA['border_features']
-
+    metadataJson['md5raster'] = []
+    metadataJson['md5vector'] = []
     metadataJson['layerNames'] = []
     metadataJson['layerIds'] = []
     metadataJson['sourceLayers'] = []
@@ -62,12 +66,15 @@ def updateMetadata():
         c.execute('SELECT * FROM mintcast.layer')
         for row in c.fetchall():
             if row[2] == 'raster':
+                metadataJson['md5raster'].append(row[6])
+
                 continue
             metadataJson['layerNames'].append(row[4])
             metadataJson['layerIds'].append(row[1])
             metadataJson['sourceLayers'].append(row[7])
             metadataJson['hasData'].append(False if row[9] == 0 else True)
             metadataJson['hasTimeline'].append(False if row[10] == 0 else True)
+            metadataJson['md5vector'].append(row[6])
             if row[10] == 1:
                 metadataJson['layers'].append({'id':row[1], 'source-layer': row[5], 'minzoom': row[11], 'maxzoom':row[12], 'type':row[2], 'mapping':'', 'startTime': row[14], 'endtime':row[15], 'directory_format':row[13]})
             if row[10] == 0:

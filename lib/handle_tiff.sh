@@ -59,7 +59,10 @@ handle_tiff(){
 	fi
 
 	RASTER_LAYER_ID=$(python3 $MINTCAST_PATH/python/macro_string/main.py layer_name_to_layer_id $LAYER_NAME$LAYER_ID_SUFFIX raster png)
-	RASTER_LAYER_ID_MD5=$(python3 $MINTCAST_PATH/python/macro_md5/main.py $RASTER_LAYER_ID)
+	#echo "RASTER_LAYER_ID: $RASTER_LAYER_ID"
+	### CHANGE THE LINE BELOW TO GET THE PROPER MD5 (AFTER INTEGRATING WITH THE DATA CATALOG)
+	export RASTER_LAYER_ID_MD5=$(python3 $MINTCAST_PATH/python/macro_md5/main.py $RASTER_LAYER_ID)
+	#echo "RASTER_LAYER_ID_MD5: $RASTER_LAYER_ID_MD5"
 	RASTER_MBTILES=$OUT_DIR/$RASTER_LAYER_ID.mbtiles
 	echo "RASTER_MBTILES: $RASTER_MBTILES"
 	if [[ -f $RASTER_MBTILES ]]; then
@@ -82,7 +85,9 @@ handle_tiff(){
 	fi
 
 	VECTOR_LAYER_ID=$(python3 $MINTCAST_PATH/python/macro_string/main.py layer_name_to_layer_id $LAYER_NAME$LAYER_ID_SUFFIX vector pbf)
-	VECTOR_LAYER_ID_MD5=$(python3 $MINTCAST_PATH/python/macro_md5/main.py $VECTOR_LAYER_ID)
+	### CHANGE THE LINE BELOW TO GET THE PROPER MD5 (AFTER INTEGRATING WITH THE DATA CATALOG)
+	export VECTOR_LAYER_ID_MD5=$(python3 $MINTCAST_PATH/python/macro_md5/main.py $VECTOR_LAYER_ID)
+	#echo "VECTOR_LAYER_ID_MD5: $VECTOR_LAYER_ID_MD5"
 	VECTOR_MBTILES=$OUT_DIR/$VECTOR_LAYER_ID.mbtiles
 	echo "VECTOR_MBTILES: $VECTOR_MBTILES"
 	if [[ -f $VECTOR_MBTILES ]]; then
