@@ -58,10 +58,33 @@ handle_tiff(){
 		LAYER_ID_SUFFIX=''
 	fi
 
+	echo "VECTOR_MD5: $VECTOR_MD5"
+	VECTOR_LAYER_ID=$(python3 $MINTCAST_PATH/python/macro_string/main.py layer_name_to_layer_id $LAYER_NAME$LAYER_ID_SUFFIX vector pbf)
+	### CHANGE THE LINE BELOW TO GET THE PROPER MD5 (AFTER INTEGRATING WITH THE DATA CATALOG)
+	if [[ -z $VECTOR_MD5 ]]; then
+		export VECTOR_LAYER_ID_MD5=$(python3 $MINTCAST_PATH/python/macro_md5/main.py $VECTOR_LAYER_ID)
+	elif [[ ! -z $VECTOR_MD5 ]]; then
+		export VECTOR_LAYER_ID_MD5=$VECTOR_MD5
+	fi
+	#echo "VECTOR_LAYER_ID_MD5: $VECTOR_LAYER_ID_MD5"
+	VECTOR_MBTILES=$OUT_DIR/$VECTOR_LAYER_ID.mbtiles
+	echo "VECTOR_MBTILES: $VECTOR_MBTILES"
+	if [[ -f $VECTOR_MBTILES ]]; then
+		rm -f $VECTOR_MBTILES
+	fi
+
 	RASTER_LAYER_ID=$(python3 $MINTCAST_PATH/python/macro_string/main.py layer_name_to_layer_id $LAYER_NAME$LAYER_ID_SUFFIX raster png)
 	#echo "RASTER_LAYER_ID: $RASTER_LAYER_ID"
 	### CHANGE THE LINE BELOW TO GET THE PROPER MD5 (AFTER INTEGRATING WITH THE DATA CATALOG)
-	export RASTER_LAYER_ID_MD5=$(python3 $MINTCAST_PATH/python/macro_md5/main.py $RASTER_LAYER_ID)
+	if [[ -z $VECTOR_MD5 ]]; then
+		export RASTER_LAYER_ID_MD5=$(python3 $MINTCAST_PATH/python/macro_md5/main.py $RASTER_LAYER_ID)
+	elif [[ ! -z $VECTOR_MD5 ]]; then
+		export RASTER_LAYER_ID_MD5=$(python3 $MINTCAST_PATH/python/macro_md5/main.py $VECTOR_MD5)
+		echo "RASTER_LAYER_ID_MD5: $RASTER_LAYER_ID_MD5"
+	fi
+
+
+
 	#echo "RASTER_LAYER_ID_MD5: $RASTER_LAYER_ID_MD5"
 	RASTER_MBTILES=$OUT_DIR/$RASTER_LAYER_ID.mbtiles
 	echo "RASTER_MBTILES: $RASTER_MBTILES"
@@ -84,15 +107,7 @@ handle_tiff(){
 			"id=$HAS_LAYER"
 	fi
 
-	VECTOR_LAYER_ID=$(python3 $MINTCAST_PATH/python/macro_string/main.py layer_name_to_layer_id $LAYER_NAME$LAYER_ID_SUFFIX vector pbf)
-	### CHANGE THE LINE BELOW TO GET THE PROPER MD5 (AFTER INTEGRATING WITH THE DATA CATALOG)
-	export VECTOR_LAYER_ID_MD5=$(python3 $MINTCAST_PATH/python/macro_md5/main.py $VECTOR_LAYER_ID)
-	#echo "VECTOR_LAYER_ID_MD5: $VECTOR_LAYER_ID_MD5"
-	VECTOR_MBTILES=$OUT_DIR/$VECTOR_LAYER_ID.mbtiles
-	echo "VECTOR_MBTILES: $VECTOR_MBTILES"
-	if [[ -f $VECTOR_MBTILES ]]; then
-		rm -f $VECTOR_MBTILES
-	fi
+
 
 
 	#HAS_LAYER=$(python3 $MINTCAST_PATH/python/macro_sqlite_curd/main.py has_tileserver_config $VECTOR_LAYER_ID)

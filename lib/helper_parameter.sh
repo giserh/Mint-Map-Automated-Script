@@ -25,6 +25,11 @@ helper_parameter(){
         shift 
         shift 
         ;;
+        -m|--md5vector)
+        VECTOR_MD5="$2"
+        shift
+        shift
+        ;;
         -u|--structure)
         DATASET_DIR_STRUCTURE="$2"
         shift 
