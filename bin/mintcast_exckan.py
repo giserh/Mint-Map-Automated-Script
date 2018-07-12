@@ -3,6 +3,17 @@ from typing import *
 import requests
 import sys
 import os
+import psycopg2
+
+MINTCAST_PATH = os.environ.get('MINTCAST_PATH')
+if not MINTCAST_PATH:
+    print("Please set `MINTCAST_PATH` first")
+    exit(0)
+config_path = MINTCAST_PATH + "/config/"
+sys.path.append(config_path)
+
+from postgres_config import hostname, username, password, database
+
 #from pipeline.config import config
 
 CKAN_BASE_URL = "http://mint-demo.westus2.cloudapp.azure.com:5000/api/action/"
@@ -31,11 +42,16 @@ def handle_metadata(data):
             result["start_time"] = ele["value"]
         elif ele["key"] == "end_time":
             result["end_time"] = ele["value"]
-    print(result)
+
     header = requests.head(result["file"]).headers
-    print(header)
+
     if "Content-Type" in header:
         result['filetype'] = header["Content-Type"]
+
+    print(result)
+    for x in result.keys():
+        print(x)
+    
     if result['filetype']:
         if result['filetype'] == 'application/x-netcdf':
             os.system("mintcast ")
@@ -55,11 +71,11 @@ def get_datasets():
     dataCatalog = []
     resp = requests.get(CKAN_BASE_URL + "package_list", 
         headers=CKAN_HEADER).json()
-    print(resp)
     if ('success' in resp) and resp['success'] and ('result' in resp):
         dataCatalog = resp['result']
     if len(dataCatalog) == 0:        
         return False
+    print("Length of data catalog: %s\n" % len(dataCatalog));
     for md5 in dataCatalog:
         handle_dataset_by_md5(md5)
         break

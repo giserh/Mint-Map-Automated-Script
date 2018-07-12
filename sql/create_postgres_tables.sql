@@ -67,3 +67,9 @@ CREATE TABLE mintcast.layer (
 	-- FOREIGN KEY (original_id) REFERENCES mintcast.original(id)
 );
 
+CREATE SEQUENCE mintcast.ckan_seq;
+
+CREATE TABLE mintcast.ckan (
+	id int DEFAULT NEXTVAL ('mintcast.layer_seq') primary key,
+	dataset varchar(255),
+)
