@@ -36,7 +36,7 @@ CREATE TABLE mintcast.layer (
 	layerid varchar(255) not null ,
 	type varchar(8) default 'vector' ,
 	tileformat varchar(8) default 'pdf' ,
-	name varchar(64) not null ,
+	name varchar(255) not null ,
 	stdname varchar(255) not null ,
 	md5 varchar(255) not null ,
 	sourceLayer varchar(64) not null ,
