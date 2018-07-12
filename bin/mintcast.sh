@@ -32,6 +32,7 @@ DATASET_DIR_STRUCTURE=""    		# If DATASET_DIR is set, set structure `{year}/{mo
 START_TIME=""               		# If dataset has timeseries, start time string, like `2018 05 01`
 END_TIME=""                 		# Same as start time
 LAYER_NAME=""               		# Layer name could be a string or a json file, as input of tippecanoe
+VECTOR_MD5=""						# unique md5hash for each dataset, can be input or generated from standard name
 TARGET_MBTILES_PATH=""      		# Production mode: path to store mbtiles files and config files
 TARGET_JSON_PATH=""         		# Production mode: path to store json files
 TILESEVER_PROG=""           		# Path of tileserver program
@@ -64,17 +65,18 @@ helper_parameter $@
 
 echo $START_TIME
 
-if [[ -z "$START_TIME" && "$DATASET_TYPE" != "single-netcdf" ]]; then
+
+if [[ -z "$START_TIME" && $DATASET_TYPE != "single-netcdf" ]]; then
 	if [[ -z "$LAYER_NAME" ]]; then
 		echo "Please set up -l|--layer-name which is the LAYER_NAME and also part of Layer ID"
 		exit 1
 	fi
 else
-	if [[ -z "$OUTPUT_DIR_STRUCTURE_FOR_TIMESERIES" && "$DATASET_TYPE" != "single-netcdf" ]]; then
+	if [[ -z "$OUTPUT_DIR_STRUCTURE_FOR_TIMESERIES" && $DATASET_TYPE != "single-netcdf" ]]; then
 		echo "Please set up -z|--output-dir-structure which is how timeseries mbtiles are stored"
 		exit 1
 	fi
-	if [[ -z "$DATASET_DIR" ]]; then
+	if [[ -z "$DATASET_DIR"  && $DATASET_TYPE != "single-netcdf" ]]; then
 		echo "Please set up -d|--dir which is used for traversal"
 		exit 1
 	fi	
@@ -118,14 +120,14 @@ if [[ $DATASET_TYPE == "tiff" || $DATASET_TYPE == "tiled" ]]; then
 	handle_postgresql
 
 	python3 $MINTCAST_PATH/python/macro_gen_web_json/main.py update-all 
-	#CKAN_URL=$(python3 $MINTCAST_PATH/python/macro_upload_ckan/main.py "$TARGET_JSON_PATH/$COL_JSON_FILENAME")
+	#CKAN_URL=$(python3 $MINTCAST_PATH/python/macro_upload_ckan/main.py get "$TARGET_JSON_PATH/$COL_JSON_FILENAME")
 	#echo $CKAN_URL
 	# update database
-	echo "TARGET_JSON_PATH: $TARGET_JSON_PATH"
-	CKAN_URL="blahblahblah.com"
-	python3 $MINTCAST_PATH/python/macro_postgres_curd/main.py update layer \
-	"ckan_url='$CKAN_URL'" \
-	"layerid='$COL_LAYER_ID'"
+	#echo "TARGET_JSON_PATH: $TARGET_JSON_PATH"
+	#CKAN_URL=""
+	#python3 $MINTCAST_PATH/python/macro_postgres_curd/main.py update layer \
+	#"ckan_url='$CKAN_URL'" \
+	#"layerid='$COL_LAYER_ID'"
 	python3 $MINTCAST_PATH/python/macro_gen_web_json/main.py update-config
 
 # elif [[ $DATASET_TYPE == "netcdf" || $DATASET_TYPE == "single-netcdf" ]]; then

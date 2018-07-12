@@ -17,7 +17,8 @@ def main(root = '../', port='8080', server='0.0.0.0'):
     conn = psycopg2.connect( host=hostname, user=username, password=password, dbname=database )
     c = conn.cursor()
     try:
-        for row in c.execute('SELECT * FROM tileserverconfig'):
+        c.execute('SELECT * FROM mintcast.tileserverconfig')
+        for row in c.fetchall():
             config['data'][row[3]] = {'mbtiles':row[2]}
         jsonStr = json.dumps(config, indent=4)
         # print(layerJsonStr)

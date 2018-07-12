@@ -9,6 +9,9 @@ MINTCAST_PATH = os.environ.get('MINTCAST_PATH')
 config_path = MINTCAST_PATH + "/config/"
 sys.path.append(config_path)
 
+RASTER_LAYER_ID_MD5 = os.environ.get('RASTER_LAYER_ID_MD5')
+VECTOR_LAYER_ID_MD5 = os.environ.get('VECTOR_LAYER_ID_MD5')
+
 from postgres_config import hostname, username, password, database
 
 #DATABASE_PATH = '/sql/database.sqlite'
@@ -51,7 +54,8 @@ def updateMetadata():
     metadataJson['server'] = METADATA['server']
     metadataJson['tiles'] = METADATA['tileurl']
     metadataJson['originalDataset'] = METADATA['border_features']
-
+    metadataJson['md5raster'] = []
+    metadataJson['md5vector'] = []
     metadataJson['layerNames'] = []
     metadataJson['layerIds'] = []
     metadataJson['sourceLayers'] = []
@@ -62,16 +66,19 @@ def updateMetadata():
         c.execute('SELECT * FROM mintcast.layer')
         for row in c.fetchall():
             if row[2] == 'raster':
+                metadataJson['md5raster'].append(row[6])
+
                 continue
             metadataJson['layerNames'].append(row[4])
             metadataJson['layerIds'].append(row[1])
-            metadataJson['sourceLayers'].append(row[5])
-            metadataJson['hasData'].append(False if row[7] == 0 else True)
-            metadataJson['hasTimeline'].append(False if row[8] == 0 else True)
-            if row[7] == 1:
-                metadataJson['layers'].append({'id':row[1], 'source-layer': row[5], 'minzoom': row[10], 'maxzoom':row[9], 'type':row[2], 'mapping':'', 'startTime': row[14], 'endtime':row[15], 'directory_format':row[13]})
-            if row[7] == 0:
-                metadataJson['layers'].append({'id':row[1], 'source-layer': row[5], 'minzoom': row[10], 'maxzoom':row[9], 'type':row[2], 'mapping':''})
+            metadataJson['sourceLayers'].append(row[7])
+            metadataJson['hasData'].append(False if row[9] == 0 else True)
+            metadataJson['hasTimeline'].append(False if row[10] == 0 else True)
+            metadataJson['md5vector'].append(row[6])
+            if row[10] == 1:
+                metadataJson['layers'].append({'id':row[1], 'source-layer': row[5], 'minzoom': row[11], 'maxzoom':row[12], 'type':row[2], 'mapping':'', 'startTime': row[14], 'endtime':row[15], 'directory_format':row[13]})
+            if row[10] == 0:
+                metadataJson['layers'].append({'id':row[1], 'source-layer': row[5], 'minzoom': row[11], 'maxzoom':row[12], 'type':row[2], 'mapping':''})
     except Exception as e:
         raise e
     finally:
@@ -99,16 +106,16 @@ def toJson(row):
 
     layerJson['id'] = row[1]
     layerJson['incre'] = row[0]
-    layerJson['source-layer'] = row[5]
+    layerJson['source-layer'] = row[7]
     layerJson['propertyName'] = 'value'
-    layerJson['minzoom'] = row[10]
-    layerJson['maxzoom'] = row[9]
-    layerJson['bounds'] = row[11]
-    layerJson['originalDatasetCoordinate'] = row[24]
-    layerJson['values'] = row[22]
-    layerJson['colormap'] = row[24]
-    layerJson['legend-type'] = row[20]
-    layerJson['legend'] = row[21]
+    layerJson['minzoom'] = row[11]
+    layerJson['maxzoom'] = row[12]
+    layerJson['bounds'] = row[13] #not being inserted
+    layerJson['originalDatasetCoordinate'] = row[28]
+    layerJson['values'] = row[25] #not being inserted
+    layerJson['colormap'] = row[27]
+    layerJson['legend-type'] = row[22]
+    layerJson['legend'] = row[23]
 
     layerJsonStr = json.dumps(layerJson, indent=4)
     # print(layerJsonStr)

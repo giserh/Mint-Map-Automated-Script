@@ -41,7 +41,7 @@ def main():
             else:
                 print(row[0])
         elif method == 'has_tileserver_config':
-            c.execute("SELECT id FROM tileserverconfig WHERE layerid = '%s'" % sys.argv[2])
+            c.execute("SELECT id FROM mintcast.tileserverconfig WHERE layerid = '%s'" % sys.argv[2])
             row = c.fetchone()
             if row == None:
                 print("None")
