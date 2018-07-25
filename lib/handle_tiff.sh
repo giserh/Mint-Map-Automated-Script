@@ -135,7 +135,7 @@ handle_tiff(){
 	fi
 	# CheckType for Already Byted file and add nodata flag
 	NODATAFLAG=''
-	POLYGOINZE_FLOAT_FLAG=''
+	POLYGONIZE_FLOAT_FLAG=''
 	check_type $INPUT
 	# Pre-processing:
 	echo "handle_tiff.sh"
