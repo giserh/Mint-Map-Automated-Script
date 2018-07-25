@@ -9,6 +9,7 @@ source $MINTCAST_PATH/lib/helper_parameter.sh
 source $MINTCAST_PATH/lib/helper_create_array.sh
 source $MINTCAST_PATH/lib/handle_tiff.sh
 source $MINTCAST_PATH/lib/handle_tiled_tiff.sh
+source $MINTCAST_PATH/lib/handle_tiff_time.sh
 source $MINTCAST_PATH/lib/handle_netcdf.sh
 source $MINTCAST_PATH/lib/handle_netcdf_single.sh
 source $MINTCAST_PATH/lib/handle_postgresql.sh
@@ -50,7 +51,10 @@ NEW_SSH_KEY="NO"					# Add ssh key
 SSH_USER="vaccaro"					# User-name to ssh/scp into jonsnow (e.g. liboliu, vaccaro, shiwei)
 USE_SS_SHAPE="NO"					# Clip using South Sudan boundary shapefile
 CLIP_BOUNDS="22.4 3.4 37.0 23.2"	# Coordinates for rectangular clipping boundary			
-
+FIRST_FILE="NO"						# Flag for timeseries files (YES for first in series, no otherwise)
+TIME_STAMP=""						# Time stamp for TIFF time series
+TIME_STEPS=""						# Time steps for TIFF time series
+TIME_FORMAT="YYYYMMDD"				# Time format for metadata JSON
 
 OUTPUT_DIR_STRUCTURE_FOR_TIMESERIES="" # how netcdf's timeseries mbtiles are stored
 
@@ -100,9 +104,11 @@ elif [[ $DATASET_TYPE == "netcdf" ]]; then
 	# exit
 elif [[ $DATASET_TYPE == "single-netcdf" ]]; then
 	handle_netcdf_single
+elif [[ $DATASET_TYPE == "tiff-time" ]]; then
+	handle_tiff_time
 else
 	echo "$DATASET_TYPE is an invalid dataset type." 
-	echo "Valid choices include: tiff, tiled, netcdf"
+	echo "Valid choices include: tiff, tiled, tiff-time, netcdf, and single-netcdf"
 	exit 1
 fi
 
@@ -153,7 +159,6 @@ if [[ $DATASET_TYPE == "tiff" || $DATASET_TYPE == "tiled" ]]; then
 # 		python3 $MINTCAST_PATH/python/macro_gen_web_json/main.py update-config
 # 	done	
 fi
-
 
 
 

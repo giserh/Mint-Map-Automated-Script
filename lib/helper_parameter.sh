@@ -65,6 +65,25 @@ helper_parameter(){
         shift
         shift
         ;;
+        --first-file)
+        FIRST_FILE=YES
+        shift
+        ;;
+        --time-stamp)
+        TIME_STAMP="$2"
+        shift
+        shift
+        ;;
+        --time-steps)
+        TIME_STEPS="$2"
+        shift
+        shift
+        ;;
+        --time-format)
+        TIME_FORMAT="$2"
+        shift
+        shift
+        ;;
         --target-mbtiles-path)
         TARGET_MBTILES_PATH="$2"
         shift
