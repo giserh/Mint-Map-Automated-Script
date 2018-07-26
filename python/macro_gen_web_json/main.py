@@ -81,6 +81,7 @@ def updateMetadata():
             metadataJson['md5vector'].append(row[6])
             metadataJson['md5raster'].append(md5(row[6].encode('utf-8')).hexdigest())
             if row[10] == 1:
+                #import pdb; pdb.set_trace()
                 step_array = ast.literal_eval(row[-2])
                 step_array = [str(i).strip() for i in step_array]
                 metadataJson['layers'].append({
@@ -91,7 +92,7 @@ def updateMetadata():
                     'mapping':'', 
                     "axis":"slider",
                     "stepType":"Time",
-                    "stepOption":{"type":"string", "format":"yyyy"},
+                    "stepOption":{"type":"string", "format":"yyyyMM"}, #change this
                     "step": step_array
                     })
             if row[10] == 0:

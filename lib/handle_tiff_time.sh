@@ -9,6 +9,7 @@
 
 # Source functions:
 source $MINTCAST_PATH/lib/check_projection.sh
+source $MINTCAST_PATH/lib/check_projection_africa.sh
 source $MINTCAST_PATH/lib/check_type.sh
 source $MINTCAST_PATH/lib/proc_clip.sh
 source $MINTCAST_PATH/lib/proc_newres.sh
@@ -50,6 +51,8 @@ handle_tiff_time(){
 	#echo "FILENAME: $FILENAME"
 
 	# Set names for intermediary and output files:
+	FORCE_OUT=$TEMP_DIR/${FILENAME%.*}_force.tif
+	FORCE_OUT2=${FORCE_OUT%.*}2.tif
 	CLIP_OUT=$TEMP_DIR/${FILENAME%.*}_clip.tif
 	PROJ_OUT=${CLIP_OUT%.*}_proj.tif
 	RES_OUT=${PROJ_OUT%.*}_newres.tif
@@ -58,7 +61,7 @@ handle_tiff_time(){
 	if [[ -z "$LAYER_ID_SUFFIX" ]]; then
 		LAYER_ID_SUFFIX=''
 	fi
-	echo "POLY_OUT: $POLY_OUT"
+	#echo "POLY_OUT: $POLY_OUT"
 
 	#if [[ $FIRST_FILE == "YES" ]]; then
 	echo "VECTOR_MD5: $VECTOR_MD5"
@@ -135,30 +138,44 @@ handle_tiff_time(){
 		echo "COLOR_TABLE: $COLOR_TABLE"
 		python3 $QML_EXTRACT_PATH $QML_FILE $COLOR_TABLE #Make colortable
 	fi
+	echo "FORCE_PROJECTION_FIRST: $FORCE_PROJECTION_FIRST"
+	if [[ $FORCE_PROJECTION_FIRST == "YES" ]]; then
+		echo "Forcing projection..."
+		check_projection_africa $INPUT $FORCE_OUT #Check projection/change to EPSG 3857
+		check_projection $FORCE_OUT $FORCE_OUT2
+		INPUT=$FORCE_OUT2
+	fi
+	
+
 	# CheckType for Already Byted file and add nodata flag
 	NODATAFLAG=''
 	POLYGONIZE_FLOAT_FLAG=''
 	check_type $INPUT
+
 	# Pre-processing:
-	echo "handle_tiff.sh"
+	echo "handle_tiff_time.sh"
 	echo "INPUT: $INPUT"
 	echo "CLIP_OUT: $CLIP_OUT"
 	echo "Clipping..."
 	echo "USE_SS_SHAPE: $USE_SS_SHAPE"
 	echo "CLIP_BOUNDS: $CLIP_BOUNDS"
-	if [[ USE_SS_SHAPE != "NO" ]]; then
-		echo "Using SS shapefile..."
-		echo "SS_BOUNDARY: $SS_BOUNDARY"
-		proc_clip $INPUT $CLIP_OUT $SS_BOUNDARY #Clip to South Sudan boundary
+	if [[ $DISABLE_CLIP == "NO" ]]; then
+		echo "Clip disabled"
+		if [[ $USE_SS_SHAPE != "NO" ]]; then
+			echo "Using SS shapefile..."
+			echo "SS_BOUNDARY: $SS_BOUNDARY"
+			proc_clip $INPUT $CLIP_OUT $SS_BOUNDARY #Clip to South Sudan boundary
+		else
+			echo "Not using SS shapefile..."
+			#CLIP_OUT=$INPUT
+			proc_clip $INPUT $CLIP_OUT
+		fi
 	else
-		echo "Not using SS shapefile..."
-		#CLIP_OUT=$INPUT
-		proc_clip $INPUT $CLIP_OUT
+		CLIP_OUT=$INPUT
 	fi
 
 	echo "Projecting..."
 	check_projection $CLIP_OUT $PROJ_OUT #Check projection/change to EPSG 3857
-
 	echo "GENERATE_RASTER_TILE: $GENERATE_RASTER_TILE"
 	echo "GENERATE_NEW_RES: $GENERATE_NEW_RES"
 	echo "GENERATE_VECTOR_TILE $GENERATE_VECTOR_TILE"

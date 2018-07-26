@@ -44,6 +44,8 @@ NO_WEBSITE_UPDATE=NO        		# Only generate tiles in dist/, no json, no restar
 TILED_FILE_EXT="dem.tif"			# for tiled dataset, the suffix and extension of the files to be merged
 WITH_QUALITY_ASSESSMENT=NO 			# for tiled dataset, if with --with-quality-assessment, then generate like elevation.num.raster.mbtiles
 DATASET_NAME="output" 				# output mbtiles name like -o elevation, output will be elevation.raster.mbtiles and elevation.vector.mbtiles
+DISABLE_CLIP="NO"					# do not clip data
+FORCE_PROJECTION_FIRST="NO"			# Force projection before standard workflow
 GENERATE_NEW_RES="YES"				# Generate new resolution during creation of tiles
 GENERATE_RASTER_TILE="YES"			# Generate raster MBTiles as output
 GENERATE_VECTOR_TILE="YES"			# Generate vector MBTiles as output
@@ -133,7 +135,7 @@ if [[ $DATASET_TYPE == "tiff" || $DATASET_TYPE == "tiled" ]]; then
 	#CKAN_URL=""
 	#python3 $MINTCAST_PATH/python/macro_postgres_curd/main.py update layer \
 	#"ckan_url='$CKAN_URL'" \
-	#"layerid='$COL_LAYER_ID'"
+	#"layerid='$Cmacro_tileserver_config/main.pyOL_LAYER_ID'"
 	python3 $MINTCAST_PATH/python/macro_gen_web_json/main.py update-config
 
 # elif [[ $DATASET_TYPE == "netcdf" || $DATASET_TYPE == "single-netcdf" ]]; then
@@ -159,6 +161,8 @@ if [[ $DATASET_TYPE == "tiff" || $DATASET_TYPE == "tiled" ]]; then
 # 		python3 $MINTCAST_PATH/python/macro_gen_web_json/main.py update-config
 # 	done	
 fi
+
+
 
 
 

@@ -6,7 +6,7 @@ MINTCAST_PATH = os.environ.get('MINTCAST_PATH')
 
 hostname = 'jonsnow.usc.edu'
 username = 'vaccaro'
-password = 'm\\tC7;cc'
+password = 'tt654321'
 database = 'mintcast'
 
 #conn = psycopg2.connect( host=hostname, user=username, password=password, dbname=database )
