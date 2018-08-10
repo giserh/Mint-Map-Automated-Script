@@ -6,7 +6,7 @@
 ### Inputs: 
 # 1) Data file to check, 2) Name of output file
 ### Outputs:
-# File in EPSG: 3857 PCS with _proj.tif suffix
+# File in EPSG: 3857 projected coordinate system with _proj.tif suffix
 ### Procedure:
 # - Creates a temporary text file of the data file's gdalinfo
 # - Uses grep on text file to see if file is projected

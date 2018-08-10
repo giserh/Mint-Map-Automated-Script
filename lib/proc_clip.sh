@@ -1,17 +1,19 @@
 #!/usr/bin/env bash
 
 ### proc_clip.sh
-# Clips data layer to South Sudan boundary as defined by input shapefile.
-# (Note: Only works on unprojected data)
+# Clips data layer to South Sudan boundary as defined by input shapefile, 
+# or to a bounding box.
 ### Inputs: 
 # 1) Data file to clip, 2) Name of output file, 3) South Sudan shapefile
 ### Outputs: 
 # Clipped file
 ### Procedure:
 # - Clip with gdalwarp
+### Notes:
+# - Only works on projected data
+# - Can be used with any shapefile (does not have to be South Sudan boundary)
 
 # Clip to South Sudan Boundary:
-#   -dstnodata 255 \
 proc_clip () {
     # in case there is one
     echo "Checking for existing file..."
