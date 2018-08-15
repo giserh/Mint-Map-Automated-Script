@@ -40,7 +40,7 @@ def convert_asc_to_tif(input_dir):
 		file_strip = file[:-4]
 		full_input = input_dir + file
 		full_output = input_dir + file_strip + ".tif"
-		GDAL_command = "gdal_translate " + full_input + " " + full_output + " -a_srs EPSG:102022" #MIGHT NEED TO CHANGE THIS (also make param)
+		GDAL_command = "gdal_translate " + full_input + " " + full_output + " -a_srs EPSG:102022" # NEED TO CHANGE THIS (also make param)
 		#print(GDAL_command)
 		#import pdb; pdb.set_trace()
 		subprocess.call(GDAL_command, shell=True)
