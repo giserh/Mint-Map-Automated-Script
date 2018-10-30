@@ -11,10 +11,11 @@
 
 # Add colors:
 proc_gdaldem () {
+	# Check for existing output file, removes if needed
 	if [ -f  $3 ]; then
 		rm $3
 	fi
-
+	# Add colors with gdaldem
 	gdaldem \
 	color-relief \
 	$1 `#Input filename`\

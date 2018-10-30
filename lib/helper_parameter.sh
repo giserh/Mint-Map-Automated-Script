@@ -65,6 +65,25 @@ helper_parameter(){
         shift
         shift
         ;;
+        --first-file)
+        FIRST_FILE=YES
+        shift
+        ;;
+        --time-stamp)
+        TIME_STAMP="$2"
+        shift
+        shift
+        ;;
+        --time-steps)
+        TIME_STEPS="$2"
+        shift
+        shift
+        ;;
+        --time-format)
+        TIME_FORMAT="$2"
+        shift
+        shift
+        ;;
         --target-mbtiles-path)
         TARGET_MBTILES_PATH="$2"
         shift
@@ -104,27 +123,35 @@ helper_parameter(){
         shift
         ;;
         --with-quality-assessment)
-        WITH_QUALITIY_ASSESSMENT=YES
+        WITH_QUALITIY_ASSESSMENT="YES"
+        shift
+        ;;
+        --disable-clip)
+        DISABLE_CLIP="YES"
         shift
         ;;
         --disable-new-res)
-        GENERATE_NEW_RES=NO
+        GENERATE_NEW_RES="NO"
         shift
         ;;
         --disable-raster-tile)
-        GENERATE_RASTER_TILE=NO
+        GENERATE_RASTER_TILE="NO"
         shift
         ;;
         --disable-vector-tile)
-        GENERATE_VECTOR_TILE=NO
+        GENERATE_VECTOR_TILE="NO"
+        shift
+        ;;
+        --force-proj-first)
+        FORCE_PROJECTION_FIRST="YES"
         shift
         ;;
         --with-south-sudan-shp)
-        USE_SS_SHAPE=YES
+        USE_SS_SHAPE="YES"
         shift
         ;;
         --add-ssh-key)
-        NEW_SSH_KEY=YES
+        NEW_SSH_KEY="YES"
         shift
         ;;
         -v|--version)

@@ -1,17 +1,15 @@
 #!/usr/bin/env bash
 
 ### check_type.sh
-# Checks to see if a data file is encoded as Byte data.  If not, extract min
-# and max values and convert data to Byte.  
-# (Note: Script assumes single band raster and TIFF file type)
+# Checks the type of a dataset (Byte, Int16, Float32) and assigns an
+# appropriate no data value.
 ### Inputs: 
-# 1) Data file to check, 2) Name of output file
+# GDAL stats of the desired data file
 ### Outputs: 
-# Data file with _byte.tif tag (converted if necessary)
+# No data flag
 ### Procedure:
-# - Uses grep on gdalinfo to see if file is Byte type
-# - If the file is not Byte, extract min and max values from gdalinfo,
-# rescale values and convert to Byte using gdal_translate.
+# - Uses grep on gdalinfo stats to see data type
+# - Assigns an appropriate value for the no data flag
 
 check_type () {
     # Make temporary stats file:
@@ -31,7 +29,7 @@ check_type () {
         NODATAFLAG='-dstnodata 255 '
     elif [[ ! -z "$IS_FLOAT" ]]; then
         NODATAFLAG='-dstnodata -9999 '
-        POLYGOINZE_FLOAT_FLAG="-float"
+        POLYGONIZE_FLOAT_FLAG="-float"
     elif [[ ! -z "$IS_INT" ]]; then
         NODATAFLAG='-dstnodata 32222 '
     else

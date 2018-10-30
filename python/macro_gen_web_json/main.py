@@ -4,6 +4,7 @@ import sys, os
 #import sqlite3
 import psycopg2
 import json
+import ast
 
 MINTCAST_PATH = os.environ.get('MINTCAST_PATH')
 config_path = MINTCAST_PATH + "/config/"
@@ -12,7 +13,10 @@ sys.path.append(config_path)
 RASTER_LAYER_ID_MD5 = os.environ.get('RASTER_LAYER_ID_MD5')
 VECTOR_LAYER_ID_MD5 = os.environ.get('VECTOR_LAYER_ID_MD5')
 
+from hashlib import md5
+
 from postgres_config import hostname, username, password, database
+
 
 #DATABASE_PATH = '/sql/database.sqlite'
 #hostname = 'localhost'
@@ -66,19 +70,33 @@ def updateMetadata():
         c.execute('SELECT * FROM mintcast.layer')
         for row in c.fetchall():
             if row[2] == 'raster':
-                metadataJson['md5raster'].append(row[6])
-
+                #metadataJson['md5raster'].append(row[6])
                 continue
+            print(row)
             metadataJson['layerNames'].append(row[4])
             metadataJson['layerIds'].append(row[1])
             metadataJson['sourceLayers'].append(row[7])
             metadataJson['hasData'].append(False if row[9] == 0 else True)
             metadataJson['hasTimeline'].append(False if row[10] == 0 else True)
             metadataJson['md5vector'].append(row[6])
+            metadataJson['md5raster'].append(md5(row[6].encode('utf-8')).hexdigest())
             if row[10] == 1:
-                metadataJson['layers'].append({'id':row[1], 'source-layer': row[5], 'minzoom': row[11], 'maxzoom':row[12], 'type':row[2], 'mapping':'', 'startTime': row[14], 'endtime':row[15], 'directory_format':row[13]})
+                #import pdb; pdb.set_trace()
+                step_array = ast.literal_eval(row[-2])
+                step_array = [str(i).strip() for i in step_array]
+                metadataJson['layers'].append({
+                    'id':row[1], 
+                    'source-layer': row[7], 
+                    'minzoom': row[11], 
+                    'maxzoom':row[12], 'type':row[2], 
+                    'mapping':'', 
+                    "axis":"slider",
+                    "stepType":"Time",
+                    "stepOption":{"type":"string", "format":"yyyyMM"}, #change this
+                    "step": step_array
+                    })
             if row[10] == 0:
-                metadataJson['layers'].append({'id':row[1], 'source-layer': row[5], 'minzoom': row[11], 'maxzoom':row[12], 'type':row[2], 'mapping':''})
+                metadataJson['layers'].append({'id':row[1], 'source-layer': row[7], 'minzoom': row[11], 'maxzoom':row[12], 'type':row[2], 'mapping':''})
     except Exception as e:
         raise e
     finally:

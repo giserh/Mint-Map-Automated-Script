@@ -4,11 +4,11 @@
 # Checks to see if a directory of tiled files is zipped and needs to be 
 # unzipped.  Unzips the files if necessary.
 ### Inputs: 
-# 1) Directory of TIFF tile files, 2) File suffix
+# 1) Directory of tile files, 2) File suffix
 ### Outputs: 
 # Unzips files into directory (if necessary)
 ### Procedure:
-# - Check if there are TIFF files in the directory aleady
+# - Check if there are files with the desired suffix in the directory aleady
 # - If not, unzips zip files
 
 check_zipped() {

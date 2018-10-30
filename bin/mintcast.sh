@@ -9,6 +9,7 @@ source $MINTCAST_PATH/lib/helper_parameter.sh
 source $MINTCAST_PATH/lib/helper_create_array.sh
 source $MINTCAST_PATH/lib/handle_tiff.sh
 source $MINTCAST_PATH/lib/handle_tiled_tiff.sh
+source $MINTCAST_PATH/lib/handle_tiff_time.sh
 source $MINTCAST_PATH/lib/handle_netcdf.sh
 source $MINTCAST_PATH/lib/handle_netcdf_single.sh
 source $MINTCAST_PATH/lib/handle_postgresql.sh
@@ -43,6 +44,8 @@ NO_WEBSITE_UPDATE=NO        		# Only generate tiles in dist/, no json, no restar
 TILED_FILE_EXT="dem.tif"			# for tiled dataset, the suffix and extension of the files to be merged
 WITH_QUALITY_ASSESSMENT=NO 			# for tiled dataset, if with --with-quality-assessment, then generate like elevation.num.raster.mbtiles
 DATASET_NAME="output" 				# output mbtiles name like -o elevation, output will be elevation.raster.mbtiles and elevation.vector.mbtiles
+DISABLE_CLIP="NO"					# do not clip data
+FORCE_PROJECTION_FIRST="NO"			# Force projection before standard workflow
 GENERATE_NEW_RES="YES"				# Generate new resolution during creation of tiles
 GENERATE_RASTER_TILE="YES"			# Generate raster MBTiles as output
 GENERATE_VECTOR_TILE="YES"			# Generate vector MBTiles as output
@@ -50,7 +53,10 @@ NEW_SSH_KEY="NO"					# Add ssh key
 SSH_USER="vaccaro"					# User-name to ssh/scp into jonsnow (e.g. liboliu, vaccaro, shiwei)
 USE_SS_SHAPE="NO"					# Clip using South Sudan boundary shapefile
 CLIP_BOUNDS="22.4 3.4 37.0 23.2"	# Coordinates for rectangular clipping boundary			
-
+FIRST_FILE="NO"						# Flag for timeseries files (YES for first in series, no otherwise)
+TIME_STAMP=""						# Time stamp for TIFF time series
+TIME_STEPS=""						# Time steps for TIFF time series
+TIME_FORMAT="YYYYMMDD"				# Time format for metadata JSON
 
 OUTPUT_DIR_STRUCTURE_FOR_TIMESERIES="" # how netcdf's timeseries mbtiles are stored
 
@@ -100,9 +106,11 @@ elif [[ $DATASET_TYPE == "netcdf" ]]; then
 	# exit
 elif [[ $DATASET_TYPE == "single-netcdf" ]]; then
 	handle_netcdf_single
+elif [[ $DATASET_TYPE == "tiff-time" ]]; then
+	handle_tiff_time
 else
 	echo "$DATASET_TYPE is an invalid dataset type." 
-	echo "Valid choices include: tiff, tiled, netcdf"
+	echo "Valid choices include: tiff, tiled, tiff-time, netcdf, and single-netcdf"
 	exit 1
 fi
 
@@ -127,7 +135,7 @@ if [[ $DATASET_TYPE == "tiff" || $DATASET_TYPE == "tiled" ]]; then
 	#CKAN_URL=""
 	#python3 $MINTCAST_PATH/python/macro_postgres_curd/main.py update layer \
 	#"ckan_url='$CKAN_URL'" \
-	#"layerid='$COL_LAYER_ID'"
+	#"layerid='$Cmacro_tileserver_config/main.pyOL_LAYER_ID'"
 	python3 $MINTCAST_PATH/python/macro_gen_web_json/main.py update-config
 
 # elif [[ $DATASET_TYPE == "netcdf" || $DATASET_TYPE == "single-netcdf" ]]; then
@@ -153,6 +161,7 @@ if [[ $DATASET_TYPE == "tiff" || $DATASET_TYPE == "tiled" ]]; then
 # 		python3 $MINTCAST_PATH/python/macro_gen_web_json/main.py update-config
 # 	done	
 fi
+
 
 
 
