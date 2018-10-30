@@ -22,8 +22,8 @@ check_type () {
     # Get gdalinfo of stats:
     GDALINFO="$(gdalinfo $STATS)"
     IS_BYTE=$(echo $GDALINFO | grep 'Type=Byte')
-    IS_INT=$(echo $GDALINFO | grep 'Type=Int16')
-    IS_FLOAT=$(echo $GDALINFO | grep 'Type=Float32')
+    IS_INT=$(echo $GDALINFO | grep 'Type=Int')
+    IS_FLOAT=$(echo $GDALINFO | grep 'Type=Float')
 
     if [[ ! -z "$IS_BYTE" ]]; then
         # mv $STATS $2 # Set temporary stats file as output
@@ -35,7 +35,7 @@ check_type () {
     elif [[ ! -z "$IS_INT" ]]; then
         NODATAFLAG='-dstnodata 32222 '
     else
-        NODATAFLAG='-dstnodata 32222 '
+        NODATAFLAG='-dstnodata -9999 '
         #statements
         # Extract min and max values from GDAL info:
         # tmp_min=${GDALINFO#*Minimum=}
