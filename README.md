@@ -5,6 +5,41 @@
 ![Contributor by Shiwei Huang](https://img.shields.io/badge/Shiwei%20Huang-Contributor-blue.svg)
 
 
+## TODO List:
+
+- Increment
+	- Postgresql
+- Timeseries Play
+	- frame request
+	- play button
+- Postgres
+	- Add one flag if it changed
+		- `0` not changed
+		- `1` changing
+		- `2` changed
+	- New structure
+		- no metadata.json
+		- only seperate files
+		- md5 file
+	- Search without metadata.json
+		- Search using redis
+		- Search via AJAX
+		- redis: name: md5
+	- Increment
+		- Postgresql with timeseries flag => md5
+		- Generate into the same json file with the same timeseries flag
+- the reason still using Json file not DB
+	- faster to send the response
+	- more secure
+	- without connect and join tables
+	- Json file structure
+		- move `metadata.json` to seperated json files
+- Consistence
+	- filename
+	- only use Json file instead of `metadata.json`
+	- layer name and source name, make them consistent
+
+
 ## Time series convention
 
 ### How time series stored in `metadata.json`
