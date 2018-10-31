@@ -6,13 +6,12 @@
 
 
 ## TODO List:
-
-- Increment
-	- Postgresql
 - Timeseries Play
 	- frame request
-	- play button
+	- play/pause button
+	- slide bar redesign
 - Postgres
+	- No show all
 	- Add one flag if it changed
 		- `0` not changed
 		- `1` changing
@@ -34,6 +33,10 @@
 	- without connect and join tables
 	- Json file structure
 		- move `metadata.json` to seperated json files
+- Timeseries Json file
+	- with hotspot geojson object
+	- with a series data loading 
+	- time slide desc data
 - Consistence
 	- filename
 	- only use Json file instead of `metadata.json`
