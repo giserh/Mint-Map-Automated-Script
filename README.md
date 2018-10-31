@@ -27,6 +27,7 @@
 	- Increment
 		- Postgresql with timeseries flag => md5
 		- Generate into the same json file with the same timeseries flag
+		- **each file is one seperated record**
 - the reason still using Json file not DB
 	- faster to send the response
 	- more secure
@@ -37,6 +38,10 @@
 	- with hotspot geojson object
 	- with a series data loading 
 	- time slide desc data
+- Hotspot data generating
+	- Geojson object 
+	- store data into Postgresql for each file
+	- when generate json file merge them into one geojson object
 - Consistence
 	- filename
 	- only use Json file instead of `metadata.json`
